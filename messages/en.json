@@ -1,5 +1,16 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+
+  "Regester": {
+    "createAccount": "Create an account",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "fullName": "Full Name",
+    "username": "Username",
+    "email": "Email",
+    "password": "Enter your password",
+    "createAccountButton": "Create account"
   }
 }

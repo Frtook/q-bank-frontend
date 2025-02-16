@@ -1,5 +1,15 @@
 {
   "HomePage": {
     "title": "مرحبا"
+  },
+  "Regester": {
+    "createAccount": "إنشاء حساب",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول",
+    "fullName": "الاسم الكامل",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "password": "أدخل كلمة المرور",
+    "createAccountButton": "إنشاء حساب"
   }
 }
