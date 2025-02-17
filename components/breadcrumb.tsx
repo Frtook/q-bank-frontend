@@ -1,7 +1,7 @@
 "use client";
 
 
-const Breadcrumb = ({lang}: {lang: string}) => {
+const Breadcrumb = () => {
 
   return (
     <nav aria-label="breadcrumb" className="w-full">

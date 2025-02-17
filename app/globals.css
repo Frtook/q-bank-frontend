@@ -76,6 +76,10 @@ body {
 
     --primary-foreground: 240 5.9% 10%;
 
+    --primary: 210, 75%, 16%;
+    --primary-foreground: 0, 0%, 100%;
+    
+
     --secondary: 240 3.7% 15.9%;
 
     --secondary-foreground: 0 0% 98%;

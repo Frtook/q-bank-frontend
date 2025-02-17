@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import Button from "@/components/ui/button";
 import TooltipDemo from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";

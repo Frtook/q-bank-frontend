@@ -26,10 +26,10 @@ export default function ThemeSwitcher({lang}: {lang: string}) {
   return (
     <div
     onClick={handleClick}
-    className="w-14 h-8 flex items-center bg-gray-200 dark:bg-gray-800 rounded-full p-1 cursor-pointer transition relative"
+    className="w-14 h-8 flex items-center bg-gray-200 dark:bg-[#111113] rounded-full p-1 cursor-pointer transition relative"
   >
     <div
-      className={`w-6 h-6 bg-white dark:bg-gray-900 rounded-full shadow-md transform transition-transform ${
+      className={`w-6 h-6 bg-white dark:bg-[#19191d] rounded-full shadow-md transform transition-transform ${
         theme === "dark" ? (lang === "ar" ? "-translate-x-6" : "translate-x-6") : "translate-x-0"
       }`}
     />

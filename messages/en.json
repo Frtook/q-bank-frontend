@@ -12,5 +12,14 @@
     "email": "Email",
     "password": "Enter your password",
     "createAccountButton": "Create account"
+  },
+  "navitems": {
+    "title": "Question Bank",
+    "dashboard": "Dashboard",
+    "questions": "Questions",
+    "exams": "Exams",
+    "ai": "AI",
+    "users": "Users",
+    "settings": "System settings"
   }
 }
