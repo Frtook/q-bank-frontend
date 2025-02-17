@@ -2,9 +2,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Hydrated from "@/components/Hydrated";
-import Navbar from "@/components/Navbar/Navbar";
+import Header from "@/components/header";
+import Sidebar from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,15 +29,22 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
+  
   return (
     <html data-mode="light" lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f3f5f6] dark:bg-[#111113] p-4`}
       >
         <NextIntlClientProvider messages={messages}>
           <Hydrated>
-            <Navbar />
-            {children}
+            <div className="grid gap-3" style={{ gridTemplateColumns: "auto 1fr" }}>
+              <Sidebar lang={locale} />
+
+              <div className="flex flex-col gap-3">
+                <Header lang={locale} />
+                {children}
+              </div>
+            </div>
           </Hydrated>
         </NextIntlClientProvider>
       </body>

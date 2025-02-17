@@ -1,52 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useCallback } from "react";
+import { Globe } from 'lucide-react';
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ lang }: { lang: string }) => {
   const router = useRouter();
-  const [locale, setLocale] = useState("");
 
   useEffect(() => {
-    const cookieLocale = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("locale"))
-      ?.split("=")[1];
-    if (cookieLocale) {
-      if (cookieLocale === "ar") {
-        document.dir = "rtl";
-      } else {
-        document.dir = "ltr";
-      }
-      setLocale(cookieLocale);
-    } else {
-      const brwoerLocale = navigator.language.slice(0, 2);
-      setLocale(brwoerLocale);
-      document.cookie = `locale=${brwoerLocale}`;
-      router.refresh();
-    }
-  }, [router]);
+    document.dir = lang === "ar" ? "rtl" : "ltr";
+  }, [lang]);
 
-  const changeLocale = (newLocale: string) => {
-    if (newLocale === "ar") {
-      document.dir = "rtl";
-    } else {
-      document.dir = "ltr";
-    }
-    setLocale(newLocale);
-    document.cookie = `locale=${newLocale}`;
+  const toggleLocale = useCallback(() => {
+    const newLocale = lang === "en" ? "ar" : "en";
+    document.dir = newLocale === "ar" ? "rtl" : "ltr";
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`; // 1 year expiration
     router.refresh();
-  };
+  }, [lang, router]);
 
   return (
-    <select
-      value={locale}
-      onChange={(e) => changeLocale(e.target.value as "en" | "ar")}
-      className="p-2 border rounded-md"
-    >
-      <option value="en">English</option>
-      <option value="ar">العربية</option>
-    </select>
+    <button onClick={toggleLocale} className="flex gap-1">
+      <Globe className=""/>
+      <span>{lang === "en" ? "AR" : "EN"}</span>
+    </button>
   );
 };
 
