@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -14,7 +14,7 @@ const page = () => {
           <p className="text-gray-500 text-sm">
             {t("alreadyHaveAccount")}
             <Link href="login">
-              <Button variant="link">{t("login")}</Button>
+              <Button variant="primary">{t("login")}</Button>
             </Link>
           </p>
         </div>

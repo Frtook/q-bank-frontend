@@ -4,8 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Hydrated from "@/components/Hydrated";
-import Navbar from "@/components/Navbar/Navbar";
-
+import Header from "@/components/header";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,11 +30,11 @@ export default async function RootLayout({
   return (
     <html data-mode="light" lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f3f5f6] dark:bg-[#1E1E2E] p-4`}
       >
         <NextIntlClientProvider messages={messages}>
           <Hydrated>
-            <Navbar />
+            <Header lang={locale} />
             {children}
           </Hydrated>
         </NextIntlClientProvider>

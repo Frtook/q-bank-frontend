@@ -2,11 +2,13 @@
 import { useThemeStore } from "@/store/themeStore";
 import { Sun, Moon } from "lucide-react";
 import { useEffect } from "react";
-export default function Navbar() {
+
+export default function ThemeSwitcher({lang}: {lang: string}) {
   const { setTheme, theme } = useThemeStore();
-  const handelClick = () => {
+  const handleClick = () => {
     setTheme();
   };
+
 
   useEffect(() => {
     (async () => {
@@ -22,12 +24,18 @@ export default function Navbar() {
   }, [theme]);
 
   return (
-    <div className="">
-      {theme === "dark" ? (
-        <Sun onClick={handelClick} />
-      ) : (
-        <Moon onClick={handelClick} />
-      )}
+    <div
+    onClick={handleClick}
+    className="w-14 h-8 flex items-center bg-gray-200 dark:bg-gray-800 rounded-full p-1 cursor-pointer transition relative"
+  >
+    <div
+      className={`w-6 h-6 bg-white dark:bg-gray-900 rounded-full shadow-md transform transition-transform ${
+        theme === "dark" ? (lang === "ar" ? "-translate-x-6" : "translate-x-6") : "translate-x-0"
+      }`}
+    />
+    <div className="absolute left-2 text-gray-600 dark:text-gray-400 text-xs">
+      {theme === "dark" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
     </div>
+  </div>
   );
 }
