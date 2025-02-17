@@ -10,13 +10,13 @@ export default function Navbar() {
 
   useEffect(() => {
     (async () => {
-      const localTheme = JSON.parse(localStorage.getItem("theme") || "");
+      const localTheme = localStorage.getItem("theme");
       if (localTheme) {
         document.documentElement.setAttribute(
           "data-mode",
-          localTheme.state.theme
+          JSON.parse(localTheme).state.theme
         );
-        document.documentElement.className = localTheme.state.theme;
+        document.documentElement.className = JSON.parse(localTheme).state.theme;
       }
     })();
   }, [theme]);
