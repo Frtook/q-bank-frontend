@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 const routes = [
   { name: "login", path: "/login" },
-  { name: "regester", path: "/regester" },
+  { name: "register", path: "/register" },
 ];
 export default function Navbar() {
   const pathName = usePathname();

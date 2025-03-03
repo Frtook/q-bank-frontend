@@ -3,10 +3,10 @@ import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRegister } from "@/hook/useAuth";
 
 const schemaRegester = z
   .object({
@@ -24,37 +24,27 @@ const schemaRegester = z
 type TschemaRegester = z.infer<typeof schemaRegester>;
 
 const RegisterPage = () => {
+  const { mutate } = useRegister();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<TschemaRegester>({
     resolver: zodResolver(schemaRegester),
   });
 
   const t = useTranslations("Regester");
-  const [message, setMessage] = useState("");
   const onSubmit = async (data: TschemaRegester) => {
     const { fullname, username, email, password, password2, academyName } =
       data;
-
-    const res = await fetch("https://api.q-bank.tech/api/v1/auth/register/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fullname,
-        username,
-        email,
-        password,
-        password2,
-        academy: { name: academyName },
-      }),
+    mutate({
+      fullname,
+      username,
+      email,
+      password,
+      password2,
+      academy: { name: academyName },
     });
-
-    const json = await res.json();
-    setMessage(json.message);
-    reset();
   };
   return (
     <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
@@ -122,7 +112,6 @@ const RegisterPage = () => {
           {errors.academyName && (
             <p className="text-red-500">{errors.academyName.message}</p>
           )}
-          {message && <span className="text-green-500">{message}</span>}
           <Button
             disabled={isSubmitting}
             className="p-4"

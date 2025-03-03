@@ -1,9 +1,6 @@
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import Hydrated from "@/components/Hydrated";
+
 import Navbar from "./Navbar";
 
 const geistSans = Geist({
@@ -26,21 +23,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
-  const messages = await getMessages();
-
   return (
-    <html data-mode="light" lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f3f5f6] dark:bg-[#111113] p-4`}
-      >
-        <NextIntlClientProvider messages={messages}>
-          <Hydrated>
-            <Navbar />
-            {children}
-          </Hydrated>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <Navbar />
+      {children}
+    </>
   );
 }

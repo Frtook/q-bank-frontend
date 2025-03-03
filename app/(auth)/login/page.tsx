@@ -2,11 +2,10 @@
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useToken } from "@/hook/useAuth";
 
 const schemaLogin = z.object({
   username: z.string().min(3, "the username must have 3 characters"),
@@ -16,6 +15,7 @@ const schemaLogin = z.object({
 type TschemaLogin = z.infer<typeof schemaLogin>;
 
 const RegisterPage = () => {
+  const { mutate: login } = useToken();
   const {
     register,
     handleSubmit,
@@ -25,21 +25,9 @@ const RegisterPage = () => {
     resolver: zodResolver(schemaLogin),
   });
 
-  const [message, setMessage] = useState();
-  const route = useRouter();
-
   const onSubmit = async (data: TschemaLogin) => {
-    const { username, password } = data;
-    const res = await fetch("https://api.q-bank.tech/api/v1/auth/token/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    if (res.ok) {
-      route.push("/");
-    }
-    const json = await res.json();
-    setMessage(json.detail);
+    login(data);
+
     reset();
   };
   return (
@@ -50,9 +38,9 @@ const RegisterPage = () => {
           <h1 className="text-4xl font-bold">Welcome Back</h1>
           <p className="text-gray-500 text-sm">
             Don't have an accont yet?
-            <Link href="login">
+            <Link href="register">
               <Button className="p-2 mx-2" variant="primary">
-                login
+                register
               </Button>
             </Link>
           </p>
@@ -80,7 +68,7 @@ const RegisterPage = () => {
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
-          {message && <span className="text-red-500">{message}</span>}
+          {/* {message && <span className="text-red-500">{message}</span>} */}
           <Button
             className="p-2"
             disabled={isSubmitting}
