@@ -10,8 +10,7 @@ export const useThemeStore = create<ThemeState>()(
     (set, get) => ({
       theme: "dark",
       setTheme: () =>
-        set((state) => ({
-          ...state,
+        set(() => ({
           theme: get().theme === "dark" ? "light" : "dark",
         })),
     }),

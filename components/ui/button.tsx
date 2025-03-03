@@ -19,9 +19,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // Define styles for each variant
     const variants = {
       primary: "bg-primary text-white hover:bg-opacity-90",
-      secondary: "bg-white text-[#414651] border border-[#D5D7DA] shadow-sm hover:bg-gray-50",
+      secondary:
+        "bg-white text-[#414651] border border-[#D5D7DA] shadow-sm hover:bg-gray-50",
       destructive: "bg-destructive text-white hover:bg-opacity-90",
-      disabled: "bg-[#fafafa] text-gray-400 border border-[#D5D7DA] shadow-sm cursor-not-allowed",
+      disabled:
+        "bg-[#fafafa] text-gray-400 border border-[#D5D7DA] shadow-sm cursor-not-allowed",
+      link: "bg-primary text-white hover:bg-opacity-90", // add style for link button
     };
 
     return (
