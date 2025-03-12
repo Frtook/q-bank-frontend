@@ -7,6 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRegister } from "@/hook/useAuth";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const schemaRegester = z
   .object({
@@ -25,12 +33,16 @@ type TschemaRegester = z.infer<typeof schemaRegester>;
 
 const RegisterPage = () => {
   const { mutate } = useRegister();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<TschemaRegester>({
+  const form = useForm<TschemaRegester>({
     resolver: zodResolver(schemaRegester),
+    defaultValues: {
+      username: "",
+      password: "",
+      academyName: "",
+      email: "",
+      fullname: "",
+      password2: "",
+    },
   });
 
   const t = useTranslations("Regester");
@@ -61,65 +73,95 @@ const RegisterPage = () => {
             </Link>
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <p>Fullname</p>
-          <Input
-            {...register("fullname")}
-            type="text"
-            placeholder={t("fullName")}
-          />
-          {errors.fullname && (
-            <p className="text-red-500">{errors.fullname.message}</p>
-          )}
-          <p>Username</p>
-          <Input
-            {...register("username")}
-            type="text"
-            placeholder={t("username")}
-          />
-          {errors.username && (
-            <p className="text-red-500">{errors.username.message}</p>
-          )}
-          <p>Email</p>
-          <Input {...register("email")} type="email" placeholder={t("email")} />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-          <p>Password</p>
-          <Input
-            {...register("password")}
-            type="password"
-            placeholder={t("password")}
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-          <p>Repey Password</p>
-          <Input
-            {...register("password2")}
-            type="password"
-            placeholder="repete password"
-          />
-          {errors.password2 && (
-            <p className="text-red-500">{errors.password2.message}</p>
-          )}
-          <p>Academy name</p>
-          <Input
-            {...register("academyName")}
-            type="text"
-            placeholder="Acadmey name"
-          />
-          {errors.academyName && (
-            <p className="text-red-500">{errors.academyName.message}</p>
-          )}
-          <Button
-            disabled={isSubmitting}
-            className="p-4"
-            variant={isSubmitting ? "disabled" : "primary"}
-          >
-            {t("createAccountButton")}
-          </Button>
-        </form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="fullname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fullname</FormLabel>
+                  <FormControl>
+                    <Input placeholder="fullname" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password2"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Repey Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Repey Password"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="academyName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Academy name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Academy name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="p-3" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
