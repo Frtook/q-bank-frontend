@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ProviderQuery from "@/components/QueryClientProvider";
 import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,9 +20,7 @@ export default async function RootLayout({
 
   return (
     <html data-mode="light" lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f3f5f6] dark:bg-[#111113] p-4`}
-      >
+      <body className={` antialiased bg-[#f3f5f6] dark:bg-[#111113] p-4`}>
         <NextIntlClientProvider messages={messages}>
           <ProviderQuery>
             <>
