@@ -1,5 +1,6 @@
 import { getCookies } from "@/helper/cookie";
 import axios, { AxiosResponse } from "axios";
+
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
@@ -9,14 +10,14 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   async (config) => {
-    const dataLength = JSON.stringify(config.data).length;
-    config.headers["Content-Length"] = dataLength;
-
     const token = await getCookies("token");
+    if (!token) {
+      window.location.href = "/login";
+      return Promise.reject("No token found");
+    }
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-
     return config;
   },
   (error) => {
@@ -26,6 +27,11 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error) => Promise.reject(error),
+  (error) => {
+    if (!error.config.validateStatus()) {
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  },
 );
 export default apiClient;

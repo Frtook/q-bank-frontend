@@ -11,3 +11,10 @@ interface ILogin {
   username: string;
   password: string;
 }
+
+interface IAcademy {
+  id: number;
+  name: string;
+  logo: string;
+  active: boolean;
+}

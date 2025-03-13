@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -14,10 +14,7 @@ export default function Navbar() {
       <p className="text-4xl flex-1  font-bold">Logo</p>
       {routes.map((route, index) => (
         <Link key={index} href={route.path}>
-          <Button
-            variant={pathName === route.path ? "primary" : "secondary"}
-            className="px-3 py-2"
-          >
+          <Button variant={pathName === route.path ? "default" : "secondary"}>
             {route.name}
           </Button>
         </Link>
