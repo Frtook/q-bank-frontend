@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ const RegisterPage = () => {
           <p className="text-gray-500 text-sm">
             Don&apos;t have an account yet?
             <Link href="register">
-              <Button className="p-2 mx-2" variant="primary">
+              <Button className="mx-2" variant="default">
                 register
               </Button>
             </Link>
@@ -87,9 +87,7 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <Button className="p-3" type="submit">
-              Submit
-            </Button>
+            <Button type="submit">Submit</Button>
           </form>
         </Form>
       </div>

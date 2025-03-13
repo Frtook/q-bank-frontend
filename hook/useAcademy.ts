@@ -7,7 +7,7 @@ export const useGetacademy = () => {
     queryKey: ["academy"],
     queryFn: async () => {
       const res = await apiClient.get("/bank/academy/");
-      return res.data;
+      return res.data as IAcademy[];
     },
   });
 };
