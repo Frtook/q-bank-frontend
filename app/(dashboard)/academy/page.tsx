@@ -4,7 +4,7 @@ import React from "react";
 import AddAcadmy from "./_components/AddAcademy";
 import { Button } from "@/components/ui/button";
 
-export default function page() {
+export default function Page() {
   const { data } = useGetacademy();
 
   const handleDelete = (id: number) => {
