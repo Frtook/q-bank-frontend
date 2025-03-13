@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useCallback } from "react";
-import { Globe } from 'lucide-react';
+import { Globe } from "lucide-react";
 
 const LanguageSwitcher = ({ lang }: { lang: string }) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const LanguageSwitcher = ({ lang }: { lang: string }) => {
 
   return (
     <button onClick={toggleLocale} className="flex gap-1">
-      <Globe className=""/>
+      <Globe className="" />
       <span>{lang === "en" ? "AR" : "EN"}</span>
     </button>
   );

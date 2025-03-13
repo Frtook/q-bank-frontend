@@ -21,7 +21,9 @@ const TooltipComponent: React.FC<TooltipProps> = ({
     <Tooltip.Provider delayDuration={150}>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          {children || <QuestionMarkCircledIcon className="w-5 h-5 cursor-pointer" />}
+          {children || (
+            <QuestionMarkCircledIcon className="w-5 h-5 cursor-pointer" />
+          )}
         </Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content
@@ -35,8 +37,8 @@ const TooltipComponent: React.FC<TooltipProps> = ({
                 "data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade",
                 "data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade",
                 "data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade",
-                className // Allow custom class overrides
-              )
+                className, // Allow custom class overrides
+              ),
             )}
           >
             {content}

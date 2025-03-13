@@ -21,11 +21,11 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 export default apiClient;
