@@ -6,6 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToken } from "@/hook/useAuth";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const schemaLogin = z.object({
   username: z.string().min(3, "the username must have 3 characters"),
@@ -16,19 +25,18 @@ type TschemaLogin = z.infer<typeof schemaLogin>;
 
 const RegisterPage = () => {
   const { mutate: login } = useToken();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<TschemaLogin>({
+  const form = useForm<TschemaLogin>({
     resolver: zodResolver(schemaLogin),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (data: TschemaLogin) => {
     login(data);
 
-    reset();
+    form.reset();
   };
   return (
     <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
@@ -37,7 +45,7 @@ const RegisterPage = () => {
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold">Welcome Back</h1>
           <p className="text-gray-500 text-sm">
-            Don't have an accont yet?
+            Don&apos;t have an account yet?
             <Link href="register">
               <Button className="p-2 mx-2" variant="primary">
                 register
@@ -45,38 +53,45 @@ const RegisterPage = () => {
             </Link>
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          <label>
-            <p className="mt-5">Enter Username</p>
-            <Input
-              {...register("username")}
-              type="text"
-              placeholder="username"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="username" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Username must have 3 characters
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </label>
-          {errors.username && (
-            <p className="text-red-500">{errors.username.message}</p>
-          )}
-          <label>
-            <p>Enter your Password</p>
-            <Input
-              {...register("password")}
-              type="password"
-              placeholder="password"
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Password must be at least 8 characters
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </label>
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-          {/* {message && <span className="text-red-500">{message}</span>} */}
-          <Button
-            className="p-2"
-            disabled={isSubmitting}
-            variant={isSubmitting ? "disabled" : "primary"}
-          >
-            Login
-          </Button>
-        </form>
+            <Button className="p-3" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );

@@ -37,9 +37,8 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <ProviderQuery>
             <>
-              {" "}
               {children}
-              <Toaster />
+              <Toaster richColors />
             </>
           </ProviderQuery>
         </NextIntlClientProvider>
