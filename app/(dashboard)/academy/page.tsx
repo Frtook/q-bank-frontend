@@ -3,6 +3,7 @@ import { useGetacademy } from "@/hook/useAcademy";
 import React from "react";
 import AddAcadmy from "./_components/AddAcademy";
 import { Button } from "@/components/ui/button";
+// import Image from "next/image";
 
 export default function Page() {
   const { data } = useGetacademy();
@@ -10,16 +11,16 @@ export default function Page() {
   const handleDelete = (id: number) => {
     console.log("delete", id);
   };
-
   return (
     <div>
-      <span className="text-[#0A214C] hover:text-primary/90">academy</span>
+      <span className="">academy</span>
       <AddAcadmy />
+
       {data &&
         data.map((acadmy) => (
           <div key={acadmy.id}>
             <p>{acadmy.name}</p>
-            <p>{acadmy.logo}</p>
+            {/* <Image src={acadmy.logo} width={30} height={30} alt="logo" /> */}
             <p>{acadmy.active}</p>
             <Button
               variant="destructive"

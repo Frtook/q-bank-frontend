@@ -2,7 +2,7 @@
 import { setCookies } from "@/helper/cookie";
 import apiClient from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -21,7 +21,7 @@ export const useRegister = () => {
     },
     onError: (error: AxiosError) => {
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },
@@ -41,7 +41,7 @@ export const useToken = () => {
     },
     onError: (error: AxiosError) => {
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },

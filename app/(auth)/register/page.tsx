@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useRegister } from "@/hook/useAuth";
 import {
   Form,
@@ -15,21 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-const schemaRegester = z
-  .object({
-    fullname: z.string().min(3, "the full name must have 3 characters"),
-    username: z.string().min(3, "the username must have 3 characters"),
-    email: z.string().email(),
-    password: z.string().min(8, "the password shuld be more than 8"),
-    password2: z.string(),
-    academyName: z.string().min(3, "the academy name must have 3 characters"),
-  })
-  .refine((data) => data.password === data.password2, {
-    message: "password not match",
-    path: ["password2"],
-  });
-type TschemaRegester = z.infer<typeof schemaRegester>;
+import { schemaRegester, TschemaRegester } from "@/lib/validations/register";
 
 const RegisterPage = () => {
   const { mutate } = useRegister();
