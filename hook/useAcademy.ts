@@ -29,7 +29,7 @@ export const useAddAcademy = () => {
     },
     onError: (error: AxiosError) => {
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
+        (error.response?.data as { detail: string })?.detail || error.message,
       );
       return error;
     },
