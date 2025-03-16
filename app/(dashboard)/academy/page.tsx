@@ -1,35 +1,24 @@
 "use client";
 import { useGetacademy } from "@/hook/useAcademy";
-import React from "react";
-import AddAcadmy from "./_components/AddAcademy";
-import { Button } from "@/components/ui/button";
-// import Image from "next/image";
+import AddAcadmy from "./AddAcademy";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export default function Page() {
   const { data } = useGetacademy();
 
-  const handleDelete = (id: number) => {
-    console.log("delete", id);
-  };
   return (
     <div>
-      <span className="">academy</span>
-      <AddAcadmy />
+      <div className="flex p-2 justify-between">
+        <span className="font-bold">academy</span>
+        <AddAcadmy />
+      </div>
 
-      {data &&
-        data.map((acadmy) => (
-          <div key={acadmy.id}>
-            <p>{acadmy.name}</p>
-            {/* <Image src={acadmy.logo} width={30} height={30} alt="logo" /> */}
-            <p>{acadmy.active}</p>
-            <Button
-              variant="destructive"
-              onClick={() => handleDelete(acadmy.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
+      {data ? (
+        <DataTable columns={columns} data={data} />
+      ) : (
+        <div>loading...</div>
+      )}
     </div>
   );
 }
