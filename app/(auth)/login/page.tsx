@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useToken } from "@/hook/useAuth";
 import {
   Form,
@@ -15,13 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-const schemaLogin = z.object({
-  username: z.string().min(3, "the username must have 3 characters"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-type TschemaLogin = z.infer<typeof schemaLogin>;
+import { schemaLogin, TschemaLogin } from "@/lib/validations/login";
 
 const RegisterPage = () => {
   const { mutate: login } = useToken();
@@ -32,12 +25,7 @@ const RegisterPage = () => {
       password: "",
     },
   });
-
-  const onSubmit = async (data: TschemaLogin) => {
-    login(data);
-
-    form.reset();
-  };
+  const onSubmit = async (data: TschemaLogin) => login(data);
   return (
     <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
       <div className="border dark:border-white border-black rounded hidden md:block "></div>
@@ -78,7 +66,7 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" {...field} />
+                    <Input placeholder="password" type="password" {...field} />
                   </FormControl>
                   <FormDescription>
                     Password must be at least 8 characters

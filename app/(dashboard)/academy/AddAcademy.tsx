@@ -10,7 +10,6 @@ import {
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,29 +23,35 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const addAcademySchema = z.object({
-  name: z.string().min(1),
-  logo: z.string().min(1),
-  active: z.boolean(),
-});
+import UploadFile from "@/components/UploadFile";
+import { useAddAcademy } from "@/hook/useAcademy";
+import { AddAcademySchema, addAcademySchema } from "@/lib/validations/academy";
+import { toast } from "sonner";
 
 export default function AddAcadmy() {
-  const form = useForm<z.infer<typeof addAcademySchema>>({
+  const { mutate: addAcademy } = useAddAcademy();
+  const form = useForm<AddAcademySchema>({
     resolver: zodResolver(addAcademySchema),
     defaultValues: {
       active: false,
       name: "",
-      logo: "",
+      logo: undefined,
     },
   });
 
-  function onSubmit(values: z.infer<typeof addAcademySchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit(data: AddAcademySchema) {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("active", data.active.toString());
+    formData.append("logo", data.logo);
+    console.log(formData);
+    addAcademy(formData);
     form.reset();
   }
+  if (form.formState.isLoading) {
+    toast.loading("loading");
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -72,13 +77,8 @@ export default function AddAcadmy() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter academy name"
-                      type=""
-                      {...field}
-                    />
+                    <Input placeholder="Enter academy name" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -89,15 +89,21 @@ export default function AddAcadmy() {
               name="logo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Logo</FormLabel>
+                  <FormLabel>images</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Entet academy logo"
-                      type=""
-                      {...field}
-                    />
+                    <UploadFile id="dropzone-file" file={field.value}>
+                      <Input
+                        className="hidden"
+                        accept="image/jpeg, image/jpg, image/png, image/webp"
+                        id="dropzone-file"
+                        type="file"
+                        onChange={(event) => {
+                          field.onChange(event.target.files?.[0]);
+                        }}
+                      />
+                    </UploadFile>
                   </FormControl>
-
+                  <FormDescription>upload images.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -121,7 +127,13 @@ export default function AddAcadmy() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button
+              disabled={form.formState.isSubmitting}
+              variant={form.formState.isSubmitting ? "secondary" : "default"}
+              type="submit"
+            >
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>

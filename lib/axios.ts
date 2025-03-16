@@ -1,17 +1,17 @@
 import { getCookies } from "@/helper/cookie";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 apiClient.interceptors.request.use(
   async (config) => {
     const token = await getCookies("token");
-    if (!token) {
+    if (!token && config.url !== "/auth/token/") {
       window.location.href = "/login";
       return Promise.reject("No token found");
     }
@@ -27,10 +27,11 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error) => {
-    if (!error.config.validateStatus()) {
+  (error: AxiosError) => {
+    if (error.status === 401) {
       window.location.href = "/login";
     }
+
     return Promise.reject(error);
   },
 );

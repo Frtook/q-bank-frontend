@@ -1,0 +1,102 @@
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+const deleteAcademy = (id: number) => {
+  console.log(id);
+};
+const updateAcademy = (id: number) => {
+  console.log(id);
+};
+export const columns: ColumnDef<IAcademy>[] = [
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "active",
+    header: "Active",
+    cell: ({ row }) => {
+      const active = row.getValue("active");
+      return (
+        <Badge variant={active ? "default" : "destructive"}>
+          {active ? "Active" : "unactive"}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "logo",
+    header: "Logo",
+    cell: ({ row }) => {
+      return (
+        <Image
+          src={row.getValue("logo")}
+          width={50}
+          height={50}
+          alt={row.getValue("name")}
+        />
+      );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const academy = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Button
+                size="sm"
+                onClick={() => updateAcademy(academy.id)}
+                variant="default"
+              >
+                Update
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button
+                size="sm"
+                onClick={() => deleteAcademy(academy.id)}
+                variant="destructive"
+              >
+                Delete
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+];
