@@ -4,7 +4,7 @@ import { ACCEPTED_IMAGE_TYPES } from "../constants";
 export type AddAcademySchema = z.infer<typeof addAcademySchema>;
 
 export const addAcademySchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string().min(1),
   logo: z
     .instanceof(File, { message: "select one image" })
