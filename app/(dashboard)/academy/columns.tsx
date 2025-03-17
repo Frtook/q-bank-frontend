@@ -1,5 +1,4 @@
 "use client";
-
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
@@ -13,12 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-const deleteAcademy = (id: number) => {
-  console.log(id);
-};
-const updateAcademy = (id: number) => {
-  console.log(id);
-};
+import AcademyDialog from "./AcademyDialog";
+import DeleteDialog from "./DeleteDialog";
+
 export const columns: ColumnDef<IAcademy>[] = [
   {
     accessorKey: "name",
@@ -66,36 +62,31 @@ export const columns: ColumnDef<IAcademy>[] = [
       const academy = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button
-                size="sm"
-                onClick={() => updateAcademy(academy.id)}
-                variant="default"
-              >
-                Update
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
               </Button>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button
-                size="sm"
-                onClick={() => deleteAcademy(academy.id)}
-                variant="destructive"
-              >
-                Delete
-              </Button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="flex-col flex p-6" align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <AcademyDialog
+                  active={academy.active}
+                  name={academy.name}
+                  isUpdate={true}
+                  id={academy.id}
+                />
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <DeleteDialog id={academy.id} />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       );
     },
   },

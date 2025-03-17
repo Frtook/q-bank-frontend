@@ -24,42 +24,61 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import UploadFile from "@/components/UploadFile";
-import { useAddAcademy } from "@/hook/useAcademy";
+import { useAddAcademy, useUpdateAcademy } from "@/hook/useAcademy";
 import { AddAcademySchema, addAcademySchema } from "@/lib/validations/academy";
-import { toast } from "sonner";
 
-export default function AddAcadmy() {
+type AcademyProps = {
+  id: number;
+  name: string;
+  active: boolean;
+  url?: string;
+  isUpdate: boolean;
+};
+export default function AcademyDialog({
+  active,
+  name,
+  url,
+  isUpdate,
+  id,
+}: AcademyProps) {
   const { mutate: addAcademy } = useAddAcademy();
+  const { mutate: UpdateAcademy } = useUpdateAcademy();
   const form = useForm<AddAcademySchema>({
     resolver: zodResolver(addAcademySchema),
     defaultValues: {
-      active: false,
-      name: "",
+      active,
+      name,
       logo: undefined,
     },
   });
 
-  function onSubmit(data: AddAcademySchema) {
+  const onSubmit = (data: AddAcademySchema) => {
+    console.log(data);
+    console.log(isUpdate);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("active", data.active.toString());
-    formData.append("logo", data.logo);
-    console.log(formData);
-    addAcademy(formData);
+    if (data.logo) {
+      formData.append("logo", data.logo);
+    }
+    if (isUpdate) {
+      UpdateAcademy({ id, formData });
+    } else {
+      addAcademy(formData);
+    }
     form.reset();
-  }
-  if (form.formState.isLoading) {
-    toast.loading("loading");
-  }
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Academy</Button>
+        <Button>{isUpdate ? "update" : "Add Academy"}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Academy</DialogTitle>
+          <DialogTitle>
+            {isUpdate ? "update academy" : "Add Academy"}
+          </DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
@@ -91,7 +110,7 @@ export default function AddAcadmy() {
                 <FormItem>
                   <FormLabel>images</FormLabel>
                   <FormControl>
-                    <UploadFile id="dropzone-file" file={field.value}>
+                    <UploadFile id="dropzone-file" url={url} file={field.value}>
                       <Input
                         className="hidden"
                         accept="image/jpeg, image/jpg, image/png, image/webp"
@@ -127,12 +146,9 @@ export default function AddAcadmy() {
                 </FormItem>
               )}
             />
-            <Button
-              disabled={form.formState.isSubmitting}
-              variant={form.formState.isSubmitting ? "secondary" : "default"}
-              type="submit"
-            >
-              Submit
+
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              {form.formState.isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>

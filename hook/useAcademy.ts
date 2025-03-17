@@ -1,7 +1,7 @@
 "use client";
 import { toast } from "sonner";
 import apiClient from "@/lib/axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export const useGetacademy = () => {
@@ -15,17 +15,60 @@ export const useGetacademy = () => {
 };
 
 export const useAddAcademy = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["academy"],
     mutationFn: (data: FormData) => {
       return apiClient.post("/bank/academy/", data);
     },
     onSuccess: (data) => {
+      toast.dismiss();
+      queryClient.invalidateQueries({ queryKey: ["academy"] });
       toast.success("success");
       return data;
     },
-    onMutate: () => {
-      toast.loading("loading");
+    onError: (error: AxiosError) => {
+      toast.dismiss();
+      toast.error(
+        (error.response?.data as { detail: string })?.detail || error.message,
+      );
+      return error;
+    },
+  });
+};
+
+export const useDeleteAcademy = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["academy"],
+    mutationFn: (id: number) => {
+      return apiClient.delete(`/bank/academy/${id}/`);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["academy"] });
+      toast.dismiss();
+      toast.success("success");
+      return data;
+    },
+    onError: (error: AxiosError) => {
+      toast.dismiss();
+      toast.error(
+        (error.response?.data as { detail: string })?.detail || error.message,
+      );
+      return error;
+    },
+  });
+};
+
+export const useUpdateAcademy = () => {
+  return useMutation({
+    mutationKey: ["academy"],
+    mutationFn: (data: { id: number; formData: FormData }) => {
+      return apiClient.patch(`/bank/academy/${data.id}/`, data.formData);
+    },
+    onSuccess: (data) => {
+      toast.success("success");
+      return data;
     },
     onError: (error: AxiosError) => {
       toast.error(

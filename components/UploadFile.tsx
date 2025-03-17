@@ -1,12 +1,14 @@
 import { Check, CloudUpload } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
   children: React.ReactNode;
   id: string;
   file: File;
+  url?: string;
 };
 
-export default function UploadFile({ children, file, id }: Props) {
+export default function UploadFile({ children, file, id, url }: Props) {
   return (
     <div className="flex items-center justify-center w-full ">
       <label
@@ -16,7 +18,11 @@ export default function UploadFile({ children, file, id }: Props) {
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           {file ? (
             <>
-              <Check className="my-2" />
+              {url ? (
+                <Image alt="logo" src={url} width={50} height={50} />
+              ) : (
+                <Check className="my-2" />
+              )}
               <p>{file.name.slice(0, 25)}</p>
             </>
           ) : (
