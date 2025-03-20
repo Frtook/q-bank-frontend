@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Images, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -46,14 +46,18 @@ export const columns: ColumnDef<IAcademy>[] = [
     accessorKey: "logo",
     header: "Logo",
     cell: ({ row }) => {
-      return (
-        <Image
-          src={row.getValue("logo")}
-          width={50}
-          height={50}
-          alt={row.getValue("name")}
-        />
-      );
+      if (row.getValue("logo")) {
+        return (
+          <Image
+            src={row.getValue("logo")}
+            width={50}
+            height={50}
+            alt={row.getValue("name")}
+          />
+        );
+      } else {
+        return <Images />;
+      }
     },
   },
   {
@@ -79,6 +83,7 @@ export const columns: ColumnDef<IAcademy>[] = [
                   name={academy.name}
                   isUpdate={true}
                   id={academy.id}
+                  url={academy.logo}
                 />
               </DropdownMenuItem>
               <DropdownMenuItem asChild>

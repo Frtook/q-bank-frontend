@@ -26,6 +26,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import UploadFile from "@/components/UploadFile";
 import { useAddAcademy, useUpdateAcademy } from "@/hook/useAcademy";
 import { AddAcademySchema, addAcademySchema } from "@/lib/validations/academy";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { useEffect, useRef } from "react";
 
 type AcademyProps = {
   id: number;
@@ -43,6 +45,7 @@ export default function AcademyDialog({
 }: AcademyProps) {
   const { mutate: addAcademy } = useAddAcademy();
   const { mutate: UpdateAcademy } = useUpdateAcademy();
+  const refClose = useRef<HTMLButtonElement>(null);
   const form = useForm<AddAcademySchema>({
     resolver: zodResolver(addAcademySchema),
     defaultValues: {
@@ -51,24 +54,22 @@ export default function AcademyDialog({
       logo: undefined,
     },
   });
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      refClose.current?.click();
+    }
+    return () => {};
+  }, [form.formState.isSubmitSuccessful]);
 
   const onSubmit = (data: AddAcademySchema) => {
-    console.log(data);
-    console.log(isUpdate);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("active", data.active.toString());
     if (data.logo) {
       formData.append("logo", data.logo);
     }
-    if (isUpdate) {
-      UpdateAcademy({ id, formData });
-    } else {
-      addAcademy(formData);
-    }
-    form.reset();
+    isUpdate ? UpdateAcademy({ id, formData }) : addAcademy(formData);
   };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -110,7 +111,7 @@ export default function AcademyDialog({
                 <FormItem>
                   <FormLabel>images</FormLabel>
                   <FormControl>
-                    <UploadFile id="dropzone-file" url={url} file={field.value}>
+                    <UploadFile id="dropzone-file" file={field.value} url={url}>
                       <Input
                         className="hidden"
                         accept="image/jpeg, image/jpg, image/png, image/webp"
@@ -146,13 +147,15 @@ export default function AcademyDialog({
                 </FormItem>
               )}
             />
-
             <Button disabled={form.formState.isSubmitting} type="submit">
               {form.formState.isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
       </DialogContent>
+      <DialogClose asChild>
+        <button ref={refClose} className="hidden"></button>
+      </DialogClose>
     </Dialog>
   );
 }

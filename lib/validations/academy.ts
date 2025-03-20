@@ -12,6 +12,7 @@ export const addAcademySchema = z.object({
       (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
       "Only these types are allowed .jpg, .jpeg, .png and .webp",
     )
-    .refine((file) => file.size < 200000, "size Image must be less than 2MB "),
+    .refine((file) => file.size < 200000, "size Image must be less than 2MB ")
+    .optional(),
   active: z.boolean(),
 });

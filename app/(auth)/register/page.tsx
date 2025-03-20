@@ -17,7 +17,7 @@ import {
 import { schemaRegester, TschemaRegester } from "@/lib/validations/register";
 
 const RegisterPage = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
   const form = useForm<TschemaRegester>({
     resolver: zodResolver(schemaRegester),
     defaultValues: {
@@ -142,7 +142,13 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button
+              disabled={isPending}
+              variant={isPending ? "secondary" : "default"}
+              type="submit"
+            >
+              Submit
+            </Button>
           </form>
         </Form>
       </div>

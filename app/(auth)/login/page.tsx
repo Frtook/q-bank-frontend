@@ -17,7 +17,7 @@ import {
 import { schemaLogin, TschemaLogin } from "@/lib/validations/login";
 
 const RegisterPage = () => {
-  const { mutate: login } = useToken();
+  const { mutate: login, isPending } = useToken();
   const form = useForm<TschemaLogin>({
     resolver: zodResolver(schemaLogin),
     defaultValues: {
@@ -25,7 +25,7 @@ const RegisterPage = () => {
       password: "",
     },
   });
-  const onSubmit = async (data: TschemaLogin) => login(data);
+  const onSubmit = (data: TschemaLogin) => login(data);
   return (
     <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
       <div className="border dark:border-white border-black rounded hidden md:block "></div>
@@ -75,7 +75,13 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button
+              disabled={isPending}
+              variant={isPending ? "secondary" : "default"}
+              type="submit"
+            >
+              Submit
+            </Button>
           </form>
         </Form>
       </div>
