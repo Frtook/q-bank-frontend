@@ -5,7 +5,7 @@ import ThemeSwitcher from "./Navbar/ThemeSwitcher";
 
 export default function Header({ lang }: { lang: string }) {
   return (
-    <div className="w-full px-6 py-4 bg-white dark:bg-[#19191d] shadow-sm rounded-lg flex justify-between items-center">
+    <div className="w-full h-fit px-6 py-4 bg-white dark:bg-[#19191d] shadow-sm rounded-lg flex justify-between items-center">
       <Breadcrumb />
       <div className="flex gap-4 items-center">
         <LanguageSwitcher lang={lang} />

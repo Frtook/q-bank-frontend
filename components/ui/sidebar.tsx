@@ -40,13 +40,13 @@ const Sidebar = ({ lang }: { lang: string }) => {
       key: "questions", // Unique key for toggling
       icon: <ScrollText />,
       label: t("questions"),
-      subItems: [{ href: "/questions/math", label: "test" }],
+      subItems: [{ href: "/questions", label: "test" }],
     },
     {
       key: "exams", // Unique key for toggling
       icon: <FilePenLine />,
       label: t("exams"),
-      subItems: [{ href: "/exams/math", label: "test" }],
+      subItems: [{ href: "/exams", label: "test" }],
     },
     {
       href: "/ai",
