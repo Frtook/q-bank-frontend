@@ -18,7 +18,7 @@ export default async function RootLayout({
 
   return (
     <div
-      className="m-2 flex grid h-3 flex-col gap-3"
+      className="m-2 grid  gap-3"
       style={{ gridTemplateColumns: "auto 1fr" }}
     >
       <Sidebar lang={locale} />
