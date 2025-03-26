@@ -19,7 +19,10 @@ export default function DeleteDialog({ id }: { id: number }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mt-4" variant="destructive">
+        <Button
+          className="mt-4"
+          variant="destructive"
+        >
           Delete
         </Button>
       </DialogTrigger>

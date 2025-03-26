@@ -35,7 +35,10 @@ export default function UploadFile({ children, id, url, file }: Props) {
         )}
         {!url && !file && (
           <div className="flex flex-col items-center justify-center pb-6 pt-5">
-            <CloudUpload className="my-2" size={30} />
+            <CloudUpload
+              className="my-2"
+              size={30}
+            />
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
               <span className="px-2 font-semibold">Click to upload</span>
               or drag and drop

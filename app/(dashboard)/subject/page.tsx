@@ -13,7 +13,10 @@ export default function Page() {
         <AddSubjectDialog />
       </div>
       {data ? (
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={data}
+        />
       ) : (
         <div>loading...</div>
       )}

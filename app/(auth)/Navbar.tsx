@@ -13,7 +13,10 @@ export default function Navbar() {
     <div className="flex gap-5 border-b border-b-gray-500 p-4">
       <p className="flex-1 text-4xl font-bold">Logo</p>
       {routes.map((route, index) => (
-        <Link key={index} href={route.path}>
+        <Link
+          key={index}
+          href={route.path}
+        >
           <Button variant={pathName === route.path ? "default" : "secondary"}>
             {route.name}
           </Button>

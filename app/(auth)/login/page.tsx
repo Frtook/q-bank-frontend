@@ -35,14 +35,20 @@ const RegisterPage = () => {
           <p className="text-sm text-gray-500">
             Don&apos;t have an account yet?
             <Link href="register">
-              <Button className="mx-2" variant="default">
+              <Button
+                className="mx-2"
+                variant="default"
+              >
                 register
               </Button>
             </Link>
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -50,7 +56,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input
+                      placeholder="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Username must have 3 characters
@@ -66,7 +75,11 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Password must be at least 8 characters

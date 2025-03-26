@@ -102,7 +102,10 @@ export default function AcademyDialog({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter academy name" {...field} />
+                    <Input
+                      placeholder="Enter academy name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +118,11 @@ export default function AcademyDialog({
                 <FormItem>
                   <FormLabel>Logo</FormLabel>
                   <FormControl>
-                    <UploadFile id="dropzone-file" file={field.value} url={url}>
+                    <UploadFile
+                      id="dropzone-file"
+                      file={field.value}
+                      url={url}
+                    >
                       <Input
                         className="hidden"
                         accept="image/jpeg, image/jpg, image/png, image/webp"
@@ -151,14 +158,21 @@ export default function AcademyDialog({
               )}
             />
 
-            <Button disabled={isAdd || isUpdated} type="submit">
+            <Button
+              disabled={isAdd || isUpdated}
+              type="submit"
+            >
               {isAdd || isUpdated ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
       </DialogContent>
       <DialogClose asChild>
-        <button ref={refClose} className="hidden" aria-hidden="true">
+        <button
+          ref={refClose}
+          className="hidden"
+          aria-hidden="true"
+        >
           hidden
         </button>
       </DialogClose>

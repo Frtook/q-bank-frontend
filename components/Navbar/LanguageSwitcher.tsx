@@ -19,7 +19,10 @@ const LanguageSwitcher = ({ lang }: { lang: string }) => {
   }, [lang, router]);
 
   return (
-    <button onClick={toggleLocale} className="flex gap-1">
+    <button
+      onClick={toggleLocale}
+      className="flex gap-1"
+    >
       <Globe className="" />
       <span>{lang === "en" ? "AR" : "EN"}</span>
     </button>

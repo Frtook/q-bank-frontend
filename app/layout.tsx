@@ -19,8 +19,11 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html data-mode="light" lang={locale}>
-      <body className={`bg-[#f3f5f6] antialiased dark:bg-[#111113]`}>
+    <html
+      data-mode="light"
+      lang={locale}
+    >
+      <body className="bg-[#f3f5f6] antialiased dark:bg-[#111113]">
         <NextIntlClientProvider messages={messages}>
           <ProviderQuery>
             <>

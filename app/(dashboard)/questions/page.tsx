@@ -7,8 +7,6 @@ import SearchInput from "@/components/ui/search";
 import { useState } from "react";
 
 export default function Home() {
-  true;
-
   // const t = useTranslations("HomePage");
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
@@ -147,7 +145,10 @@ export default function Home() {
 
         <div className="flex w-full justify-between rounded-md bg-white p-4 shadow-sm dark:bg-[#19191d]">
           <div className="flex gap-2">
-            <SearchInput className="" placeholder="Search Questions" />
+            <SearchInput
+              className=""
+              placeholder="Search Questions"
+            />
             <Button
               className="border border-[#D5D7DA] shadow-sm dark:border-none"
               variant="secondary"

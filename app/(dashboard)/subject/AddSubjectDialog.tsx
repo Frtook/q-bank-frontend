@@ -95,10 +95,8 @@ export default function AddSubjectDialog() {
     }
     return () => {};
   }, [form.formState.isSubmitSuccessful]);
-
-  const onSubmit = (data: TschemaSubject) => {
-    console.log(data);
-  };
+  console.log("tset");
+  const onSubmit = () => {};
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -124,7 +122,10 @@ export default function AddSubjectDialog() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter academy name" {...field} />
+                    <Input
+                      placeholder="Enter academy name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -201,7 +202,10 @@ export default function AddSubjectDialog() {
         </Form>
       </DialogContent>
       <DialogClose asChild>
-        <button ref={refClose} className="hidden"></button>
+        <button
+          ref={refClose}
+          className="hidden"
+        ></button>
       </DialogClose>
     </Dialog>
   );

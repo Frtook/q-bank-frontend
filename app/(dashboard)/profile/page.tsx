@@ -60,7 +60,10 @@ export default function Page() {
                   <FormItem>
                     <FormLabel>Fullname</FormLabel>
                     <FormControl>
-                      <Input placeholder="your Full Name" {...field} />
+                      <Input
+                        placeholder="your Full Name"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -73,7 +76,10 @@ export default function Page() {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="your Username" {...field} />
+                      <Input
+                        placeholder="your Username"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -86,7 +92,11 @@ export default function Page() {
                   <FormItem className="col-span-2">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="your Email" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="your Email"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,7 +107,10 @@ export default function Page() {
               <Link href="/">
                 <Button variant="secondary">Cancel</Button>
               </Link>
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                disabled={isPending}
+              >
                 {isPending ? "Saving..." : "Save Changes"}
               </Button>
             </div>

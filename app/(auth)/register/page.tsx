@@ -52,14 +52,20 @@ const RegisterPage = () => {
           <p className="text-sm text-gray-500">
             {t("alreadyHaveAccount")}
             <Link href="login">
-              <Button className="mx-2" variant="default">
+              <Button
+                className="mx-2"
+                variant="default"
+              >
                 {t("login")}
               </Button>
             </Link>
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="fullname"
@@ -67,7 +73,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Fullname</FormLabel>
                   <FormControl>
-                    <Input placeholder="fullname" {...field} />
+                    <Input
+                      placeholder="fullname"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +89,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input
+                      placeholder="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +105,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" {...field} />
+                    <Input
+                      placeholder="Enter email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +121,11 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -136,7 +155,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Academy name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Academy name" {...field} />
+                    <Input
+                      placeholder="Academy name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
