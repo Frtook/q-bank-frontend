@@ -7,6 +7,8 @@ import SearchInput from "@/components/ui/search";
 import { useState } from "react";
 
 export default function Home() {
+  true;
+
   // const t = useTranslations("HomePage");
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
@@ -115,9 +117,9 @@ export default function Home() {
 
   return (
     <div className="mx-1">
-      <div className=" flex flex-col gap-4">
-        <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
-          <div className="bg-white dark:bg-[#19191d] w-full h-36 shadow-sm rounded-xl flex flex-col p-4 gap-6">
+      <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <div className="flex h-36 w-full flex-col gap-6 rounded-xl bg-white p-4 shadow-sm dark:bg-[#19191d]">
             <h3 className="text-base font-bold text-[#181D27] dark:text-white">
               Total Questions
             </h3>
@@ -125,7 +127,7 @@ export default function Home() {
               2,420
             </span>
           </div>
-          <div className="bg-white dark:bg-[#19191d] w-full h-36 shadow-sm rounded-xl flex flex-col p-4 gap-6">
+          <div className="flex h-36 w-full flex-col gap-6 rounded-xl bg-white p-4 shadow-sm dark:bg-[#19191d]">
             <h3 className="text-base font-bold text-[#181D27] dark:text-white">
               Total Questions
             </h3>
@@ -133,7 +135,7 @@ export default function Home() {
               2,420
             </span>
           </div>
-          <div className="bg-white dark:bg-[#19191d] w-full h-36 shadow-sm rounded-xl flex flex-col p-4 gap-6">
+          <div className="flex h-36 w-full flex-col gap-6 rounded-xl bg-white p-4 shadow-sm dark:bg-[#19191d]">
             <h3 className="text-base font-bold text-[#181D27] dark:text-white">
               Total Questions
             </h3>
@@ -143,17 +145,17 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#19191d]  w-full flex justify-between shadow-sm p-4 rounded-md ">
+        <div className="flex w-full justify-between rounded-md bg-white p-4 shadow-sm dark:bg-[#19191d]">
           <div className="flex gap-2">
             <SearchInput className="" placeholder="Search Questions" />
             <Button
-              className="border border-[#D5D7DA] dark:border-none shadow-sm"
+              className="border border-[#D5D7DA] shadow-sm dark:border-none"
               variant="secondary"
             >
               Filters
             </Button>
             <Button
-              className="border border-[#D5D7DA] dark:border-none shadow-sm"
+              className="border border-[#D5D7DA] shadow-sm dark:border-none"
               variant="secondary"
               onClick={exportSelectedRows}
               disabled={selectedRows.length === 0}

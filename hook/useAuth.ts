@@ -21,7 +21,7 @@ export const useRegister = () => {
     },
     onError: (error: AxiosError) => {
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },
@@ -45,7 +45,7 @@ export const useToken = () => {
     onError: (error: AxiosError) => {
       console.log(error);
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },

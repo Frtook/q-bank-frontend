@@ -17,7 +17,10 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <div className="grid gap-3 m-2" style={{ gridTemplateColumns: "auto 1fr" }}>
+    <div
+      className="m-2 flex grid h-3 flex-col gap-3"
+      style={{ gridTemplateColumns: "auto 1fr" }}
+    >
       <Sidebar lang={locale} />
 
       <div className="flex flex-col gap-3">

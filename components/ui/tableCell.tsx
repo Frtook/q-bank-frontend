@@ -38,7 +38,7 @@ export const TableCell: React.FC<TableProps> = ({
   className = "",
 }) => (
   <td
-    className={`px-6 py-2 text-gray-900 lg:max-w-64 max-w-96 ${className}`}
+    className={`max-w-96 px-6 py-2 text-gray-900 lg:max-w-64 ${className}`}
     style={{ wordWrap: "break-word", overflowWrap: "break-word" }}
   >
     {children}

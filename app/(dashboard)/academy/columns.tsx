@@ -74,7 +74,7 @@ export const columns: ColumnDef<IAcademy>[] = [
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="flex-col flex p-6" align="end">
+            <DropdownMenuContent className="flex flex-col p-6" align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>

@@ -15,7 +15,7 @@ export default function ThemeSwitcher({ lang }: { lang: string }) {
       if (localTheme) {
         document.documentElement.setAttribute(
           "data-mode",
-          JSON.parse(localTheme).state.theme,
+          JSON.parse(localTheme).state.theme
         );
         document.documentElement.className = JSON.parse(localTheme).state.theme;
       }
@@ -25,10 +25,10 @@ export default function ThemeSwitcher({ lang }: { lang: string }) {
   return (
     <div
       onClick={handleClick}
-      className="w-14 h-8 flex items-center bg-gray-200 dark:bg-[#111113] rounded-full p-1 cursor-pointer transition relative"
+      className="relative flex h-8 w-14 cursor-pointer items-center rounded-full bg-gray-200 p-1 transition dark:bg-[#111113]"
     >
       <div
-        className={`w-6 h-6 bg-white dark:bg-[#19191d] rounded-full shadow-md transform transition-transform ${
+        className={`h-6 w-6 transform rounded-full bg-white shadow-md transition-transform dark:bg-[#19191d] ${
           theme === "dark"
             ? lang === "ar"
               ? "-translate-x-6"
@@ -36,11 +36,11 @@ export default function ThemeSwitcher({ lang }: { lang: string }) {
             : "translate-x-0"
         }`}
       />
-      <div className="absolute left-2 text-gray-600 dark:text-gray-400 text-xs">
+      <div className="absolute left-2 text-xs text-gray-600 dark:text-gray-400">
         {theme === "dark" ? (
-          <Moon className="w-4 h-4" />
+          <Moon className="h-4 w-4" />
         ) : (
-          <Sun className="w-4 h-4" />
+          <Sun className="h-4 w-4" />
         )}
       </div>
     </div>

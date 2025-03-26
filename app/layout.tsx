@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <html data-mode="light" lang={locale}>
-      <body className={` antialiased bg-[#f3f5f6] dark:bg-[#111113]`}>
+      <body className={`bg-[#f3f5f6] antialiased dark:bg-[#111113]`}>
         <NextIntlClientProvider messages={messages}>
           <ProviderQuery>
             <>

@@ -93,7 +93,7 @@ export default function AcademyDialog({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10"
+            className="mx-auto max-w-3xl space-y-8 py-10"
           >
             <FormField
               control={form.control}

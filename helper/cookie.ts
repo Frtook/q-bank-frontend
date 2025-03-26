@@ -19,7 +19,7 @@ export async function deleteCookies(key: string) {
 export async function setCookies(
   key: string,
   data: string | number | object,
-  maxAge: number,
+  maxAge: number
 ) {
   const serializedData = typeof data === "string" ? data : JSON.stringify(data);
 

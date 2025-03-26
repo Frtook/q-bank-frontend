@@ -10,8 +10,8 @@ const routes = [
 export default function Navbar() {
   const pathName = usePathname();
   return (
-    <div className="flex gap-5 p-4 border-b border-b-gray-500 ">
-      <p className="text-4xl flex-1  font-bold">Logo</p>
+    <div className="flex gap-5 border-b border-b-gray-500 p-4">
+      <p className="flex-1 text-4xl font-bold">Logo</p>
       {routes.map((route, index) => (
         <Link key={index} href={route.path}>
           <Button variant={pathName === route.path ? "default" : "secondary"}>

@@ -23,7 +23,7 @@ const Sidebar = ({ lang }: { lang: string }) => {
 
   const [collapsed, setCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
-    {},
+    {}
   );
 
   const toggleSubItems = (key: string) => {
@@ -73,18 +73,18 @@ const Sidebar = ({ lang }: { lang: string }) => {
 
   return (
     <div
-      className={`h-screen bg-white dark:bg-[#19191d] text-primary p-4 transition-all duration-300 shadow-sm rounded-lg relative ${collapsed ? "w-20" : "w-64"}`}
+      className={`relative h-screen rounded-lg bg-white p-4 text-primary shadow-sm transition-all duration-300 dark:bg-[#19191d] ${collapsed ? "w-20" : "w-64"}`}
     >
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className={`absolute ${lang === "en" ? "-right-4" : "-left-4"} top-1/2 transform -translate-y-1/2 bg-primary opacity-35 text-white rounded-full p-2 shadow-lg hover:opacity-100 transition-all duration-300 z-10`}
+        className={`absolute ${lang === "en" ? "-right-4" : "-left-4"} top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-primary p-2 text-white opacity-35 shadow-lg transition-all duration-300 hover:opacity-100`}
       >
-        <Menu className="w-6 h-6" />
+        <Menu className="h-6 w-6" />
       </button>
 
-      <div className="flex items-center justify-center space-x-2 mb-6 py-8 border-b border-gray-200 dark:border-primary">
+      <div className="mb-6 flex items-center justify-center space-x-2 border-b border-gray-200 py-8 dark:border-primary">
         {!collapsed && (
-          <span className="text-xl font-semibold  text-primary dark:text-white">
+          <span className="text-xl font-semibold text-primary dark:text-white">
             {t("title")}
           </span>
         )}
@@ -144,11 +144,11 @@ const SidebarItem = ({
       {!hasSubItems && href && (
         <Link
           href={disabled ? "#" : href}
-          className={`group relative flex items-center gap-2 space-x-3 p-3 rounded-lg transition  ${
+          className={`group relative flex items-center gap-2 space-x-3 rounded-lg p-3 transition ${
             isActive
               ? "bg-primary font-bold text-white"
-              : "hover:bg-gray-200 dark:hover:bg-primary text-primary dark:text-white"
-          } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              : "text-primary hover:bg-gray-200 dark:text-white dark:hover:bg-primary"
+          } ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
           aria-disabled={disabled}
           onClick={(e) => {
             if (disabled) {
@@ -160,7 +160,7 @@ const SidebarItem = ({
           {!collapsed && <span>{label}</span>}
           {collapsed && (
             <span
-              className={`absolute ${lang === "en" ? "left-full ml-2" : "right-full mr-2"} px-3 py-1 w-fit text-nowrap rounded-md text-base bg-white shadow-sm border border-gray-200 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300`}
+              className={`absolute ${lang === "en" ? "left-full ml-2" : "right-full mr-2"} w-fit text-nowrap rounded-md border border-gray-200 bg-white px-3 py-1 text-base text-primary opacity-0 shadow-sm transition-all duration-300 group-hover:opacity-100`}
             >
               {label}
             </span>
@@ -171,11 +171,11 @@ const SidebarItem = ({
       {/* Render as a toggleable item if there are subitems */}
       {hasSubItems && (
         <div
-          className={`group relative flex items-center gap-2 space-x-3 p-3 rounded-lg transition dark:text-white  ${
+          className={`group relative flex items-center gap-2 space-x-3 rounded-lg p-3 transition dark:text-white ${
             isActive
               ? "bg-primary font-bold"
               : "hover:bg-gray-200 dark:hover:bg-primary"
-          } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+          } ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             if (!disabled) {
               onToggle?.();
@@ -186,7 +186,7 @@ const SidebarItem = ({
           {!collapsed && <span>{label}</span>}
           {collapsed && (
             <span
-              className={`absolute ${lang === "en" ? "left-full ml-2" : "right-full mr-2"} px-3 py-1 w-fit text-nowrap rounded-md text-base bg-white shadow-sm border border-gray-200 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300`}
+              className={`absolute ${lang === "en" ? "left-full ml-2" : "right-full mr-2"} w-fit text-nowrap rounded-md border border-gray-200 bg-white px-3 py-1 text-base text-primary opacity-0 shadow-sm transition-all duration-300 group-hover:opacity-100`}
             >
               {label}
             </span>
@@ -211,10 +211,10 @@ const SidebarItem = ({
               <Link
                 key={index}
                 href={subItem.href}
-                className={`flex items-center gap-2 p-2 rounded-lg transition  ${
+                className={`flex items-center gap-2 rounded-lg p-2 transition ${
                   isActive
                     ? "bg-primary font-bold text-white"
-                    : "hover:bg-gray-200 dark:hover:bg-primary dark:text-white text-primary"
+                    : "text-primary hover:bg-gray-200 dark:text-white dark:hover:bg-primary"
                 }`}
               >
                 <Hash className="" />

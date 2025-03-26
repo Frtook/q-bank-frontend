@@ -30,7 +30,7 @@ export const useAddAcademy = () => {
     onError: (error: AxiosError) => {
       toast.dismiss();
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },
@@ -53,7 +53,7 @@ export const useDeleteAcademy = () => {
     onError: (error: AxiosError) => {
       toast.dismiss();
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },
@@ -72,7 +72,7 @@ export const useUpdateAcademy = () => {
     },
     onError: (error: AxiosError) => {
       toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message,
+        (error.response?.data as { detail: string })?.detail || error.message
       );
       return error;
     },

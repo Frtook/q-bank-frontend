@@ -115,7 +115,7 @@ export default function AddSubjectDialog() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10"
+            className="mx-auto max-w-3xl space-y-8 py-10"
           >
             <FormField
               control={form.control}
@@ -144,12 +144,12 @@ export default function AddSubjectDialog() {
                           role="combobox"
                           className={cn(
                             "w-full justify-between",
-                            !field.value && "text-muted-foreground",
+                            !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value
                             ? academies?.find(
-                                (academy) => academy.id === Number(field.value),
+                                (academy) => academy.id === Number(field.value)
                               )?.name
                             : "Select language"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -175,7 +175,7 @@ export default function AddSubjectDialog() {
                                     "mr-2 h-4 w-4",
                                     academy.id === field.value
                                       ? "opacity-100"
-                                      : "opacity-0",
+                                      : "opacity-0"
                                   )}
                                 />
                                 {academy.name}
@@ -191,7 +191,7 @@ export default function AddSubjectDialog() {
               )}
             />
             <Button
-              className="block mx-auto"
+              className="mx-auto block"
               disabled={form.formState.isSubmitting}
               type="submit"
             >
