@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,6 +35,7 @@ type AcademyProps = {
   url?: string;
   isUpdate: boolean;
 };
+
 export default function AcademyDialog({
   active,
   name,
@@ -43,9 +43,10 @@ export default function AcademyDialog({
   isUpdate,
   id,
 }: AcademyProps) {
-  const { mutate: addAcademy } = useAddAcademy();
-  const { mutate: UpdateAcademy } = useUpdateAcademy();
+  const { mutate: addAcademy, isPending: isAdd } = useAddAcademy();
+  const { mutate: updateAcademy, isPending: isUpdated } = useUpdateAcademy();
   const refClose = useRef<HTMLButtonElement>(null);
+
   const form = useForm<AddAcademySchema>({
     resolver: zodResolver(addAcademySchema),
     defaultValues: {
@@ -54,41 +55,45 @@ export default function AcademyDialog({
       logo: undefined,
     },
   });
+
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
       refClose.current?.click();
     }
-    return () => {};
   }, [form.formState.isSubmitSuccessful]);
 
-  const onSubmit = (data: AddAcademySchema) => {
+  const handleSubmit = (data: AddAcademySchema) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("active", data.active.toString());
     if (data.logo) {
       formData.append("logo", data.logo);
     }
-    isUpdate ? UpdateAcademy({ id, formData }) : addAcademy(formData);
+    if (isUpdate) {
+      updateAcademy({ id, formData });
+    } else {
+      addAcademy(formData);
+    }
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>{isUpdate ? "update" : "Add Academy"}</Button>
+        <Button>{isUpdate ? "Update Academy" : "Add Academy"}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {isUpdate ? "update academy" : "Add Academy"}
+            {isUpdate ? "Update Academy" : "Add Academy"}
           </DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Fill out the form below to {isUpdate ? "update" : "add"} an academy.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 max-w-3xl mx-auto py-10"
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="mx-auto max-w-3xl space-y-8 py-10"
           >
             <FormField
               control={form.control}
@@ -97,21 +102,27 @@ export default function AcademyDialog({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter academy name" {...field} />
+                    <Input
+                      placeholder="Enter academy name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="logo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>images</FormLabel>
+                  <FormLabel>Logo</FormLabel>
                   <FormControl>
-                    <UploadFile id="dropzone-file" file={field.value} url={url}>
+                    <UploadFile
+                      id="dropzone-file"
+                      file={field.value}
+                      url={url}
+                    >
                       <Input
                         className="hidden"
                         accept="image/jpeg, image/jpg, image/png, image/webp"
@@ -123,11 +134,11 @@ export default function AcademyDialog({
                       />
                     </UploadFile>
                   </FormControl>
-                  <FormDescription>upload images.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="active"
@@ -141,20 +152,29 @@ export default function AcademyDialog({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel>Active</FormLabel>
-                    <FormDescription>this is a description</FormDescription>
                     <FormMessage />
                   </div>
                 </FormItem>
               )}
             />
-            <Button disabled={form.formState.isSubmitting} type="submit">
-              {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+
+            <Button
+              disabled={isAdd || isUpdated}
+              type="submit"
+            >
+              {isAdd || isUpdated ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
       </DialogContent>
       <DialogClose asChild>
-        <button ref={refClose} className="hidden"></button>
+        <button
+          ref={refClose}
+          className="hidden"
+          aria-hidden="true"
+        >
+          hidden
+        </button>
       </DialogClose>
     </Dialog>
   );

@@ -1,0 +1,3 @@
+pnpm run format:fix
+git add .
+pnpm run lint

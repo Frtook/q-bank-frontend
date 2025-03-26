@@ -27,22 +27,28 @@ const RegisterPage = () => {
   });
   const onSubmit = (data: TschemaLogin) => login(data);
   return (
-    <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
-      <div className="border dark:border-white border-black rounded hidden md:block "></div>
-      <div className=" mx-auto  md:w-[70%] xl:w-[50%]">
+    <div className="container mx-auto grid grid-cols-1 p-2 md:grid-cols-2 md:p-6">
+      <div className="hidden rounded border border-black dark:border-white md:block"></div>
+      <div className="mx-auto md:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold">Welcome Back</h1>
-          <p className="text-gray-500 text-sm">
+          <p className="text-sm text-gray-500">
             Don&apos;t have an account yet?
             <Link href="register">
-              <Button className="mx-2" variant="default">
+              <Button
+                className="mx-2"
+                variant="default"
+              >
                 register
               </Button>
             </Link>
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -50,7 +56,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input
+                      placeholder="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Username must have 3 characters
@@ -66,7 +75,11 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Password must be at least 8 characters

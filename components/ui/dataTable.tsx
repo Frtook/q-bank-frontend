@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   Table,
@@ -10,7 +10,11 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scrollArea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Pencil2Icon, TrashIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
+import {
+  Pencil2Icon,
+  TrashIcon,
+  DotsVerticalIcon,
+} from "@radix-ui/react-icons";
 
 interface Column {
   accessor: string;
@@ -57,14 +61,18 @@ const DataTable: React.FC<DataTableProps> = ({
     } else {
       setSelectedRows(data.map((_, index) => index));
     }
-    onRowSelectionChange?.(selectedRows.length === data.length ? [] : data.map((_, index) => index));
+    onRowSelectionChange?.(
+      selectedRows.length === data.length ? [] : data.map((_, index) => index)
+    );
   };
 
   return (
-    <div className="w-full bg-white dark:bg-[#19191d] shadow-lg rounded-xl p-4">
-      {title && <h2 className="text-xl font-semibold mb-4 text-gray-800">{title}</h2>}
+    <div className="w-full rounded-xl bg-white p-4 shadow-lg dark:bg-[#19191d]">
+      {title && (
+        <h2 className="mb-4 text-xl font-semibold text-gray-800">{title}</h2>
+      )}
 
-      <ScrollArea className="w-full h-[430px]">
+      <ScrollArea className="h-[430px] w-full">
         <Table className="w-full">
           <TableHeader>
             <TableRow className="bg-gray-100 dark:bg-[#353a3e]">
@@ -77,12 +85,15 @@ const DataTable: React.FC<DataTableProps> = ({
               </TableHead>
               {/* Render visible columns (excluding `id`) */}
               {visibleColumns.map((col) => (
-                <TableHead key={col.accessor} className="px-4 text-left text-[#535862] dark:text-white font-medium whitespace-nowrap">
+                <TableHead
+                  key={col.accessor}
+                  className="whitespace-nowrap px-4 text-left font-medium text-[#535862] dark:text-white"
+                >
                   {col.header}
                 </TableHead>
               ))}
               {/* Actions Column Header */}
-              <TableHead className="px-4 text-gray-700 dark:text-white font-bold whitespace-nowrap flex items-center justify-center">
+              <TableHead className="flex items-center justify-center whitespace-nowrap px-4 font-bold text-gray-700 dark:text-white">
                 <DotsVerticalIcon className="text-black" />
               </TableHead>
             </TableRow>
@@ -90,7 +101,10 @@ const DataTable: React.FC<DataTableProps> = ({
 
           <TableBody>
             {data.map((row, rowIndex) => (
-              <TableRow key={rowIndex} className="border-b hover:bg-gray-50 dark:hover:bg-primary">
+              <TableRow
+                key={rowIndex}
+                className="border-b hover:bg-gray-50 dark:hover:bg-primary"
+              >
                 {/* Row Checkbox */}
                 <TableCell className="px-4">
                   <Checkbox
@@ -100,7 +114,10 @@ const DataTable: React.FC<DataTableProps> = ({
                 </TableCell>
                 {/* Render visible columns (excluding `id`) */}
                 {visibleColumns.map((col) => (
-                  <TableCell key={col.accessor} className="py-6 hover:cursor-pointer px-4 font-semibold text-[#181D27] dark:text-white">
+                  <TableCell
+                    key={col.accessor}
+                    className="px-4 py-6 font-semibold text-[#181D27] hover:cursor-pointer dark:text-white"
+                  >
                     {row[col.accessor]}
                   </TableCell>
                 ))}
@@ -111,13 +128,13 @@ const DataTable: React.FC<DataTableProps> = ({
                       className="text-[#0A214C] dark:text-white"
                       onClick={() => onEdit?.(rowIndex)} // Trigger edit action
                     >
-                      <Pencil2Icon className="w-5 h-5" />
+                      <Pencil2Icon className="h-5 w-5" />
                     </button>
                     <button
                       className="text-[#D92D20]"
                       onClick={() => onDelete?.(rowIndex)} // Trigger delete action
                     >
-                      <TrashIcon className="w-5 h-5" />
+                      <TrashIcon className="h-5 w-5" />
                     </button>
                   </div>
                 </TableCell>

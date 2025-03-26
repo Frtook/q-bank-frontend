@@ -44,22 +44,28 @@ const RegisterPage = () => {
     });
   };
   return (
-    <div className="grid grid-cols-1 container mx-auto  md:grid-cols-2 p-2 md:p-6">
-      <div className="border dark:border-white border-black rounded hidden md:block "></div>
-      <div className=" mx-auto  md:w-[70%] xl:w-[50%]">
+    <div className="container mx-auto grid grid-cols-1 p-2 md:grid-cols-2 md:p-6">
+      <div className="hidden rounded border border-black dark:border-white md:block"></div>
+      <div className="mx-auto md:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-3">
           <h1 className="text-4xl font-bold">{t("createAccount")}</h1>
-          <p className="text-gray-500 text-sm">
+          <p className="text-sm text-gray-500">
             {t("alreadyHaveAccount")}
             <Link href="login">
-              <Button className=" mx-2" variant="default">
+              <Button
+                className="mx-2"
+                variant="default"
+              >
                 {t("login")}
               </Button>
             </Link>
           </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
             <FormField
               control={form.control}
               name="fullname"
@@ -67,7 +73,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Fullname</FormLabel>
                   <FormControl>
-                    <Input placeholder="fullname" {...field} />
+                    <Input
+                      placeholder="fullname"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +89,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="username" {...field} />
+                    <Input
+                      placeholder="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +105,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" {...field} />
+                    <Input
+                      placeholder="Enter email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +121,11 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -136,7 +155,10 @@ const RegisterPage = () => {
                 <FormItem>
                   <FormLabel>Academy name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Academy name" {...field} />
+                    <Input
+                      placeholder="Academy name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

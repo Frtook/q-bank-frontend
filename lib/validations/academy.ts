@@ -10,7 +10,7 @@ export const addAcademySchema = z.object({
     .instanceof(File, { message: "select one image" })
     .refine(
       (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Only these types are allowed .jpg, .jpeg, .png and .webp",
+      "Only these types are allowed .jpg, .jpeg, .png and .webp"
     )
     .refine((file) => file.size < 200000, "size Image must be less than 2MB ")
     .optional(),

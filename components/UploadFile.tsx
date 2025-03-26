@@ -10,15 +10,15 @@ type Props = {
 
 export default function UploadFile({ children, id, url, file }: Props) {
   return (
-    <div className="flex items-center justify-center w-full h-52">
+    <div className="flex h-52 w-full items-center justify-center">
       <label
         htmlFor={id}
-        className="flex flex-col items-center justify-center w-full  border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 "
+        className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
       >
         {url && !file && (
           <Image
             alt="logo"
-            className="w-full bg-cover h-52"
+            className="h-52 w-full bg-cover"
             src={url}
             width={50}
             height={50}
@@ -27,17 +27,20 @@ export default function UploadFile({ children, id, url, file }: Props) {
         {file && (
           <Image
             src={URL.createObjectURL(file)}
-            className="w-full bg-cover h-52"
+            className="h-52 w-full bg-cover"
             alt="logo"
             width={50}
             height={50}
           />
         )}
         {!url && !file && (
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <CloudUpload className="my-2" size={30} />
+          <div className="flex flex-col items-center justify-center pb-6 pt-5">
+            <CloudUpload
+              className="my-2"
+              size={30}
+            />
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-semibold px-2">Click to upload</span>
+              <span className="px-2 font-semibold">Click to upload</span>
               or drag and drop
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">

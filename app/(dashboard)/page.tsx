@@ -19,9 +19,18 @@ export default function Home() {
             content={"This is tooltip"}
             direction="right"
           />
-          <TooltipDemo content={"This is tooltip"} direction="left" />
-          <TooltipDemo content={"This is tooltip"} direction="top" />
-          <TooltipDemo content={"This is tooltip"} direction="bottom" />
+          <TooltipDemo
+            content={"This is tooltip"}
+            direction="left"
+          />
+          <TooltipDemo
+            content={"This is tooltip"}
+            direction="top"
+          />
+          <TooltipDemo
+            content={"This is tooltip"}
+            direction="bottom"
+          />
         </div>
       </div>
     </div>
