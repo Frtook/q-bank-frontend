@@ -20,7 +20,7 @@ export async function middleware(requset: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ token: accessToken }),
-      }
+      },
     );
 
     if (!verifyResponse.ok) {
@@ -29,7 +29,7 @@ export async function middleware(requset: NextRequest) {
         {
           method: "POST",
           body: JSON.stringify({ refresh: refreshToken }),
-        }
+        },
       );
       if (!refreshResponse.ok) {
         return NextResponse.redirect(new URL("/login", requset.url));
