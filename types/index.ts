@@ -18,3 +18,7 @@ interface IAcademy {
   logo: string;
   active: boolean;
 }
+
+type ISubject = {
+  name: string;
+};

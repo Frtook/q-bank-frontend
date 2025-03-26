@@ -1,13 +1,12 @@
 import { getCookies } from "@/helper/cookie";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
-
 apiClient.interceptors.request.use(
   async (config) => {
-    const token = await getCookies("token");
+    const token = await getCookies("accessToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -15,13 +14,6 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
-);
-
-apiClient.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  },
+  }
 );
 export default apiClient;

@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function page() {
+export default function Page() {
   const { data: profile } = useGetProfile();
   const { mutate: updateProfile, isPending } = useUpdateProfile();
   const form = useForm({

@@ -3,8 +3,12 @@ import { cookies } from "next/headers";
 
 export async function getCookies(key: string) {
   const data = (await cookies()).get(key)?.value;
-  if (data) {
+  if (!data) return null;
+
+  try {
     return JSON.parse(data);
+  } catch {
+    return data; // it's a plain string
   }
 }
 
@@ -15,9 +19,10 @@ export async function deleteCookies(key: string) {
 export async function setCookies(
   key: string,
   data: string | number | object,
-  maxAge: number,
+  maxAge: number
 ) {
-  const serializedData = JSON.stringify(data);
+  const serializedData = typeof data === "string" ? data : JSON.stringify(data);
+
   (await cookies()).set(key, serializedData, {
     maxAge,
     httpOnly: true,
