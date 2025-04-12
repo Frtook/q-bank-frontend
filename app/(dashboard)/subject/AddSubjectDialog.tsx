@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
-import { schemaSubject, TschemaSubject } from "@/lib/validations/subject";
+import { schemaSubject, Subject } from "@/lib/validations/subject";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
@@ -40,48 +40,13 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useGetacademy } from "@/hook/useAcademy";
-export const languages = [
-  {
-    label: "English",
-    value: "en",
-  },
-  {
-    label: "French",
-    value: "fr",
-  },
-  {
-    label: "German",
-    value: "de",
-  },
-  {
-    label: "Spanish",
-    value: "es",
-  },
-  {
-    label: "Portuguese",
-    value: "pt",
-  },
-  {
-    label: "Russian",
-    value: "ru",
-  },
-  {
-    label: "Japanese",
-    value: "ja",
-  },
-  {
-    label: "Korean",
-    value: "ko",
-  },
-  {
-    label: "Chinese",
-    value: "zh",
-  },
-];
+import { useAddSubject } from "@/hook/useSubject";
+
 export default function AddSubjectDialog() {
-  const { data: academies } = useGetacademy();
+  const { data: academies, isSuccess } = useGetacademy();
+  const { mutate: addSubject } = useAddSubject();
   const refClose = useRef<HTMLButtonElement>(null);
-  const form = useForm<TschemaSubject>({
+  const form = useForm<Subject>({
     resolver: zodResolver(schemaSubject),
     defaultValues: {
       name: "",
@@ -89,14 +54,17 @@ export default function AddSubjectDialog() {
     },
   });
 
+  const onsubmit = (data: Subject) => {
+    addSubject(data);
+  };
+
   useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
+    if (isSuccess) {
       refClose.current?.click();
     }
     return () => {};
-  }, [form.formState.isSubmitSuccessful]);
-  console.log("tset");
-  const onSubmit = () => {};
+  }, [isSuccess]);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -112,7 +80,7 @@ export default function AddSubjectDialog() {
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onsubmit)}
             className="mx-auto max-w-3xl space-y-8 py-10"
           >
             <FormField
@@ -152,16 +120,16 @@ export default function AddSubjectDialog() {
                             ? academies?.find(
                                 (academy) => academy.id === Number(field.value)
                               )?.name
-                            : "Select language"}
+                            : "Select Academy"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-full p-0">
                       <Command>
-                        <CommandInput placeholder="Search language..." />
+                        <CommandInput placeholder="Search Academy..." />
                         <CommandList>
-                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandEmpty>No Academy found.</CommandEmpty>
                           <CommandGroup>
                             {academies?.map((academy) => (
                               <CommandItem

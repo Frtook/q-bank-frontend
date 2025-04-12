@@ -12,8 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import AcademyDialog from "./AcademyDialog";
 import DeleteDialog from "./DeleteDialog";
+import EditAcademyDialog from "./EditAcademyDialog";
 
 export const columns: ColumnDef<IAcademy>[] = [
   {
@@ -84,10 +84,9 @@ export const columns: ColumnDef<IAcademy>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <AcademyDialog
+                <EditAcademyDialog
                   active={academy.active}
                   name={academy.name}
-                  isUpdate={true}
                   id={academy.id}
                   url={academy.logo}
                 />

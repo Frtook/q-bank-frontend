@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export type TschemaSubject = z.infer<typeof schemaSubject>;
+export type Subject = z.infer<typeof schemaSubject>;
 
 export const schemaSubject = z.object({
-  name: z.string(),
+  name: z.string().min(3),
   academy: z.number(),
 });

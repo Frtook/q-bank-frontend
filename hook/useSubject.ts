@@ -1,4 +1,5 @@
 import apiClient from "@/lib/axios";
+import { Subject } from "@/lib/validations/subject";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useGetSubject = () => {
@@ -6,7 +7,7 @@ export const useGetSubject = () => {
     queryKey: ["subject"],
     queryFn: async () => {
       const res = await apiClient.get("/bank/subject/");
-      return res.data as ISubject[];
+      return res.data as Omit<Subject, "academy">[];
     },
   });
 };
@@ -14,6 +15,7 @@ export const useGetSubject = () => {
 export const useAddSubject = () => {
   return useMutation({
     mutationKey: ["subject"],
-    mutationFn: async (data) => await apiClient.post("/bank/subject/", data),
+    mutationFn: async (data: Subject) =>
+      await apiClient.post("/bank/subject/", data),
   });
 };

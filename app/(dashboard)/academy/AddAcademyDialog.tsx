@@ -23,71 +23,51 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import UploadFile from "@/components/UploadFile";
-import { useAddAcademy, useUpdateAcademy } from "@/hook/useAcademy";
-import { AddAcademySchema, addAcademySchema } from "@/lib/validations/academy";
+import { useAddAcademy } from "@/hook/useAcademy";
+import { Academy, AcademySchema } from "@/lib/validations/academy";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
 
-type AcademyProps = {
-  id: number;
-  name: string;
-  active: boolean;
-  url?: string;
-  isUpdate: boolean;
-};
-
-export default function AcademyDialog({
-  active,
-  name,
-  url,
-  isUpdate,
-  id,
-}: AcademyProps) {
-  const { mutate: addAcademy, isPending: isAdd } = useAddAcademy();
-  const { mutate: updateAcademy, isPending: isUpdated } = useUpdateAcademy();
+export default function AddAcademyDialog() {
+  const { mutate: addAcademy, isPending, isSuccess } = useAddAcademy();
   const refClose = useRef<HTMLButtonElement>(null);
 
-  const form = useForm<AddAcademySchema>({
-    resolver: zodResolver(addAcademySchema),
+  const form = useForm<Academy>({
+    resolver: zodResolver(AcademySchema),
     defaultValues: {
-      active,
-      name,
+      active: false,
+      name: "",
       logo: undefined,
     },
   });
 
   useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
+    if (isSuccess) {
+      form.reset();
       refClose.current?.click();
     }
-  }, [form.formState.isSubmitSuccessful]);
+  }, [isSuccess]);
 
-  const handleSubmit = (data: AddAcademySchema) => {
+  const handleSubmit = (data: Academy) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("active", data.active.toString());
     if (data.logo) {
       formData.append("logo", data.logo);
     }
-    if (isUpdate) {
-      updateAcademy({ id, formData });
-    } else {
-      addAcademy(formData);
-    }
+    addAcademy(formData);
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>{isUpdate ? "Update Academy" : "Add Academy"}</Button>
+        <Button>Add Academy</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {isUpdate ? "Update Academy" : "Add Academy"}
-          </DialogTitle>
+          <DialogTitle>Add Academy</DialogTitle>
           <DialogDescription>
-            Fill out the form below to {isUpdate ? "update" : "add"} an academy.
+            Fill out the form below to add an academy.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -121,7 +101,6 @@ export default function AcademyDialog({
                     <UploadFile
                       id="dropzone-file"
                       file={field.value}
-                      url={url}
                     >
                       <Input
                         className="hidden"
@@ -159,10 +138,10 @@ export default function AcademyDialog({
             />
 
             <Button
-              disabled={isAdd || isUpdated}
+              disabled={isPending}
               type="submit"
             >
-              {isAdd || isUpdated ? "Submitting..." : "Submit"}
+              {isPending ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
