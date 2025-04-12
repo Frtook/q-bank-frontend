@@ -46,7 +46,7 @@ export default function AddAcademyDialog() {
       form.reset();
       refClose.current?.click();
     }
-  }, [isSuccess]);
+  }, [isSuccess, form]);
 
   const handleSubmit = (data: Academy) => {
     const formData = new FormData();
