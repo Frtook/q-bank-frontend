@@ -12,6 +12,8 @@ import {
   ChevronDown,
   ChevronUp,
   Hash,
+  School,
+  Book,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -43,10 +45,22 @@ const Sidebar = ({ lang }: { lang: string }) => {
       subItems: [{ href: "/questions", label: "test" }],
     },
     {
+      key: "academy", // Unique key for toggling
+      icon: <School />,
+      label: t("academy"),
+      subItems: [],
+    },
+    {
+      key: "subject", // Unique key for toggling
+      icon: <Book />,
+      label: t("subject"),
+      subItems: [],
+    },
+    {
       key: "exams", // Unique key for toggling
       icon: <FilePenLine />,
       label: t("exams"),
-      subItems: [{ href: "/exams", label: "test" }],
+      subItems: [{ href: "/exams", label: "test", icon: <Book /> }],
     },
     {
       href: "/ai",
