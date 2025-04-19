@@ -1,4 +1,4 @@
-import { getCookies } from "@/helper/cookie";
+import { getCookies } from "@/lib/cookie";
 import axios from "axios";
 
 const apiClient = axios.create({

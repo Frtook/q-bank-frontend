@@ -10,52 +10,66 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-export const columns: ColumnDef<ISubject>[] = [
+import DeleteDialog from "./DeleteDialog";
+import { getSubjectName } from "@/lib/helper";
+import EditSubjectDialog from "./EditSubjectDialog";
+export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Name
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "academy",
+    header: () => "Academy",
+    cell: ({ row }) => {
+      return getSubjectName(row.original.academy, academies);
     },
   },
-
   {
     id: "actions",
-    cell: ({}) => {
-      // const academy = row.original;
-
+    cell: ({ row }) => {
+      const subject = row.original;
       return (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-8 w-8 p-0"
-              >
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="flex flex-col p-6"
-              align="end"
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="h-8 w-8 p-0"
             >
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>one</DropdownMenuItem>
-              <DropdownMenuItem asChild>tow</DropdownMenuItem>
-              <DropdownMenuItem asChild>three</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </>
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="flex flex-col p-6"
+            align="end"
+          >
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <DeleteDialog id={subject.id} />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <EditSubjectDialog
+                academy={subject.academy}
+                name={subject.name}
+                id={subject.id}
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

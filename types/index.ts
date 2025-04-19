@@ -20,5 +20,15 @@ interface IAcademy {
 }
 
 type ISubject = {
+  id: number;
   name: string;
+  academy: number;
+};
+
+type MangeUsers = {
+  id: number;
+  username: string;
+  is_active: boolean;
+  email: string;
+  fullname: string;
 };
