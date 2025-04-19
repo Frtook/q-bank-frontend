@@ -40,23 +40,29 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useGetacademy } from "@/hook/useAcademy";
-import { useAddSubject } from "@/hook/useSubject";
+import { useUpdateSubject } from "@/hook/useSubject";
 
-export default function AddSubjectDialog() {
+export default function EditSubjectDialog({
+  name,
+  academy,
+  id,
+}: {
+  academy: number;
+  name: string;
+  id: number;
+}) {
   const { data: academies } = useGetacademy();
-  const { mutate: addSubject, isPending, isSuccess } = useAddSubject();
+  const { mutate: updateSubject, isSuccess, isPending } = useUpdateSubject(id);
   const refClose = useRef<HTMLButtonElement>(null);
   const form = useForm<SchemaSubject>({
     resolver: zodResolver(schemaSubject),
     defaultValues: {
-      name: "",
-      academy: undefined,
+      name,
+      academy,
     },
   });
 
-  const onsubmit = (data: SchemaSubject) => {
-    addSubject(data);
-  };
+  const handleSubmit = (data: SchemaSubject) => updateSubject(data);
 
   useEffect(() => {
     if (isSuccess) {
@@ -68,7 +74,7 @@ export default function AddSubjectDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Subject</Button>
+        <Button>Update Subject</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -80,7 +86,7 @@ export default function AddSubjectDialog() {
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onsubmit)}
+            onSubmit={form.handleSubmit(handleSubmit)}
             className="mx-auto max-w-3xl space-y-8 py-10"
           >
             <FormField
@@ -161,8 +167,8 @@ export default function AddSubjectDialog() {
             />
             <Button
               className="mx-auto block"
-              disabled={isPending}
               type="submit"
+              disabled={isPending}
             >
               {isPending ? "Submitting..." : "Submit"}
             </Button>

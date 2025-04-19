@@ -1,5 +1,5 @@
 "use client";
-import { setCookies } from "@/helper/cookie";
+import { setCookies } from "@/lib/cookie";
 import apiClient from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
