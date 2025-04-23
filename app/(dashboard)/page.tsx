@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import TooltipDemo from "@/components/ui/tooltip";
+// import { Tooltip } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -13,25 +13,25 @@ export default function Home() {
         {/* <Button variant="disabled" className="px-6 py-3"> // NOT Implemented
           Disabled
         </Button> */}
-        <div className="flex items-center gap-4">
-          <TooltipDemo
+        {/* <div className="flex items-center gap-4">
+          <Tooltip
             className=""
             content={"This is tooltip"}
             direction="right"
           />
-          <TooltipDemo
+          <Tooltip
             content={"This is tooltip"}
             direction="left"
           />
-          <TooltipDemo
+          <Tooltip
             content={"This is tooltip"}
             direction="top"
           />
-          <TooltipDemo
+          <Tooltip
             content={"This is tooltip"}
             direction="bottom"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

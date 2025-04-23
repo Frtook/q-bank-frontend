@@ -1,10 +1,12 @@
 "use client";
 import { useThemeStore } from "@/store/themeStore";
 import { Sun, Moon } from "lucide-react";
+import { useLocale } from "next-intl";
 import { useEffect } from "react";
 
-export default function ThemeSwitcher({ lang }: { lang: string }) {
+export default function ThemeSwitcher() {
   const { setTheme, theme } = useThemeStore();
+  const lang = useLocale();
   const handleClick = () => {
     setTheme();
   };
