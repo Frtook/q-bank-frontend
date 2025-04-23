@@ -1,8 +1,8 @@
-import { getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 import Header from "@/components/header";
-import Sidebar from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,19 +14,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
-
   return (
-    <div
-      className="m-2 grid gap-3"
-      style={{ gridTemplateColumns: "auto 1fr" }}
-    >
-      <Sidebar lang={locale} />
-
-      <div className="flex flex-col gap-3">
-        <Header lang={locale} />
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full">
+        <Header />
         {children}
-      </div>
-    </div>
+      </main>
+    </SidebarProvider>
   );
 }

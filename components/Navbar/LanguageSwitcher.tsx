@@ -1,29 +1,30 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useCallback } from "react";
 import { Globe } from "lucide-react";
+import { useLocale } from "next-intl";
+import { setCookies } from "@/lib/cookie";
 
-const LanguageSwitcher = ({ lang }: { lang: string }) => {
+const LanguageSwitcher = () => {
   const router = useRouter();
+  const lang = useLocale();
 
-  useEffect(() => {
-    document.dir = lang === "ar" ? "rtl" : "ltr";
-  }, [lang]);
-
-  const toggleLocale = useCallback(() => {
-    const newLocale = lang === "en" ? "ar" : "en";
-    document.dir = newLocale === "ar" ? "rtl" : "ltr";
-    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`; // 1 year expiration
+  const toggleLocale = async () => {
+    const days = 60 * 60 * 24 * 7;
     router.refresh();
-  }, [lang, router]);
+    if (lang == "ar") {
+      await setCookies("locale", "en", days);
+    } else {
+      await setCookies("locale", "ar", days);
+    }
+  };
 
   return (
     <button
       onClick={toggleLocale}
       className="flex gap-1"
     >
-      <Globe className="" />
+      <Globe />
       <span>{lang === "en" ? "AR" : "EN"}</span>
     </button>
   );

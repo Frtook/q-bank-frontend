@@ -1,53 +1,32 @@
+"use client";
+
 import * as React from "react";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-interface TooltipProps {
-  content: string;
-  direction?: "top" | "bottom" | "left" | "right";
-  className?: string;
-  children?: React.ReactNode;
-}
+import { cn } from "@/lib/utils";
 
-const TooltipComponent: React.FC<TooltipProps> = ({
-  content,
-  direction = "top",
-  className,
-  children,
-}) => {
-  return (
-    <Tooltip.Provider delayDuration={150}>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          {children || (
-            <QuestionMarkCircledIcon className="h-5 w-5 cursor-pointer" />
-          )}
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            side={direction}
-            sideOffset={5}
-            className={twMerge(
-              clsx(
-                "z-50 select-none rounded-lg bg-[#0A214C] px-4 py-2 text-sm text-white shadow-lg transition-opacity duration-200 ease-out will-change-[transform,opacity]",
-                "data-[state=closed]:opacity-0 data-[state=delayed-open]:opacity-100",
-                "data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade",
-                "data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade",
-                "data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade",
-                "data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade",
-                className // Allow custom class overrides
-              )
-            )}
-          >
-            {content}
-            <Tooltip.Arrow className="fill-[#0A214C]" />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
-  );
-};
+const TooltipProvider = TooltipPrimitive.Provider;
 
-export default TooltipComponent;
+const Tooltip = TooltipPrimitive.Root;
+
+const TooltipTrigger = TooltipPrimitive.Trigger;
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 origin-[--radix-tooltip-content-transform-origin] overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </TooltipPrimitive.Portal>
+));
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

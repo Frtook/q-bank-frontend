@@ -3,7 +3,11 @@ import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    "Accept-Language": "ar",
+  },
 });
+
 apiClient.interceptors.request.use(
   async (config) => {
     const token = await getCookies("accessToken");
