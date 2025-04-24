@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 // import { Tooltip } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 export default function Home() {
-  const t = useTranslations("HomePage");
+  const t = useTranslations("homePage");
   return (
     <div className="">
       <h1>{t("title")}</h1>

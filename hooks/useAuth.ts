@@ -16,7 +16,6 @@ export const useRegister = () => {
     },
     onSuccess: async (data) => {
       toast.success(data.data.message);
-      console.log(data.data);
       push("/login");
     },
     onError: (error: AxiosError) => {
@@ -36,14 +35,12 @@ export const useToken = () => {
     },
     onSuccess: async (data) => {
       toast.success("welcome back");
-      console.log(data);
       await setCookies("accessToken", data.data.access, DAYS);
       await setCookies("refreshToken", data.data.refresh, DAYS * 30);
 
       push("/");
     },
     onError: (error: AxiosError) => {
-      console.log(error);
       toast.error(
         (error.response?.data as { detail: string })?.detail || error.message
       );

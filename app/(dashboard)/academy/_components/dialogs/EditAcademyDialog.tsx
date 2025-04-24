@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import UploadFile from "@/components/UploadFile";
-import { useUpdateAcademy } from "@/hook/useAcademy";
+import { useUpdateAcademy } from "@/hooks/useAcademy";
 import { Academy, AcademySchema } from "@/lib/validations/academy";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";

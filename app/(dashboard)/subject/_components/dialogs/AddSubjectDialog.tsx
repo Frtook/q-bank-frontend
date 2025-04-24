@@ -39,8 +39,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useGetacademy } from "@/hook/useAcademy";
-import { useAddSubject } from "@/hook/useSubject";
+import { useGetacademy } from "@/hooks/useAcademy";
+import { useAddSubject } from "@/hooks/useSubject";
 
 export default function AddSubjectDialog() {
   const { data: academies } = useGetacademy();

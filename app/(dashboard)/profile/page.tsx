@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useGetProfile, useUpdateProfile } from "@/hook/useProfile";
+import { useGetProfile, useUpdateProfile } from "@/hooks/useProfile";
 import { schemaProfile, TschemaProfile } from "@/lib/validations/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";

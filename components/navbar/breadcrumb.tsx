@@ -8,23 +8,25 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { navItems } from "@/lib/constants";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+
 const Breadcrumbs = () => {
+  const t = useTranslations("navitems");
   const paths = usePathname()
     .split("/")
     .filter((path) => path);
-  console.log(paths);
   return (
     <Breadcrumb>
       <BreadcrumbList>
         {paths.length == 0 && (
           <BreadcrumbItem>
-            <BreadcrumbPage>Dashbord</BreadcrumbPage>
+            <BreadcrumbPage>{t("dashboard")}</BreadcrumbPage>
           </BreadcrumbItem>
         )}
         {paths.length >= 1 && (
           <>
-            <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+            <BreadcrumbLink href="/">{t("dashboard")}</BreadcrumbLink>
             <BreadcrumbSeparator />
           </>
         )}
@@ -33,11 +35,11 @@ const Breadcrumbs = () => {
           return (
             <BreadcrumbItem key={index}>
               {index === paths.length - 1 ? (
-                <BreadcrumbPage>{page?.lable}</BreadcrumbPage>
+                <BreadcrumbPage>{t(page?.lable)}</BreadcrumbPage>
               ) : (
                 <>
                   <BreadcrumbLink href={page?.href}>
-                    {page?.lable}
+                    {t(page?.lable)}
                   </BreadcrumbLink>
                   <BreadcrumbSeparator />
                 </>

@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteDialog from "./DeleteDialog";
 import { getSubjectName } from "@/lib/helper";
-import EditSubjectDialog from "./EditSubjectDialog";
+import EditSubjectDialog from "./dialogs/EditSubjectDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
   {
     accessorKey: "id",
@@ -59,7 +59,11 @@ export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <DeleteDialog id={subject.id} />
+              <DeleteDialog
+                mutationKey="subject"
+                url="/bank/subject"
+                id={subject.id}
+              />
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <EditSubjectDialog

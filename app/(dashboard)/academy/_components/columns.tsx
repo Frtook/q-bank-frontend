@@ -12,8 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DeleteDialog from "./DeleteDialog";
-import EditAcademyDialog from "./EditAcademyDialog";
+import EditAcademyDialog from "./dialogs/EditAcademyDialog";
+import DeleteDialog from "@/components/DeleteDialog";
 
 export const columns: ColumnDef<IAcademy>[] = [
   {
@@ -92,7 +92,11 @@ export const columns: ColumnDef<IAcademy>[] = [
                 />
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <DeleteDialog id={academy.id} />
+                <DeleteDialog
+                  id={academy.id}
+                  mutationKey="academy"
+                  url="/bank/academy"
+                />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

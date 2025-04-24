@@ -39,8 +39,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useGetacademy } from "@/hook/useAcademy";
-import { useUpdateSubject } from "@/hook/useSubject";
+import { useGetacademy } from "@/hooks/useAcademy";
+import { useUpdateSubject } from "@/hooks/useSubject";
 
 export default function EditSubjectDialog({
   name,

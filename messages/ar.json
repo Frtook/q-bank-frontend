@@ -1,8 +1,22 @@
 {
-  "HomePage": {
+  "homePage": {
     "title": "مرحبا"
   },
-  "Regester": {
+  "navAuth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "login": {
+    "welcome": "مرحبًا بعودتك",
+    "noaccount": "لا تملك حسابًا بعد؟",
+    "register": "تسجيل",
+    "username": "اسم المستخدم",
+    "usernameDescription": "يجب أن يحتوي اسم المستخدم على 3 أحرف على الأقل",
+    "password": "كلمة المرور",
+    "passwordDescription": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+    "submit": "تسجيل الدخول"
+  },
+  "regester": {
     "createAccount": "إنشاء حساب",
     "alreadyHaveAccount": "لديك حساب بالفعل؟",
     "login": "تسجيل الدخول",
@@ -10,6 +24,8 @@
     "username": "اسم المستخدم",
     "email": "البريد الإلكتروني",
     "password": "أدخل كلمة المرور",
+    "reperPass": "اعد كتابة كلمة المرور",
+    "academyName": "اسم الكلية , جامعة , مدرسة",
     "createAccountButton": "إنشاء حساب"
   },
   "navitems": {
