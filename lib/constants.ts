@@ -18,44 +18,44 @@ export const ACCEPTED_IMAGE_TYPES = [
 
 export const navItems = [
   {
-    lable: "Dashboard",
+    lable: "dashboard",
     href: "/",
     icon: Home,
   },
   {
-    lable: "Questions",
+    lable: "questions",
     href: "/questions",
     icon: ScrollText,
   },
   {
-    lable: "Academy",
+    lable: "academy",
     href: "/academy",
     icon: School,
   },
   {
-    lable: "Subject",
+    lable: "subject",
     href: "/subject",
     icon: Book,
   },
   {
-    lable: "Exams",
+    lable: "exams",
     href: "/exams",
     icon: FilePenLine,
     disable: true,
   },
   {
-    lable: "Ai",
+    lable: "ai",
     href: "/ai",
     icon: Bot,
     disable: true,
   },
   {
-    lable: "Mange User",
+    lable: "users",
     href: "/mange-users",
     icon: UserPlus,
   },
   {
-    lable: "Settings",
+    lable: "settings",
     href: "/profile",
     icon: Settings,
   },

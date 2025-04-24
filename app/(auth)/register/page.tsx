@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRegister } from "@/hook/useAuth";
+import { useRegister } from "@/hooks/useAuth";
 import {
   Form,
   FormControl,
@@ -30,7 +30,7 @@ const RegisterPage = () => {
     },
   });
 
-  const t = useTranslations("Regester");
+  const t = useTranslations("regester");
   const onSubmit = async (data: TschemaRegester) => {
     const { fullname, username, email, password, password2, academyName } =
       data;
@@ -71,10 +71,10 @@ const RegisterPage = () => {
               name="fullname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Fullname</FormLabel>
+                  <FormLabel>{t("fullName")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="fullname"
+                      placeholder={t("fullName")}
                       {...field}
                     />
                   </FormControl>
@@ -87,10 +87,10 @@ const RegisterPage = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>{t("username")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="username"
+                      placeholder={t("username")}
                       {...field}
                     />
                   </FormControl>
@@ -103,10 +103,10 @@ const RegisterPage = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter email"
+                      placeholder={t("email")}
                       {...field}
                     />
                   </FormControl>
@@ -119,10 +119,10 @@ const RegisterPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="password"
+                      placeholder={t("password")}
                       type="password"
                       {...field}
                     />
@@ -136,10 +136,10 @@ const RegisterPage = () => {
               name="password2"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Repey Password</FormLabel>
+                  <FormLabel>{t("reperPass")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Repey Password"
+                      placeholder={t("reperPass")}
                       type="password"
                       {...field}
                     />
@@ -153,10 +153,10 @@ const RegisterPage = () => {
               name="academyName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Academy name</FormLabel>
+                  <FormLabel>{t("academyName")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Academy name"
+                      placeholder={t("academyName")}
                       {...field}
                     />
                   </FormControl>
@@ -169,7 +169,7 @@ const RegisterPage = () => {
               variant={isPending ? "secondary" : "default"}
               type="submit"
             >
-              Submit
+              {t("createAccountButton")}
             </Button>
           </form>
         </Form>

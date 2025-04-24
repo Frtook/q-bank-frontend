@@ -1,7 +1,7 @@
 import React from "react";
-import LanguageSwitcher from "./Navbar/LanguageSwitcher";
-import ThemeSwitcher from "./Navbar/ThemeSwitcher";
-import { SidebarTrigger } from "./ui/sidebar";
+import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { SidebarTrigger } from "../ui/sidebar";
 import Breadcrumbs from "./breadcrumb";
 
 export default function Header() {

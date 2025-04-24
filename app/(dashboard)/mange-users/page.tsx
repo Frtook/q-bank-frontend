@@ -1,15 +1,13 @@
 "use client";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
-import { useGetMangeUser } from "@/hook/useMageUsers";
+// import { DataTable } from "./data-table";
+import { columns } from "./_components/columns";
+import { useGetMangeUser } from "@/hooks/useMageUsers";
 import { toast } from "sonner";
-import AddUserDialog from "./AddUserDialog";
-import { useGetPermission } from "@/hook/usePermission";
+import AddUserDialog from "./_components/dialogs/AddUserDialog";
+import { DataTable } from "@/components/table/data-table";
 
 export default function Page() {
   const { data, error, isError, isLoading } = useGetMangeUser();
-  const { data: per } = useGetPermission();
-  console.log(per);
   if (isLoading) {
     return <div>loading...</div>;
   }
@@ -27,6 +25,8 @@ export default function Page() {
         <DataTable
           columns={columns}
           data={data}
+          placeholderInput="Filter name..."
+          sortValue="fullname"
         />
       )}
     </div>

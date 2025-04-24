@@ -1,8 +1,8 @@
 "use client";
-import { useGetacademy } from "@/hook/useAcademy";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
-import AddAcademyDialog from "./AddAcademyDialog";
+import { useGetacademy } from "@/hooks/useAcademy";
+import { columns } from "./_components/columns";
+import AddAcademyDialog from "./_components/dialogs/AddAcademyDialog";
+import { DataTable } from "@/components/table/data-table";
 
 export default function Page() {
   const { data } = useGetacademy();
@@ -16,6 +16,8 @@ export default function Page() {
 
       {data ? (
         <DataTable
+          placeholderInput="Filter name..."
+          sortValue="name"
           columns={columns}
           data={data}
         />

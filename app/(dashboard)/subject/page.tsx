@@ -1,9 +1,9 @@
 "use client";
-import { DataTable } from "./data-table";
-import { useGetSubject } from "@/hook/useSubject";
-import { getColumns } from "./columns";
-import AddSubjectDialog from "./AddSubjectDialog";
-import { useGetacademy } from "@/hook/useAcademy";
+import { useGetSubject } from "@/hooks/useSubject";
+import AddSubjectDialog from "./_components/dialogs/AddSubjectDialog";
+import { useGetacademy } from "@/hooks/useAcademy";
+import { DataTable } from "@/components/table/data-table";
+import { getColumns } from "./_components/columns";
 
 export default function Page() {
   const { data } = useGetSubject();
@@ -18,6 +18,8 @@ export default function Page() {
         <DataTable
           columns={getColumns(academies)}
           data={data}
+          placeholderInput="Filter name..."
+          sortValue="name"
         />
       ) : (
         <div>loading...</div>

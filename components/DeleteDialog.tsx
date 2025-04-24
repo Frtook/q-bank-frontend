@@ -8,13 +8,36 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { useDeleteSubject } from "@/hook/useSubject";
-
-export default function DeleteDialog({ id }: { id: number }) {
-  const { mutate: DeleteSubject } = useDeleteSubject();
-
-  const deleteSubject = (id: number) => {
-    DeleteSubject(id);
+import apiClient from "@/lib/axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
+type Props = {
+  id: number;
+  url: string;
+  mutationKey: string;
+};
+export default function DeleteDialog({ id, url, mutationKey }: Props) {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: [mutationKey],
+    mutationFn: async (id: number) => apiClient.delete(`${url}/${id}/`),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: [mutationKey] });
+      toast.dismiss();
+      toast.success("Delete Success");
+      return data;
+    },
+    onError: (error: AxiosError) => {
+      toast.dismiss();
+      toast.error(
+        (error.response?.data as { detail: string })?.detail || error.message
+      );
+      return error;
+    },
+  });
+  const deleteAcademy = (id: number) => {
+    mutate(id);
   };
   return (
     <Dialog>
@@ -26,7 +49,11 @@ export default function DeleteDialog({ id }: { id: number }) {
           Delete
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Are you sure to delete this academy</DialogTitle>
           <DialogDescription asChild>
@@ -38,7 +65,7 @@ export default function DeleteDialog({ id }: { id: number }) {
               <DialogClose asChild>
                 <Button
                   className="self-center"
-                  onClick={() => deleteSubject(id)}
+                  onClick={() => deleteAcademy(id)}
                   variant="destructive"
                 >
                   Delete

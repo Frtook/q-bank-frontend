@@ -1,9 +1,22 @@
 {
-  "HomePage": {
+  "homePage": {
     "title": "Hello world!"
   },
-
-  "Regester": {
+  "navAuth": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "login": {
+    "welcome": "Welcome Back",
+    "noaccount": "Don&apos;t have an account yet?",
+    "register": "register",
+    "username": "username",
+    "usernameDescription": "Username must have 3 characters",
+    "password": "Password",
+    "passwordDescription": " Password must be at least 8 characters",
+    "submit": "submit"
+  },
+  "regester": {
     "createAccount": "Create an account",
     "alreadyHaveAccount": "Already have an account?",
     "login": "Login",
@@ -11,6 +24,8 @@
     "username": "Username",
     "email": "Email",
     "password": "Enter your password",
+    "reperPass": "Repey Password",
+    "academyName": "Academy name",
     "createAccountButton": "Create account"
   },
   "navitems": {

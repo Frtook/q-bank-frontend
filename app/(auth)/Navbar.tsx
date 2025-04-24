@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -9,6 +10,7 @@ const routes = [
 ];
 export default function Navbar() {
   const pathName = usePathname();
+  const t = useTranslations("navAuth");
   return (
     <div className="flex gap-5 border-b border-b-gray-500 p-4">
       <p className="flex-1 text-4xl font-bold">Logo</p>
@@ -18,7 +20,7 @@ export default function Navbar() {
           href={route.path}
         >
           <Button variant={pathName === route.path ? "default" : "secondary"}>
-            {route.name}
+            {t(route.name)}
           </Button>
         </Link>
       ))}

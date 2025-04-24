@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useToken } from "@/hook/useAuth";
+import { useToken } from "@/hooks/useAuth";
 import {
   Form,
   FormControl,
@@ -15,8 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { schemaLogin, TschemaLogin } from "@/lib/validations/login";
+import { useTranslations } from "next-intl";
 
 const RegisterPage = () => {
+  const t = useTranslations("login");
   const { mutate: login, isPending } = useToken();
   const form = useForm<TschemaLogin>({
     resolver: zodResolver(schemaLogin),
@@ -31,15 +33,15 @@ const RegisterPage = () => {
       <div className="hidden rounded border border-black dark:border-white md:block"></div>
       <div className="mx-auto md:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-bold">Welcome Back</h1>
+          <h1 className="text-4xl font-bold">{t("welcome")}</h1>
           <p className="text-sm text-gray-500">
-            Don&apos;t have an account yet?
+            {t("noaccount")}
             <Link href="register">
               <Button
                 className="mx-2"
                 variant="default"
               >
-                register
+                {t("register")}
               </Button>
             </Link>
           </p>
@@ -54,16 +56,14 @@ const RegisterPage = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>{t("username")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="username"
+                      placeholder={t("username")}
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
-                    Username must have 3 characters
-                  </FormDescription>
+                  <FormDescription>{t("usernameDescription")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -73,17 +73,15 @@ const RegisterPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="password"
+                      placeholder={t("password")}
                       type="password"
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
-                    Password must be at least 8 characters
-                  </FormDescription>
+                  <FormDescription>{t("passwordDescription")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -93,7 +91,7 @@ const RegisterPage = () => {
               variant={isPending ? "secondary" : "default"}
               type="submit"
             >
-              Submit
+              {t("submit")}
             </Button>
           </form>
         </Form>
