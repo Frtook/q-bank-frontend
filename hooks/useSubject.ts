@@ -15,28 +15,17 @@ export const useGetSubject = () => {
 };
 
 export const useAddSubject = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["subject"],
     mutationFn: async (data: SchemaSubject) =>
       await apiClient.post("/bank/subject/", data),
-  });
-};
-
-export const useDeleteSubject = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: ["subject"],
-    mutationFn: async (id: number) =>
-      await apiClient.delete(`/bank/subject/${id}/`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["subject"] });
-      toast.dismiss();
       toast.success("success");
       return data;
     },
     onError: (error: AxiosError) => {
-      toast.dismiss();
       toast.error(
         (error.response?.data as { detail: string })?.detail || error.message
       );

@@ -32,20 +32,17 @@ export function AppSidebar() {
                     className="h-full"
                     asChild
                   >
-                    <div
+                    <Link
+                      href={item.href}
+                      aria-disabled={item.disable}
                       className={cn("p-3", {
-                        "bg-foreground text-white dark:bg-white dark:text-black":
+                        "bg-foreground text-white hover:bg-foreground hover:text-white dark:bg-white dark:text-black hover:dark:bg-white hover:dark:text-black":
                           item.href === pathname,
                       })}
                     >
                       <item.icon />
-                      <Link
-                        href={item.href}
-                        aria-disabled={item.disable}
-                      >
-                        {t(item.lable)}
-                      </Link>
-                    </div>
+                      <div>{t(item.lable)}</div>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

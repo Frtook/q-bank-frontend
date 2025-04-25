@@ -22,6 +22,7 @@ export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
     accessorKey: "name",
     header: ({ column }) => (
       <Button
+        className="p-0"
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
@@ -53,7 +54,7 @@ export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="flex flex-col p-6"
+            className="flex flex-col gap-3 p-6"
             align="end"
           >
             <DropdownMenuLabel>Actions</DropdownMenuLabel>

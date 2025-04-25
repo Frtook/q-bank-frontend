@@ -78,24 +78,24 @@ export const columns: ColumnDef<IAcademy>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="flex flex-col p-6"
+              className="flex flex-col gap-3 p-6"
               align="end"
             >
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <DeleteDialog
+                  id={academy.id}
+                  mutationKey="academy"
+                  url="/bank/academy"
+                />
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <EditAcademyDialog
                   active={academy.active}
                   name={academy.name}
                   id={academy.id}
                   url={academy.logo}
-                />
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <DeleteDialog
-                  id={academy.id}
-                  mutationKey="academy"
-                  url="/bank/academy"
                 />
               </DropdownMenuItem>
             </DropdownMenuContent>

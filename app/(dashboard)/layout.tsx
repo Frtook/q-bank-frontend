@@ -19,7 +19,7 @@ export default async function RootLayout({
       <AppSidebar />
       <main className="w-full">
         <Header />
-        {children}
+        <div className="px-6 py-4">{children}</div>
       </main>
     </SidebarProvider>
   );

@@ -27,6 +27,7 @@ import { useUpdateAcademy } from "@/hooks/useAcademy";
 import { Academy, AcademySchema } from "@/lib/validations/academy";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
+import { PenLine } from "lucide-react";
 
 type AcademyProps = {
   id: number;
@@ -73,7 +74,10 @@ export default function EditAcademyDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Update Academy</Button>
+        <div className="flex cursor-pointer justify-between gap-3">
+          <p>Update</p>
+          <PenLine />
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

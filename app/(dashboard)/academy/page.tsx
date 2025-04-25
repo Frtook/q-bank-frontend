@@ -3,6 +3,7 @@ import { useGetacademy } from "@/hooks/useAcademy";
 import { columns } from "./_components/columns";
 import AddAcademyDialog from "./_components/dialogs/AddAcademyDialog";
 import { DataTable } from "@/components/table/data-table";
+import TableSkeleton from "@/components/table/table-skeleton";
 
 export default function Page() {
   const { data } = useGetacademy();
@@ -22,7 +23,7 @@ export default function Page() {
           data={data}
         />
       ) : (
-        <div>loading...</div>
+        <TableSkeleton />
       )}
     </div>
   );

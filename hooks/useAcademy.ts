@@ -37,36 +37,15 @@ export const useAddAcademy = () => {
   });
 };
 
-export const useDeleteAcademy = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationKey: ["academy"],
-    mutationFn: (id: number) => {
-      return apiClient.delete(`/bank/academy/${id}/`);
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["academy"] });
-      toast.dismiss();
-      toast.success("success");
-      return data;
-    },
-    onError: (error: AxiosError) => {
-      toast.dismiss();
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
-  });
-};
-
 export const useUpdateAcademy = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["academy"],
     mutationFn: (data: { id: number; formData: FormData }) => {
       return apiClient.patch(`/bank/academy/${data.id}/`, data.formData);
     },
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["academy"] });
       toast.success("success");
       return data;
     },

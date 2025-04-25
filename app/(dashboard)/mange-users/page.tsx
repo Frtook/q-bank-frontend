@@ -5,6 +5,7 @@ import { useGetMangeUser } from "@/hooks/useMageUsers";
 import { toast } from "sonner";
 import AddUserDialog from "./_components/dialogs/AddUserDialog";
 import { DataTable } from "@/components/table/data-table";
+import TableSkeleton from "@/components/table/table-skeleton";
 
 export default function Page() {
   const { data, error, isError, isLoading } = useGetMangeUser();
@@ -21,13 +22,15 @@ export default function Page() {
         <h1>All Users</h1>
         <AddUserDialog />
       </div>
-      {data && (
+      {data ? (
         <DataTable
           columns={columns}
           data={data}
           placeholderInput="Filter name..."
           sortValue="fullname"
         />
+      ) : (
+        <TableSkeleton />
       )}
     </div>
   );

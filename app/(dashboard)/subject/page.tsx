@@ -4,6 +4,7 @@ import AddSubjectDialog from "./_components/dialogs/AddSubjectDialog";
 import { useGetacademy } from "@/hooks/useAcademy";
 import { DataTable } from "@/components/table/data-table";
 import { getColumns } from "./_components/columns";
+import TableSkeleton from "@/components/table/table-skeleton";
 
 export default function Page() {
   const { data } = useGetSubject();
@@ -22,7 +23,7 @@ export default function Page() {
           sortValue="name"
         />
       ) : (
-        <div>loading...</div>
+        <TableSkeleton />
       )}
     </div>
   );
