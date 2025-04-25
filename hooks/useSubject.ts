@@ -57,3 +57,17 @@ export const useUpdateSubject = (id: number) => {
     },
   });
 };
+export const useDeleteSubject = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: number) =>
+      await apiClient.delete(`/bank/subject/${id}/`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["subject"] });
+      toast.success("Subject deleted");
+    },
+    onError: (err: AxiosError) => {
+      toast.error("Failed to delete subject");
+    },
+  });
+};
