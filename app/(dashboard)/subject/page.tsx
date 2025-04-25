@@ -5,10 +5,12 @@ import { useGetacademy } from "@/hooks/useAcademy";
 import { DataTable } from "@/components/table/data-table";
 import { getColumns } from "./_components/columns";
 import TableSkeleton from "@/components/table/table-skeleton";
+// import { useGetOutcome } from "@/hooks/useOutcome";
 
 export default function Page() {
   const { data } = useGetSubject();
   const { data: academies } = useGetacademy();
+  // const { data: outcome } = useGetOutcome();
   return (
     <div>
       <div className="flex justify-between">

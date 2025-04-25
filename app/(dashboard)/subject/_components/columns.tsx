@@ -54,7 +54,7 @@ export const getColumns = (academies: IAcademy[]): ColumnDef<ISubject>[] => [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="flex flex-col gap-3 p-6"
+            className="flex flex-col gap-1 p-6"
             align="end"
           >
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
