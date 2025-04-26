@@ -32,6 +32,7 @@ interface DataTableProps {
   onRowSelectionChange?: (selectedRows: number[]) => void;
   onEdit?: (rowIndex: number) => void;
   onDelete?: (rowIndex: number) => void;
+  onRowClick?: (rowData: DataRow) => void; // New prop for row click
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -41,6 +42,7 @@ const DataTable: React.FC<DataTableProps> = ({
   onRowSelectionChange,
   onEdit,
   onDelete,
+  onRowClick, // Destructure the new prop
 }) => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
@@ -64,6 +66,12 @@ const DataTable: React.FC<DataTableProps> = ({
     onRowSelectionChange?.(
       selectedRows.length === data.length ? [] : data.map((_, index) => index)
     );
+  };
+
+  const handleRowClick = (rowData: DataRow) => {
+    if (onRowClick) {
+      onRowClick(rowData);
+    }
   };
 
   return (
@@ -104,9 +112,14 @@ const DataTable: React.FC<DataTableProps> = ({
               <TableRow
                 key={rowIndex}
                 className="border-b hover:bg-gray-50 dark:hover:bg-primary"
+                onClick={() => handleRowClick(row)} // Add click handler to the row
+                style={{ cursor: onRowClick ? "pointer" : "default" }} // Change cursor if clickable
               >
                 {/* Row Checkbox */}
-                <TableCell className="px-4">
+                <TableCell
+                  className="px-4"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <Checkbox
                     checked={selectedRows.includes(rowIndex)}
                     onCheckedChange={() => handleRowSelection(rowIndex)}
@@ -116,23 +129,26 @@ const DataTable: React.FC<DataTableProps> = ({
                 {visibleColumns.map((col) => (
                   <TableCell
                     key={col.accessor}
-                    className="px-4 py-6 font-semibold text-[#181D27] hover:cursor-pointer dark:text-white"
+                    className="px-4 py-6 font-semibold text-[#181D27] dark:text-white"
                   >
                     {row[col.accessor]}
                   </TableCell>
                 ))}
                 {/* Actions Column */}
-                <TableCell className="px-4">
+                <TableCell
+                  className="px-4"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="flex gap-2">
                     <button
                       className="text-[#0A214C] dark:text-white"
-                      onClick={() => onEdit?.(rowIndex)} // Trigger edit action
+                      onClick={() => onEdit?.(rowIndex)}
                     >
                       <Pencil2Icon className="h-5 w-5" />
                     </button>
                     <button
                       className="text-[#D92D20]"
-                      onClick={() => onDelete?.(rowIndex)} // Trigger delete action
+                      onClick={() => onDelete?.(rowIndex)}
                     >
                       <TrashIcon className="h-5 w-5" />
                     </button>

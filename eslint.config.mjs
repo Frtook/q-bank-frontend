@@ -16,6 +16,7 @@ const eslintConfig = [
       semi: ["error"],
       quotes: ["error", "double"],
       "no-console": ["off"],
+      "@typescript-eslint/no-explicit-any": "off",
     },
   }),
 ];
