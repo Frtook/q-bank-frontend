@@ -68,7 +68,7 @@ export default function AddSubjectDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Subject</Button>
+        <Button>+ New Subject</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

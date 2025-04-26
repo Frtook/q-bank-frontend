@@ -38,8 +38,7 @@ export function AppSidebar() {
                       href={item.href}
                       aria-disabled={item.disable}
                       className={cn("p-3", {
-                        "bg-foreground text-white hover:bg-foreground hover:text-white":
-                          item.href === pathname,
+                        "bg-foreground text-white": item.href === pathname,
                       })}
                     >
                       <item.icon style={{ width: "22px", height: "22px" }} />

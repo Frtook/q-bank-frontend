@@ -61,7 +61,7 @@ export default function AddAcademyDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Academy</Button>
+        <Button>+ New Academy</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

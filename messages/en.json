@@ -1,6 +1,14 @@
 {
   "homePage": {
-    "title": "Hello world!"
+    "Subjects": "Subjects",
+    "NumberOfQuestions": "Number of questions",
+    "Exam": "Exam",
+    "Users": "Users",
+    "AddNewQuestion": "Add new question",
+    "GenerateExam": "Generate Exam",
+    "History": "History",
+    "AddNewQuestionText": "Lorem ipsum dolor sit amet consectetur.",
+    "GenerateExamText": "Lorem ipsum dolor sit amet consectetur."
   },
   "navAuth": {
     "login": "Login",

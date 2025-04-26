@@ -25,7 +25,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
 import { SchemaSubject, schemaSubject } from "@/lib/validations/subject";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown, PenLine } from "lucide-react";
+import { Check, ChevronsUpDown, SquarePen } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -74,10 +74,7 @@ export default function EditSubjectDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex cursor-pointer justify-between gap-3">
-          <p>Update</p>
-          <PenLine />
-        </div>
+        <SquarePen style={{ width: "20px", height: "20px" }} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

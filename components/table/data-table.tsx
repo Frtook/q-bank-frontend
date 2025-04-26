@@ -10,6 +10,7 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
+  Row,
 } from "@tanstack/react-table";
 
 import {
@@ -22,11 +23,16 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useLocale } from "next-intl";
+import { Search } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onRowClick?: (
+    event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+    row: Row<TData>
+  ) => void;
 }
 type Props = {
   placeholderInput: string;
@@ -36,6 +42,7 @@ type Props = {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onRowClick,
   placeholderInput,
   sortValue,
 }: DataTableProps<TData, TValue> & Props) {
@@ -56,20 +63,38 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+  const onRowClickHandler = useCallback(
+    (
+      event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+      row: Row<TData>
+    ) => {
+      const target = event.target as HTMLElement;
+      if (target.closest("td") && onRowClick) {
+        onRowClick(event, row);
+      }
+    },
+    [onRowClick]
+  );
+
   return (
     <div>
       {/* filtter */}
       <div className="flex items-center py-4">
-        <Input
-          placeholder={placeholderInput}
-          value={(table.getColumn(sortValue)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(sortValue)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm bg-white dark:border-white dark:bg-gray-800"
-        />
+        <div className="relative">
+          <Input
+            placeholder={placeholderInput}
+            value={
+              (table.getColumn(sortValue)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(sortValue)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm bg-white pl-10 dark:border-white dark:bg-gray-800"
+          />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+        </div>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md bg-white p-4 shadow-md">
         {/* table */}
         <Table>
           <TableHeader>
@@ -78,7 +103,9 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className={`${locale === "en" ? "text-left" : "text-right"}`}
+                      className={`${
+                        locale === "en" ? "text-left" : "text-right"
+                      } bg-gray-200 p-4`}
                       key={header.id}
                     >
                       {header.isPlaceholder
@@ -99,9 +126,13 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={(e) => onRowClickHandler(e, row)}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      className="p-4"
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -10,8 +10,8 @@ export default function Page() {
 
   return (
     <div>
-      <div className="flex justify-between p-2">
-        <span className="font-bold">academy</span>
+      <div className="flex justify-between rounded-md bg-white p-4">
+        <span className="font-bold">Academy Page</span>
         <AddAcademyDialog />
       </div>
 
