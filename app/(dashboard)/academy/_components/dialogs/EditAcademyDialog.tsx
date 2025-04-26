@@ -27,7 +27,7 @@ import { useUpdateAcademy } from "@/hooks/useAcademy";
 import { Academy, AcademySchema } from "@/lib/validations/academy";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
-import { PenLine } from "lucide-react";
+import { SquarePen } from "lucide-react";
 
 type AcademyProps = {
   id: number;
@@ -74,10 +74,7 @@ export default function EditAcademyDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex cursor-pointer justify-between gap-3">
-          <p>Update</p>
-          <PenLine />
-        </div>
+        <SquarePen style={{ width: "20px", height: "20px" }} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

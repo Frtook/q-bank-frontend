@@ -1,6 +1,14 @@
 {
   "homePage": {
-    "title": "مرحبا"
+    "Subjects": "المواد",
+    "NumberOfQuestions": "عدد الأسئلة",
+    "Exam": "الاختبارات",
+    "Users": "المستخدمين",
+    "AddNewQuestion": "إضافة سؤال جديد",
+    "GenerateExam": "إنشاء اختبار",
+    "History": "السجل",
+    "AddNewQuestionText": "هذا نص تجريبي يمكن تغييره لاحقًا.",
+    "GenerateExamText": "هذا نص تجريبي يمكن تغييره لاحقًا."
   },
   "navAuth": {
     "login": "تسجيل الدخول",

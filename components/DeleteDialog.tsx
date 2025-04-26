@@ -11,7 +11,7 @@ import {
 import apiClient from "@/lib/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { Trash2 } from "lucide-react";
+import { Trash } from "lucide-react";
 import { toast } from "sonner";
 type Props = {
   id: number;
@@ -43,9 +43,10 @@ export default function DeleteDialog({ id, url, mutationKey }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="mt-4 flex cursor-pointer justify-between gap-3">
-          Delete <Trash2 className="text-red-600" />
-        </div>
+        <Trash
+          style={{ width: "20px", height: "20px" }}
+          className="cursor-pointer text-red-600"
+        />
       </DialogTrigger>
       <DialogContent
         onInteractOutside={(e) => {
