@@ -1,3 +1,4 @@
+"use client";
 import apiClient from "@/lib/axios";
 import { SchemaSubject } from "@/lib/validations/subject";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

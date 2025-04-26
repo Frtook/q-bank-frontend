@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import TableSkeleton from "@/components/table/table-skeleton";
+// import { useGetOutcome } from "@/hooks/useOutcome";
 
 type Subject = {
   id: number;
@@ -37,84 +38,6 @@ type DataRow = {
 export default function Page() {
   const { data: subjects, isLoading } = useGetSubject();
   const { data: academies } = useGetacademy();
-  const addSubject = useAddSubject();
-  const deleteSubject = useDeleteSubject();
-
-  const [subjectName, setSubjectName] = useState("");
-  const [selectedAcademy, setSelectedAcademy] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [currentRowId, setCurrentRowId] = useState<number | null>(null);
-  const [rowToDeleteId, setRowToDeleteId] = useState<number | null>(null);
-
-  const router = useRouter();
-
-  const updateSubject = useUpdateSubject(currentRowId as number);
-
-  const academiesList = academies?.map((academy) => ({
-    value: academy.id.toString(),
-    label: academy.name,
-  }));
-
-  const handleRowClick = (rowData: DataRow) => {
-    // Type assertion since we know the shape of our data
-    const subject = rowData as Subject;
-    router.push(`/subject/${subject.id}`);
-  };
-
-  const handleEdit = (rowIndex: number) => {
-    const subject = subjects?.[rowIndex];
-    if (!subject) return;
-    setSubjectName(subject.name);
-    setSelectedAcademy(subject.academy.toString());
-    setCurrentRowId(subject.id);
-    setIsDialogOpen(true);
-  };
-
-  const handleSave = () => {
-    const payload = {
-      name: subjectName,
-      academy: Number(selectedAcademy),
-    };
-
-    if (currentRowId !== null) {
-      updateSubject.mutate(payload, {
-        onSuccess: () => {
-          setIsDialogOpen(false);
-          resetForm();
-        },
-      });
-    } else {
-      addSubject.mutate(payload, {
-        onSuccess: () => {
-          setIsDialogOpen(false);
-          resetForm();
-        },
-      });
-    }
-  };
-
-  const handleDeleteClick = (rowIndex: number) => {
-    const subject = subjects?.[rowIndex];
-    if (!subject) return;
-    setRowToDeleteId(subject.id);
-    setIsDeleteDialogOpen(true);
-  };
-
-  const confirmDelete = () => {
-    if (rowToDeleteId !== null) {
-      deleteSubject.mutate(rowToDeleteId);
-      setIsDeleteDialogOpen(false);
-      setRowToDeleteId(null);
-    }
-  };
-
-  const resetForm = () => {
-    setSubjectName("");
-    setSelectedAcademy("");
-    setCurrentRowId(null);
-  };
-
   return (
     <div className="flex flex-col gap-2">
       <div className="flex w-full justify-between rounded-md bg-white p-4 shadow-sm dark:bg-[#19191d]">

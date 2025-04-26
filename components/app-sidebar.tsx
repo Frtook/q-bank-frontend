@@ -23,7 +23,9 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{t("title")}</SidebarGroupLabel>
+          <SidebarGroupLabel className="font-bold">
+            {t("title")}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
@@ -36,12 +38,12 @@ export function AppSidebar() {
                       href={item.href}
                       aria-disabled={item.disable}
                       className={cn("p-3", {
-                        "bg-foreground text-white hover:bg-foreground hover:text-white dark:bg-white dark:text-black hover:dark:bg-white hover:dark:text-black":
+                        "bg-foreground text-white hover:bg-foreground hover:text-white":
                           item.href === pathname,
                       })}
                     >
-                      <item.icon />
-                      <div>{t(item.lable)}</div>
+                      <item.icon style={{ width: "22px", height: "22px" }} />
+                      <p className="text-[16px]">{t(item.lable)}</p>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
