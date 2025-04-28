@@ -32,3 +32,16 @@ type MangeUsers = {
   email: string;
   fullname: string;
 };
+
+type Outcome = {
+  id: number;
+  subject: number;
+  text: string;
+};
+
+type Topic = {
+  id: number;
+  name: string;
+  subject: number;
+  outcomes: number[];
+};
