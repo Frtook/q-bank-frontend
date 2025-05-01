@@ -2,6 +2,7 @@ import React from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { SidebarTrigger } from "../ui/sidebar";
+import UserIcon from "./userIcon";
 // import Breadcrumbs from "./breadcrumb";
 
 export default function Header() {
@@ -12,6 +13,7 @@ export default function Header() {
       <div className="flex items-center gap-4">
         <LanguageSwitcher />
         <ThemeSwitcher />
+        <UserIcon />
       </div>
     </div>
   );

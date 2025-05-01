@@ -10,9 +10,16 @@ import AddTopicDialog from "./dialogs/AddTopic";
 import { useGetOutcome } from "@/hooks/useOutcome";
 import DeleteDialog from "@/components/DeleteDialog";
 import EditTopicDialog from "./dialogs/EditTopic";
+import { usePathname } from "next/navigation";
 const Topics = () => {
-  const { data: topics } = useGetTopic();
-  const { data: outcomes } = useGetOutcome();
+  const subjectID = usePathname().split("/")[2];
+
+  const { data: topics, isLoading: isLoadingTopic } = useGetTopic({
+    subjec: subjectID,
+  });
+  const { data: outcomes } = useGetOutcome({
+    subjec: subjectID,
+  });
 
   return (
     <div className="mx-1">
@@ -20,7 +27,7 @@ const Topics = () => {
         <p className="text-2xl font-bold">Topic Page</p>
         <AddTopicDialog />
       </div>
-      {!topics && "loading..."}
+      {isLoadingTopic && "loading..."}
       <div className="flex flex-col gap-5">
         {topics?.map((topic) => (
           <Collapsible key={topic.id}>

@@ -30,7 +30,7 @@ import { MultiSelect } from "@/components/ui/multi-selector";
 
 export default function AddTopicDialog() {
   const subjectID = usePathname().split("/")[2];
-  const { data: outcomes } = useGetOutcome();
+  const { data: outcomes } = useGetOutcome({ subjec: subjectID });
   const { mutate: addTopic, isPending } = useAddTopic();
   const form = useForm<TTopic>({
     resolver: zodResolver(schemaTopic),

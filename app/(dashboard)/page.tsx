@@ -1,16 +1,18 @@
 "use client";
 
+import { useGetCountState } from "@/hooks/useCountState";
 import { Book, CircleHelp, FileText, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("homePage");
+  const { data: countState } = useGetCountState();
 
   return (
     <div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:gap-9">
         <Card
-          count={24}
+          count={countState?.subject_count}
           name={t("Subjects")}
           icon={
             <Book
@@ -20,7 +22,7 @@ export default function Home() {
           }
         />
         <Card
-          count={24}
+          count={countState?.question_count}
           name={t("NumberOfQuestions")}
           icon={
             <CircleHelp
@@ -30,7 +32,7 @@ export default function Home() {
           }
         />
         <Card
-          count={24}
+          count={countState?.exam_count}
           name={t("Exam")}
           icon={
             <FileText
@@ -40,7 +42,7 @@ export default function Home() {
           }
         />
         <Card
-          count={24}
+          count={countState?.user_count}
           name={t("Users")}
           icon={
             <Users
@@ -81,7 +83,7 @@ export default function Home() {
 type CardProp = {
   name: string;
   icon: React.ReactNode;
-  count: number;
+  count: number | undefined;
 };
 
 const Card: React.FC<CardProp> = ({ name, icon, count }) => {

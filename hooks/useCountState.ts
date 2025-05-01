@@ -6,7 +6,7 @@ export const useGetCountState = () => {
     queryKey: [],
     queryFn: async () => {
       const res = await apiClient.get("/stats/count/");
-      return res.data;
+      return res.data as CountState;
     },
   });
 };

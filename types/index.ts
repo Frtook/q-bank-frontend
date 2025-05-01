@@ -45,3 +45,34 @@ type Topic = {
   subject: number;
   outcomes: number[];
 };
+
+type CountState = {
+  academy_count: number;
+  exam_count: number;
+  question_count: number;
+  subject_count: number;
+  topic_count: number;
+  user_count: number;
+};
+
+type Privilege = {
+  id: number;
+  object_pk: string;
+  user: number;
+  fullname: string;
+  permission: number;
+  perm: string;
+};
+
+type PrivilegeGroup = {
+  name: [
+    {
+      fullname: string;
+      id: number;
+      object_pk: string;
+      perm: string;
+      permission: number;
+      user: number;
+    },
+  ];
+};
