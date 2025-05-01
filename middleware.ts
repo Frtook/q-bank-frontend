@@ -29,12 +29,16 @@ export async function middleware(requset: NextRequest) {
         {
           method: "POST",
           body: JSON.stringify({ refresh: refreshToken }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       if (!refreshResponse.ok) {
         return NextResponse.redirect(new URL("/login", requset.url));
       }
-      const { accessToken: newAccessToken } = await refreshResponse.json();
+      const { access: newAccessToken } = await refreshResponse.json();
+      console.log("gg", accessToken);
       const response = NextResponse.next();
 
       response.cookies.set("accessToken", newAccessToken, {

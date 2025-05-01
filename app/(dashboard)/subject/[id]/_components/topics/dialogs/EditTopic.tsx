@@ -40,7 +40,7 @@ export default function EditTopicDialog({
   name,
 }: Props) {
   const subjectID = usePathname().split("/")[2];
-  const { data: outcomes } = useGetOutcome();
+  const { data: outcomes } = useGetOutcome({ subjec: subjectID });
   const { mutate: editTopic, isPending } = useUpdataTopic(id);
   const form = useForm<TTopic>({
     resolver: zodResolver(schemaTopic),

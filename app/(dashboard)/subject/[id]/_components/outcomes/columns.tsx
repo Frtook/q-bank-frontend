@@ -27,7 +27,7 @@ export const columns: ColumnDef<Outcome>[] = [
           />
           <DeleteDialog
             id={outcome.id}
-            mutationKey="outcome"
+            mutationKey="privilege"
             url="/bank/outcome"
           />
         </div>

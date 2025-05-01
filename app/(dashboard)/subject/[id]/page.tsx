@@ -2,11 +2,11 @@
 import TabsContainer from "@/components/ui/tabContainer";
 import * as Tabs from "@radix-ui/react-tabs";
 import { MdOutlineTopic } from "react-icons/md";
-import Outcomes from "@/components/subjects/subjectDetails/outcomes/outcomes";
-import Topics from "@/components/subjects/subjectDetails/topics/topics";
+import Outcomes from "@/app/(dashboard)/subject/[id]/_components/outcomes/outcomes";
+import Topics from "@/app/(dashboard)/subject/[id]/_components/topics/topics";
 import { LiaClipboardListSolid } from "react-icons/lia";
 import { ShieldCheck } from "lucide-react";
-import Permission from "@/components/subjects/subjectDetails/primtion/permission";
+import Permission from "@/app/(dashboard)/subject/[id]/_components/permission/permission";
 
 export default function Page() {
   return (
