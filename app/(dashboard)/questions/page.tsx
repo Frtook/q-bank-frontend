@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-// import TooltipDemo from "@/components/ui/tooltip";
-// import { useTranslations } from "next-intl";
 import DataTable from "@/components/ui/dataTable";
 import SearchInput from "@/components/ui/search";
 import { useState } from "react";
+import QuestionDialog from "./_components/createQuestion/createDialog";
 
 export default function Home() {
-  // const t = useTranslations("HomePage");
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const columns = [
@@ -165,7 +163,7 @@ export default function Home() {
             </Button>
           </div>
           <div>
-            <Button variant="default">+ New Question</Button>
+            <QuestionDialog />
           </div>
         </div>
         <DataTable
