@@ -1,10 +1,11 @@
 "use client";
-import { setCookies } from "@/lib/cookie";
+import { setCookies } from "@/lib/helperServer";
 import apiClient from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { ToastError } from "@/lib/helperClient";
 
 const DAYS = 60 * 60 * 1000 * 7;
 
@@ -18,12 +19,7 @@ export const useRegister = () => {
       toast.success(data.data.message);
       push("/login");
     },
-    onError: (error: AxiosError) => {
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 
@@ -37,14 +33,8 @@ export const useToken = () => {
       toast.success("welcome back");
       await setCookies("accessToken", data.data.access, DAYS);
       await setCookies("refreshToken", data.data.refresh, DAYS * 30);
-
       push("/");
     },
-    onError: (error: AxiosError) => {
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

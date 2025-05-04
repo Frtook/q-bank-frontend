@@ -24,7 +24,7 @@ export const columns: ColumnDef<Privilege>[] = [
         <div className="flex items-center gap-3">
           <DeleteDialog
             id={user.id}
-            mutationKey=""
+            mutationKey="premission"
             url={`/bank/subject/${user.object_pk}/privilege`}
           />
         </div>

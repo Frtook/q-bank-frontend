@@ -1,7 +1,10 @@
 "use client";
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { TOutcome } from "@/lib/validations/outcome";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 type SearchParams = {
   subjec: string;
@@ -29,6 +32,7 @@ export const useAddOutcome = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 
@@ -42,6 +46,8 @@ export const useEditOutcome = (id: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
+      toast.success("Success Update Outcome");
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

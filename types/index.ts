@@ -64,15 +64,27 @@ type Privilege = {
   perm: string;
 };
 
-type PrivilegeGroup = {
-  name: [
-    {
-      fullname: string;
-      id: number;
-      object_pk: string;
-      perm: string;
-      permission: number;
-      user: number;
-    },
-  ];
+type Answer = {
+  id: number;
+  text: string;
+  isPerfectAns: boolean;
+};
+
+type Setting = {
+  active: boolean;
+  periodOfTime: string;
+  type: number;
+  level: number;
+  rondomnizable: boolean;
+  createdBy: string;
+  topic: number;
+};
+
+type Question = {
+  id: number;
+  text: string;
+  hint: string;
+  image: string;
+  setting: Setting;
+  answers: Answer[];
 };

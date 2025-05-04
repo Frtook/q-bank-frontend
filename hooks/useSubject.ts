@@ -1,5 +1,6 @@
 "use client";
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { SchemaSubject } from "@/lib/validations/subject";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -26,12 +27,7 @@ export const useAddSubject = () => {
       toast.success("success");
       return data;
     },
-    onError: (error: AxiosError) => {
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 
@@ -49,13 +45,7 @@ export const useUpdateSubject = (id: number) => {
       toast.success("success");
       return data;
     },
-    onError: (error: AxiosError) => {
-      toast.dismiss();
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 export const useDeleteSubject = () => {
@@ -67,8 +57,6 @@ export const useDeleteSubject = () => {
       queryClient.invalidateQueries({ queryKey: ["subject"] });
       toast.success("Subject deleted");
     },
-    onError: (err: AxiosError) => {
-      toast.error("Failed to delete subject");
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

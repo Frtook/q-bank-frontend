@@ -2,7 +2,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -58,6 +57,7 @@ export default function EditTopicDialog({
   useEffect(() => {
     if (subjectID) {
       form.reset({
+        name,
         subject: Number(subjectID),
       });
     }
@@ -68,13 +68,9 @@ export default function EditTopicDialog({
       <DialogTrigger asChild>
         <CirclePlus />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Edit Topic</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

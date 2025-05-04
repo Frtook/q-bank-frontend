@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, RotateCwSquare } from "lucide-react";
-import { getSubjectName } from "@/lib/helper";
+import { getSubjectName } from "@/lib/helperClient";
 import EditSubjectDialog from "./dialogs/EditSubjectDialog";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useRouter } from "next/navigation";

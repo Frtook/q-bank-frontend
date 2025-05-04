@@ -1,6 +1,8 @@
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { TPermission } from "@/lib/validations/permission";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 type SearchParams = {
@@ -28,8 +30,9 @@ export const useAddPrivilege = () => {
       await apiClient.post("/bank/subject/1/privilege/", data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["privilege"] });
-      toast.success("success");
+      toast.success("Success Add Permition");
       return data;
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

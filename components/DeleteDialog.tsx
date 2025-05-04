@@ -9,6 +9,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { Trash } from "lucide-react";
@@ -23,19 +24,11 @@ export default function DeleteDialog({ id, url, mutationKey }: Props) {
   const { mutate } = useMutation({
     mutationKey: [mutationKey],
     mutationFn: async (id: number) => apiClient.delete(`${url}/${id}/`),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [mutationKey] });
-      toast.dismiss();
       toast.success("Delete Success");
-      return data;
     },
-    onError: (error: AxiosError) => {
-      toast.dismiss();
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
   const deleteAcademy = (id: number) => {
     mutate(id);

@@ -10,7 +10,7 @@ type Props = {
 
 export default function UploadFile({ children, id, url, file }: Props) {
   return (
-    <div className="flex h-52 w-full items-center justify-center">
+    <div className="flex h-32 w-full items-center justify-center">
       <label
         htmlFor={id}
         className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
@@ -18,8 +18,8 @@ export default function UploadFile({ children, id, url, file }: Props) {
         {url && !file && (
           <Image
             alt="logo"
-            className="h-52 w-full bg-cover"
             src={url}
+            className="h-32 w-full object-cover"
             width={50}
             height={50}
           />
@@ -27,7 +27,7 @@ export default function UploadFile({ children, id, url, file }: Props) {
         {file && (
           <Image
             src={URL.createObjectURL(file)}
-            className="h-52 w-full bg-cover"
+            className="h-32 w-full object-cover"
             alt="logo"
             width={50}
             height={50}

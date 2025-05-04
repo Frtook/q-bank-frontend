@@ -1,6 +1,8 @@
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { SchemaUser } from "@/lib/validations/mange-user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 export const useGetMangeUser = () => {
   return useQuery({
@@ -23,5 +25,6 @@ export const useAddMangeUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mange-user"] });
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Globe } from "lucide-react";
 import { useLocale } from "next-intl";
-import { setCookies } from "@/lib/cookie";
+import { setCookies } from "@/lib/helperServer";
 
 const LanguageSwitcher = () => {
   const router = useRouter();

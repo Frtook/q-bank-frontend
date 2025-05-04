@@ -16,7 +16,7 @@
   },
   "login": {
     "welcome": "Welcome Back",
-    "noaccount": "Don&apos;t have an account yet?",
+    "noaccount": "Don't have an account yet?",
     "register": "register",
     "username": "username",
     "usernameDescription": "Username must have 3 characters",
@@ -44,7 +44,7 @@
     "subject": "Subject",
     "exams": "Exams",
     "ai": "AI",
-    "users": "Users",
-    "settings": "System settings"
+    "users": "Manage Users",
+    "settings": "Profile"
   }
 }

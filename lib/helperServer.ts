@@ -30,3 +30,8 @@ export async function setCookies(
     secure: process.env.NODE_ENV === "production",
   });
 }
+
+export async function logoutAction() {
+  (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
+}

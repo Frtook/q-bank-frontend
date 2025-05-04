@@ -1,6 +1,9 @@
 import apiClient from "@/lib/axios";
+import { ToastError } from "@/lib/helperClient";
 import { TTopic } from "@/lib/validations/topic";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 type SearchParams = {
   subjec: string;
@@ -24,7 +27,9 @@ export const useAddTopic = () => {
       await apiClient.post("/bank/topic/", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["topic"] });
+      toast.success("Success Add Topic");
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 
@@ -37,6 +42,8 @@ export const useUpdataTopic = (id: number) => {
       await apiClient.patch(`/bank/topic/${id}/`, body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["topic"] });
+      toast.success("Success Updata Topic");
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
