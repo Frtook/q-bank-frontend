@@ -1,10 +1,7 @@
-import { getCookies } from "@/lib/cookie";
+import { getCookies } from "@/lib/helperServer";
 import axios from "axios";
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  headers: {
-    "Accept-Language": "ar",
-  },
 });
 
 apiClient.interceptors.request.use(

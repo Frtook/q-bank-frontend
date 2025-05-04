@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import apiClient from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { ToastError } from "@/lib/helperClient";
 
 export const useGetacademy = () => {
   return useQuery({
@@ -27,13 +28,7 @@ export const useAddAcademy = () => {
       toast.success("success");
       return data;
     },
-    onError: (error: AxiosError) => {
-      toast.dismiss();
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };
 
@@ -49,11 +44,6 @@ export const useUpdateAcademy = () => {
       toast.success("success");
       return data;
     },
-    onError: (error: AxiosError) => {
-      toast.error(
-        (error.response?.data as { detail: string })?.detail || error.message
-      );
-      return error;
-    },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

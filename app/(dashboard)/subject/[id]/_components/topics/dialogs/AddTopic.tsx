@@ -42,13 +42,18 @@ export default function AddTopicDialog() {
   });
 
   const onsubmit = (data: TTopic) => {
-    // console.log(data);
     addTopic(data);
+    form.reset({
+      name: "",
+      outcomes: undefined,
+      subject: Number(subjectID),
+    });
   };
 
   useEffect(() => {
     if (subjectID) {
       form.reset({
+        name: "",
         subject: Number(subjectID),
       });
     }

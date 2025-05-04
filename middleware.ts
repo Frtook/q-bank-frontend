@@ -38,7 +38,6 @@ export async function middleware(requset: NextRequest) {
         return NextResponse.redirect(new URL("/login", requset.url));
       }
       const { access: newAccessToken } = await refreshResponse.json();
-      console.log("gg", accessToken);
       const response = NextResponse.next();
 
       response.cookies.set("accessToken", newAccessToken, {

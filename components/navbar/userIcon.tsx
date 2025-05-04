@@ -4,13 +4,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogOut, User } from "lucide-react";
 import { useGetProfile } from "@/hooks/useProfile";
+import { logoutAction } from "@/lib/helperServer";
+import { LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+
 export default function UserIcon() {
   const { data: profile } = useGetProfile();
   const router = useRouter();
-  const logout = () => {
+  const logout = async () => {
+    logoutAction();
     router.push("/login");
   };
   return (
@@ -33,7 +36,7 @@ export default function UserIcon() {
           </div>
           <div
             className="mt-2 flex cursor-pointer justify-center gap-3 px-4"
-            onClick={logout}
+            onClick={() => logout()}
           >
             <LogOut className="text-red-600" />
             <p>Logout</p>

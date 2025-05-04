@@ -19,15 +19,28 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
+type Props = {
+  options: {
+    label: string;
+    value: string;
+    icon?: React.ElementType;
+  }[];
+  onValueChange: (value: string | null) => void;
+  initialValue?: string | null;
+  placeholder?: string;
+  modalPopover?: boolean;
+};
 export const SingleSelect = ({
   options,
   onValueChange,
-  initialValue = null,
+  initialValue,
   placeholder = "Select an option",
   modalPopover = false,
   ...props
-}) => {
-  const [selected, setSelected] = React.useState<string | null>(initialValue);
+}: Props) => {
+  const [selected, setSelected] = React.useState<string | null>(
+    initialValue || null
+  );
   const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
   const handleSelect = (value: string) => {
