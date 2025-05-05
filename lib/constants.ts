@@ -41,7 +41,6 @@ export const navItems = [
     lable: "exams",
     href: "/exams",
     icon: FilePenLine,
-    disable: true,
   },
   {
     lable: "ai",

@@ -41,7 +41,6 @@ const Breadcrumbs = () => {
     {
       lable: "exams",
       href: "/exams",
-      disable: true,
     },
     {
       lable: "ai",
