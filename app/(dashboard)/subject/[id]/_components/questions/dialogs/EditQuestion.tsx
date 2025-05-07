@@ -49,8 +49,9 @@ export default function EditQuestionDialog({
     isSuccess,
   } = useUpdateQuestion(question.id);
   const { data: topics } = useGetTopic({ subjec: subjectID });
+
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(
-    null
+    question.answers.findIndex((answer) => answer.isPerfectAns)
   );
   const refClose = useRef<HTMLButtonElement>(null);
 
@@ -64,8 +65,7 @@ export default function EditQuestionDialog({
     name: "answers",
   });
   const onsubmit = async (data: TQuestion) => {
-    if (data.image?.startsWith("https://api.q-bank.tech/image/")) {
-      console.log(true);
+    if (data.image?.startsWith("https://api.q-bank.tech/")) {
       delete data.image;
     }
     await editQusetion(data);

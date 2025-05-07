@@ -1,16 +1,16 @@
-"use client";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useGetTopic } from "@/hooks/useTopic";
-import { ChevronsUpDown } from "lucide-react";
+import { BookA, CircleArrowDownIcon } from "lucide-react";
 import AddTopicDialog from "./dialogs/AddTopic";
 import { useGetOutcome } from "@/hooks/useOutcome";
 import DeleteDialog from "@/components/DeleteDialog";
 import EditTopicDialog from "./dialogs/EditTopic";
 import { usePathname } from "next/navigation";
+import CardIcon from "@/components/card-icon";
 
 const Topics = () => {
   const subjectID = usePathname().split("/")[2];
@@ -23,28 +23,32 @@ const Topics = () => {
 
   return (
     <div className="mx-4">
-      <div className="mb-8 flex items-center justify-between rounded-xl bg-white p-4 shadow-md">
-        <h1 className="text-3xl font-bold text-gray-800">Course Topics</h1>
-        <AddTopicDialog />
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+        <CardIcon
+          count={topics?.length}
+          title="Totla Topic"
+          icon={<BookA />}
+        />
       </div>
+      <AddTopicDialog />
 
       {isLoading && (
-        <div className="animate-pulse space-y-4">
+        <div className="mt-4 animate-pulse space-y-4">
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="h-16 rounded-lg bg-gray-200"
+              className="h-16 rounded-lg bg-gray-200 dark:bg-secondary"
             />
           ))}
         </div>
       )}
 
-      <div className="space-y-4">
+      <div className="mt-6 space-y-4">
         {topics?.map((topic) => (
           <Collapsible key={topic.id}>
-            <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md focus:shadow-xl dark:bg-secondary">
               <div className="space-y-1 text-left">
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   {topic.name}
                 </h3>
                 <p className="text-sm text-gray-500">
@@ -65,7 +69,7 @@ const Topics = () => {
                     mutationKey="topic"
                   />
                 </div>
-                <ChevronsUpDown className="ml-4 h-6 w-6 text-gray-400 transition-transform group-data-[state=open]:rotate-180" />
+                <CircleArrowDownIcon className="ml-4 h-6 w-6 text-gray-400 transition-transform group-data-[state=open]:rotate-180" />
               </div>
             </CollapsibleTrigger>
 
@@ -73,9 +77,9 @@ const Topics = () => {
               {topic.outcomes.map((outcome) => (
                 <div
                   key={outcome}
-                  className="rounded-lg bg-indigo-50/50 p-4 transition-colors hover:bg-indigo-100"
+                  className="rounded-lg bg-indigo-50/50 p-4 transition-colors hover:bg-indigo-100 dark:bg-primary"
                 >
-                  <p className="text-sm font-medium text-indigo-800">
+                  <p className="text-sm font-medium text-indigo-800 dark:text-white">
                     {outcomes?.find((out) => out.id === outcome)?.text}
                   </p>
                 </div>

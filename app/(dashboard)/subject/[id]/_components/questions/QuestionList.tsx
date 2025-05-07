@@ -43,7 +43,7 @@ const getTypeDetails = (type: number) => {
 
 export default function QuestionList({ questions }: { questions: Question[] }) {
   return (
-    <div className="mt-5">
+    <div className="my-5">
       <div className="space-y-5">
         {questions.map((question) => {
           const typeDetails = getTypeDetails(question.setting.type);
@@ -83,7 +83,7 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                       src={question.image}
                       alt={question.text}
                       fill
-                      className="object-cover"
+                      className="object-contain object-center"
                     />
                   </div>
                 )}

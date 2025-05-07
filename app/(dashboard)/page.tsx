@@ -1,5 +1,6 @@
 "use client";
 
+import CardIcon from "@/components/card-icon";
 import { useGetCountState } from "@/hooks/useCountState";
 import { Book, CircleHelp, FileText, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -10,10 +11,10 @@ export default function Home() {
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:gap-9">
-        <Card
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:gap-9">
+        <CardIcon
           count={countState?.subject_count}
-          name={t("Subjects")}
+          title={t("Subjects")}
           icon={
             <Book
               className="text-blue-700"
@@ -21,9 +22,9 @@ export default function Home() {
             />
           }
         />
-        <Card
+        <CardIcon
           count={countState?.question_count}
-          name={t("NumberOfQuestions")}
+          title={t("NumberOfQuestions")}
           icon={
             <CircleHelp
               className="text-blue-700"
@@ -31,9 +32,9 @@ export default function Home() {
             />
           }
         />
-        <Card
+        <CardIcon
           count={countState?.exam_count}
-          name={t("Exam")}
+          title={t("Exam")}
           icon={
             <FileText
               className="text-blue-700"
@@ -41,9 +42,9 @@ export default function Home() {
             />
           }
         />
-        <Card
+        <CardIcon
           count={countState?.user_count}
-          name={t("Users")}
+          title={t("Users")}
           icon={
             <Users
               className="text-blue-700"
@@ -51,65 +52,31 @@ export default function Home() {
             />
           }
         />
-        <CardName
-          name={t("AddNewQuestion")}
+        <CardIcon
+          count={countState?.academy_count}
+          title={t("Academy")}
           icon={
-            <CircleHelp
+            <Users
               className="text-blue-700"
               strokeWidth={2.5}
             />
           }
-          text={t("AddNewQuestionText")}
         />
-        <CardName
-          name={t("GenerateExam")}
+        <CardIcon
+          count={countState?.topic_count}
+          title={t("Topic")}
           icon={
-            <FileText
+            <Users
               className="text-blue-700"
               strokeWidth={2.5}
             />
           }
-          text={t("GenerateExamText")}
         />
       </div>
 
-      <div className="mt-4 rounded-md bg-white p-6">
+      <div className="mt-4 rounded-md bg-white p-6 shadow-xl dark:bg-primary">
         <p className="text-3xl font-bold">{t("History")}</p>
       </div>
     </div>
   );
 }
-
-type CardProp = {
-  name: string;
-  icon: React.ReactNode;
-  count: number | undefined;
-};
-
-const Card: React.FC<CardProp> = ({ name, icon, count }) => {
-  return (
-    <div className="rounded-xl bg-white p-6 shadow-md">
-      <div className="flex items-center justify-between">
-        <p className="text-gray-500">{name}</p>
-        <div className="rounded-full bg-gray-100 p-4">{icon}</div>
-      </div>
-      <p className="text-3xl font-bold">{count}</p>
-    </div>
-  );
-};
-
-const CardName: React.FC<Omit<CardProp, "count"> & { text: string }> = ({
-  name,
-  icon,
-  text,
-}) => {
-  return (
-    <div className="rounded-xl bg-white p-6 shadow-md">
-      <div className="flex items-center justify-between">
-        <p className="text-xl font-bold text-blue-500">{name}</p>
-        <div className="rounded-full bg-gray-100 p-4">{icon}</div>
-      </div>
-      <p className="text-gray-500">{text}</p>
-    </div>
-  );
-};

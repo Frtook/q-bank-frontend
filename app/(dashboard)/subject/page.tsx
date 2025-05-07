@@ -6,6 +6,8 @@ import { getColumns } from "./_components/columns";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@/components/table/data-table";
+import CardIcon from "@/components/card-icon";
+import { Book } from "lucide-react";
 
 export default function Page() {
   const { data } = useGetSubject();
@@ -14,9 +16,22 @@ export default function Page() {
 
   return (
     <div>
-      <div className="flex items-center justify-between rounded-md bg-white p-2">
-        <h1>Subject Page</h1>
-        <AddSubjectDialog />
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+        <CardIcon
+          count={data?.length}
+          title="Totla Subjects"
+          icon={<Book />}
+        />
+        {/* <CardIcon
+          count={data?.filter((acadmey) => acadmey.active).length}
+          title="Active Academies"
+          icon={<ShieldCheck className="text-green-700" />}
+        />
+        <CardIcon
+          count={data?.filter((acadmey) => !acadmey.active).length}
+          title="Inctive Academies"
+          icon={<ShieldX className="text-red-700" />}
+        /> */}
       </div>
 
       {data && academies ? (
@@ -28,6 +43,7 @@ export default function Page() {
           }}
           placeholderInput="Search Subject.."
           sortValue="name"
+          button={<AddSubjectDialog />}
         />
       ) : (
         <TableSkeleton />

@@ -42,12 +42,13 @@ export default function DeleteDialog({ id, url, mutationKey }: Props) {
         />
       </DialogTrigger>
       <DialogContent
+        className="dark:bg-secondary"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
       >
         <DialogHeader>
-          <DialogTitle>Are you sure to delete this academy</DialogTitle>
+          <DialogTitle className="mb-5">Are you sure to delete</DialogTitle>
           <DialogDescription asChild>
             <div className="flex flex-col gap-5">
               <p>

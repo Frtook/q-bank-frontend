@@ -4,6 +4,8 @@
     "NumberOfQuestions": "Number of questions",
     "Exam": "Exam",
     "Users": "Users",
+    "Academy": "Academy",
+    "Topic": "Topic",
     "AddNewQuestion": "Add new question",
     "GenerateExam": "Generate Exam",
     "History": "History",
@@ -18,11 +20,11 @@
     "welcome": "Welcome Back",
     "noaccount": "Don't have an account yet?",
     "register": "register",
-    "username": "username",
+    "username": "Username",
     "usernameDescription": "Username must have 3 characters",
     "password": "Password",
     "passwordDescription": " Password must be at least 8 characters",
-    "submit": "submit"
+    "submit": "login"
   },
   "regester": {
     "createAccount": "Create an account",

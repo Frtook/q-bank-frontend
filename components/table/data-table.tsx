@@ -37,6 +37,7 @@ interface DataTableProps<TData, TValue> {
 type Props = {
   placeholderInput: string;
   sortValue: string;
+  button?: React.ReactNode;
 };
 
 export function DataTable<TData, TValue>({
@@ -44,6 +45,7 @@ export function DataTable<TData, TValue>({
   data,
   onRowClick,
   placeholderInput,
+  button,
   sortValue,
 }: DataTableProps<TData, TValue> & Props) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -79,7 +81,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {/* filtter */}
-      <div className="flex items-center py-4">
+      <div className="my-5 flex items-center justify-between rounded-xl bg-white p-4 dark:bg-secondary">
         <div className="relative">
           <Input
             placeholder={placeholderInput}
@@ -89,12 +91,13 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn(sortValue)?.setFilterValue(event.target.value)
             }
-            className="max-w-sm bg-white pl-10 dark:border-white dark:bg-gray-800"
+            className="max-w-sm border-2 bg-white py-6 pl-10 dark:border-white dark:bg-gray-800"
           />
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-[50%] size-5 -translate-y-1/2 text-gray-400" />
         </div>
+        {button && button}
       </div>
-      <div className="rounded-md bg-white p-4 shadow-md">
+      <div className="rounded-md bg-white p-4 shadow-md dark:bg-secondary">
         {/* table */}
         <Table>
           <TableHeader>
@@ -105,7 +108,7 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       className={`${
                         locale === "en" ? "text-left" : "text-right"
-                      } bg-gray-200 p-4`}
+                      } rounded-xl bg-gray-100 p-2 font-semibold dark:bg-primary dark:text-white`}
                       key={header.id}
                     >
                       {header.isPlaceholder
@@ -127,6 +130,7 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   onClick={(e) => onRowClickHandler(e, row)}
+                  className="dark:odd:bg-muted-foreground/10 dark:even:bg-muted-foreground/20"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

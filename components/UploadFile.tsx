@@ -13,7 +13,7 @@ export default function UploadFile({ children, id, url, file }: Props) {
     <div className="flex h-32 w-full items-center justify-center">
       <label
         htmlFor={id}
-        className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-800"
+        className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-primary dark:hover:border-gray-500 dark:hover:bg-gray-800"
       >
         {url && !file && (
           <Image

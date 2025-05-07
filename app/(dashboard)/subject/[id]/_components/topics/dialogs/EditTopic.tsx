@@ -61,7 +61,7 @@ export default function EditTopicDialog({
         subject: Number(subjectID),
       });
     }
-  }, [subjectID, form]);
+  }, [subjectID, form, name]);
 
   return (
     <Dialog>

@@ -5,6 +5,8 @@ import { useGetOutcome } from "@/hooks/useOutcome";
 import { DataTable } from "@/components/table/data-table";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { usePathname } from "next/navigation";
+import CardIcon from "@/components/card-icon";
+import { BookA } from "lucide-react";
 
 const Outcomes = () => {
   const subjectID = usePathname().split("/")[2];
@@ -12,16 +14,21 @@ const Outcomes = () => {
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between rounded-md bg-white p-2">
-        <h1 className="text-2xl font-bold">Outcome Page</h1>
-        <AddOutcomeDialog />
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+        <CardIcon
+          count={data?.length}
+          title="Totla Outcoem"
+          icon={<BookA />}
+        />
       </div>
+
       {data ? (
         <DataTable
           placeholderInput="Search Outcome.."
           sortValue="text"
           columns={columns}
           data={data}
+          button={<AddOutcomeDialog />}
         />
       ) : (
         <TableSkeleton />

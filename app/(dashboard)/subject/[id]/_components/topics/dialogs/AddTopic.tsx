@@ -62,7 +62,7 @@ export default function AddTopicDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Topic</Button>
+        <Button className="mt-5">+ New Topic</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

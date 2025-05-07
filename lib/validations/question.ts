@@ -13,13 +13,7 @@ export const schemaQuestion = z.object({
           (img) => img.startsWith("data:image/"),
           "Please select a valid base64 image"
         ),
-      z
-        .string()
-        .refine(
-          (img) => img.startsWith("https://api.q-bank.tech/image/"),
-          "Please select a valid image URL"
-        ),
-      z.null(),
+      z.string().optional(),
     ])
     .optional(),
   answers: z
@@ -31,7 +25,11 @@ export const schemaQuestion = z.object({
     )
     .refine(
       (answers) => answers.some((answer) => answer.isPerfectAns),
-      "Select one answer"
+      "Select The True answer"
+    )
+    .refine(
+      (answers) => answers.every((answer) => answer.text.trim() !== ""),
+      "Select The Text answer"
     ),
   setting: z.object({
     active: z.boolean(),
