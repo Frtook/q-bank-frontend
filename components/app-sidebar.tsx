@@ -110,7 +110,7 @@ export function AppSidebar() {
                             className={cn(
                               "flex w-full items-center gap-2 p-3",
                               {
-                                "bg-foreground text-white":
+                                "bg-black text-white dark:bg-primary":
                                   item.href === pathname,
                               }
                             )}
@@ -134,7 +134,7 @@ export function AppSidebar() {
                               key={idx}
                               href={`/subject/${subItem.id}`}
                               className={cn("rounded-md p-3 text-sm", {
-                                "bg-black text-white":
+                                "bg-black text-white dark:bg-primary":
                                   pathname === `/subject/${subItem.id}`,
                               })}
                             >
@@ -153,7 +153,8 @@ export function AppSidebar() {
                         href={item.href}
                         aria-disabled={item.disable}
                         className={cn("p-3", {
-                          "bg-foreground text-white": item.href === pathname,
+                          "bg-foreground text-white dark:bg-primary":
+                            item.href === pathname,
                         })}
                       >
                         <item.icon style={{ width: "22px", height: "22px" }} />

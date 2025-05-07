@@ -33,12 +33,12 @@ import { Slider } from "@/components/ui/slider";
 import { useLocale } from "next-intl";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CloudUpload, Trash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 export default function AddQuestionDialog() {
   const subjectID = usePathname().split("/")[2];
-  const { mutateAsync: addQusetion, isPending, isSuccess } = useAddQuestion();
+  const { mutateAsync: addQusetion, isPending } = useAddQuestion();
   const { data: topics } = useGetTopic({ subjec: subjectID });
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(
     null
@@ -71,25 +71,23 @@ export default function AddQuestionDialog() {
     name: "answers",
   });
   const onsubmit = async (data: TQuestion) => {
-    console.log(data);
     await addQusetion(data);
+    setCorrectAnswerIndex(null);
     form.reset({
-      answers: [{ isPerfectAns: false, text: "" }],
+      answers: [
+        { isPerfectAns: false, text: "" },
+        { isPerfectAns: false, text: "" },
+      ],
       text: "",
       hint: "",
       setting: {
         topic: undefined,
-        periodOfTime: "000500",
+        periodOfTime: data.setting.periodOfTime,
+        level: data.setting.level,
       },
     });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      refClose.current?.click();
-    }
-    return () => {};
-  }, [isSuccess]);
   return (
     <Dialog>
       <DialogTrigger asChild>

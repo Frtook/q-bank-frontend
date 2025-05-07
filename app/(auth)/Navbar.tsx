@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathName = usePathname();
   const t = useTranslations("navAuth");
   return (
-    <div className="flex gap-5 border-b border-b-gray-500 p-4">
+    <div className="flex gap-5 border-b border-b-gray-500 p-4 px-8">
       <p className="flex-1 text-4xl font-bold">Logo</p>
       {routes.map((route, index) => (
         <Link

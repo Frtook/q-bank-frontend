@@ -37,7 +37,7 @@ export default function Page() {
   const onSubmit = (data: TschemaProfile) => updateProfile(data);
   return (
     <div className="space-y-5">
-      <div className="h-60 rounded-xl bg-gradient-to-r from-[#0C7FDA] to-white p-10 text-[#E9F5FE]">
+      <div className="h-60 rounded-xl bg-gradient-to-r from-[#0C7FDA] to-white p-10 text-[#E9F5FE] dark:from-primary dark:to-secondary">
         <p className="font-semibold">{profile?.username}</p>
         <p className="mt-5 text-3xl font-bold">{profile?.fullname}</p>
         <p className="text-xl text-gray-300">{profile?.email}</p>
@@ -50,7 +50,7 @@ export default function Page() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-5 rounded-xl bg-white p-4"
+            className="mt-5 rounded-xl bg-white p-4 dark:bg-secondary"
           >
             <div className="grid grid-cols-2 gap-5">
               <FormField
@@ -61,6 +61,7 @@ export default function Page() {
                     <FormLabel>Fullname</FormLabel>
                     <FormControl>
                       <Input
+                        className="dark:border-white"
                         placeholder="your Full Name"
                         {...field}
                       />
@@ -77,6 +78,7 @@ export default function Page() {
                     <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input
+                        className="dark:border-white"
                         placeholder="your Username"
                         {...field}
                       />
@@ -94,6 +96,7 @@ export default function Page() {
                     <FormControl>
                       <Input
                         type="email"
+                        className="dark:border-white"
                         placeholder="your Email"
                         {...field}
                       />

@@ -29,17 +29,16 @@ const RegisterPage = () => {
   });
   const onSubmit = (data: TschemaLogin) => login(data);
   return (
-    <div className="container mx-auto grid grid-cols-1 p-2 md:grid-cols-2 md:p-6">
-      <div className="hidden rounded border border-black dark:border-white md:block"></div>
-      <div className="mx-auto md:w-[70%] xl:w-[50%]">
+    <div className="mt-24 flex items-center justify-center bg-cover bg-center">
+      <div className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-bold">{t("welcome")}</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-center text-2xl font-bold">{t("welcome")}</h1>
+          <p className="text-center text-sm text-gray-500">
             {t("noaccount")}
             <Link href="register">
               <Button
                 className="mx-2"
-                variant="default"
+                variant="outline"
               >
                 {t("register")}
               </Button>
@@ -90,6 +89,7 @@ const RegisterPage = () => {
               disabled={isPending}
               variant={isPending ? "secondary" : "default"}
               type="submit"
+              className="w-full"
             >
               {t("submit")}
             </Button>

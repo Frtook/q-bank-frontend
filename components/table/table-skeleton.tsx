@@ -12,20 +12,19 @@ import {
 import React from "react";
 
 export default function TableSkeleton() {
-  // Generate an array of rows with an array of cells for each row
   const rows = Array.from({ length: 10 }, () => Array.from({ length: 6 }));
 
   return (
     <ScrollArea className="h-[calc(80vh-220px)] rounded-md">
       <Table className="relative border-separate border-spacing-y-3">
         <TableHeader>
-          <TableRow className="rounded-xl bg-gray-300 px-6">
+          <TableRow className="rounded-xl bg-gray-300 px-6 dark:bg-gray-700">
             {Array.from({ length: 6 }).map((_, columnIndex) => (
               <TableHead
                 className="text-right"
                 key={columnIndex}
               >
-                <div className="h-4 animate-pulse rounded bg-gray-300"></div>
+                <div className="h-4 animate-pulse rounded bg-gray-300 dark:bg-gray-600"></div>
               </TableHead>
             ))}
           </TableRow>
@@ -33,7 +32,7 @@ export default function TableSkeleton() {
         <TableBody>
           {rows.map((_, rowIndex) => (
             <TableRow
-              className="border-muted bg-background"
+              className="border-muted bg-background dark:bg-gray-800"
               key={rowIndex}
             >
               {rows[rowIndex].map((_, cellIndex) => (
@@ -41,7 +40,7 @@ export default function TableSkeleton() {
                   key={cellIndex}
                   className="p-4 first:rounded-r-lg last:rounded-l-md"
                 >
-                  <div className="h-4 animate-pulse rounded bg-gray-300"></div>
+                  <div className="h-4 animate-pulse rounded bg-gray-300 dark:bg-gray-600"></div>
                 </TableCell>
               ))}
             </TableRow>

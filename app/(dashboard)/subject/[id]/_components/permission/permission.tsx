@@ -16,10 +16,6 @@ export default function Permission() {
   });
   return (
     <div>
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold">Permission</h1>
-        <AddPermissionDialog />
-      </div>
       {isLoading ? (
         <TableSkeleton />
       ) : (
@@ -28,6 +24,7 @@ export default function Permission() {
           data={privilege || []}
           sortValue="fullname"
           placeholderInput="Search by name "
+          button={<AddPermissionDialog />}
         />
       )}
     </div>
