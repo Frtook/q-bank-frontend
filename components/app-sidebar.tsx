@@ -32,7 +32,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
-import { useGetSubject } from "@/hooks/useSubject";
+import { useGetSubject } from "@/hooks/subject/useSubject";
 export function AppSidebar() {
   const pathname = usePathname();
   const t = useTranslations("navitems");
@@ -69,7 +69,6 @@ export function AppSidebar() {
       lable: "ai",
       href: "/ai",
       icon: Bot,
-      disable: true,
     },
     {
       lable: "users",

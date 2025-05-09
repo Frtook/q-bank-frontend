@@ -14,19 +14,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 type Props = {
   id: number;
   url: string;
   mutationKey: string;
 };
 export default function DeleteDialog({ id, url, mutationKey }: Props) {
+  const t = useTranslations("toast");
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationKey: [mutationKey],
     mutationFn: async (id: number) => apiClient.delete(`${url}/${id}/`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [mutationKey] });
-      toast.success("Delete Success");
+      toast.success(t("deleteSuccess"));
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });

@@ -48,5 +48,22 @@
     "ai": "AI",
     "users": "Manage Users",
     "settings": "Profile"
+  },
+  "toast": {
+    "profileUpdated": "Profile updated successfully",
+    "privilegeAdded": "Privilege added successfully",
+    "registrationSuccess": "Registration successful",
+    "welcomeBack": "Welcome back",
+    "academyAdded": "Academy added successfully",
+    "academyUpdated": "Academy updated successfully",
+    "topicAdded": "Topic added successfully",
+    "topicUpdated": "Topic updated successfully",
+    "subjectAdded": "Subject added successfully",
+    "subjectUpdated": "Subject updated successfully",
+    "subjectDeleted": "Subject deleted successfully",
+    "questionAdded": "Question added successfully",
+    "questionUpdated": "Question updated successfully",
+    "outcomeUpdated": "Outcome updated successfully",
+    "deleteSuccess": "Delete successful"
   }
 }

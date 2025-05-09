@@ -24,11 +24,11 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { usePathname } from "next/navigation";
-import { useAddQuestion } from "@/hooks/useQuestion";
-import { TQuestion, schemaQuestion } from "@/lib/validations/question";
+import { useAddQuestion } from "@/hooks/subject/useQuestion";
+import { TQuestion, schemaQuestion } from "@/lib/validations/subject/question";
 import { TypeQuestion } from "@/lib/constants";
 import { SingleSelect } from "@/components/ui/single-select";
-import { useGetTopic } from "@/hooks/useTopic";
+import { useGetTopic } from "@/hooks/subject/useTopic";
 import { Slider } from "@/components/ui/slider";
 import { useLocale } from "next-intl";
 import { ScrollArea } from "@/components/ui/scroll-area";

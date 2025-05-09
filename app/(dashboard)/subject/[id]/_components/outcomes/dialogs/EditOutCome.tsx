@@ -20,8 +20,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEditOutcome } from "@/hooks/useOutcome";
-import { TOutcome, schemaOutcome } from "@/lib/validations/outcome";
+import { useEditOutcome } from "@/hooks/subject/useOutcome";
+import { TOutcome, schemaOutcome } from "@/lib/validations/subject/outcome";
 import { useEffect, useRef } from "react";
 import { SquarePen } from "lucide-react";
 

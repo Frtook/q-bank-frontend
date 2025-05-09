@@ -4,6 +4,12 @@ export const ACCEPTED_IMAGE_TYPES = [
   "image/png",
   "image/webp",
 ];
+export const ACCEPTED_FILE_TYPES = [
+  "application/pdf",
+  "application/docx",
+  "application/txt",
+  "application/doc",
+];
 
 export const TypeQuestion = [
   { lable: "Multi Choise", value: 1 },

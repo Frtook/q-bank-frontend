@@ -3,10 +3,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { useGetTopic } from "@/hooks/useTopic";
+import { useGetTopic } from "@/hooks/subject/useTopic";
 import { BookA, CircleArrowDownIcon } from "lucide-react";
 import AddTopicDialog from "./dialogs/AddTopic";
-import { useGetOutcome } from "@/hooks/useOutcome";
+import { useGetOutcome } from "@/hooks/subject/useOutcome";
 import DeleteDialog from "@/components/DeleteDialog";
 import EditTopicDialog from "./dialogs/EditTopic";
 import { usePathname } from "next/navigation";

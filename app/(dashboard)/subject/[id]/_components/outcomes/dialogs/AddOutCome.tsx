@@ -21,8 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAddOutcome } from "@/hooks/useOutcome";
-import { TOutcome, schemaOutcome } from "@/lib/validations/outcome";
+import { useAddOutcome } from "@/hooks/subject/useOutcome";
+import { TOutcome, schemaOutcome } from "@/lib/validations/subject/outcome";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 

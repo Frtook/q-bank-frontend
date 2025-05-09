@@ -88,3 +88,10 @@ type Question = {
   setting: Setting;
   answers: Answer[];
 };
+
+type Documents = {
+  id: number;
+  name: string;
+  file: string;
+  subject: number;
+};

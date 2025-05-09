@@ -1,7 +1,7 @@
 "use client";
 import AddOutcomeDialog from "./dialogs/AddOutCome";
 import { columns } from "./columns";
-import { useGetOutcome } from "@/hooks/useOutcome";
+import { useGetOutcome } from "@/hooks/subject/useOutcome";
 import { DataTable } from "@/components/table/data-table";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { usePathname } from "next/navigation";

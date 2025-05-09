@@ -48,5 +48,22 @@
     "ai": "الذكاء الاصطناعي",
     "users": "المستخدمين",
     "settings": "إعدادات النظام"
+  },
+  "toast": {
+    "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
+    "privilegeAdded": "تمت إضافة الصلاحية بنجاح",
+    "registrationSuccess": "تم التسجيل بنجاح",
+    "welcomeBack": "مرحبًا بعودتك",
+    "academyAdded": "تمت إضافة الكلية بنجاح",
+    "academyUpdated": "تم تحديث الكلية بنجاح",
+    "topicAdded": "تمت إضافة الموضوع بنجاح",
+    "topicUpdated": "تم تحديث الموضوع بنجاح",
+    "subjectAdded": "تمت إضافة المادة بنجاح",
+    "subjectUpdated": "تم تحديث المادة بنجاح",
+    "subjectDeleted": "تم حذف المادة بنجاح",
+    "questionAdded": "تمت إضافة السؤال بنجاح",
+    "questionUpdated": "تم تحديث السؤال بنجاح",
+    "outcomeUpdated": "تم تحديث النتيجة بنجاح",
+    "deleteSuccess": "تم الحذف بنجاح"
   }
 }
