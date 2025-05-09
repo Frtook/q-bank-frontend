@@ -97,6 +97,9 @@ importers:
       next-themes:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      pretty-bytes:
+        specifier: ^7.0.0
+        version: 7.0.0
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -3768,6 +3771,13 @@ packages:
     engines: { node: ">=14" }
     hasBin: true
 
+  pretty-bytes@7.0.0:
+    resolution:
+      {
+        integrity: sha512-U5otLYPR3L0SVjHGrkEUx5mf7MxV2ceXeE7VwWPk+hyzC5drNohsOGNPDZqxCqyX1lkbEN4kl1LiI8QFd7r0ZA==,
+      }
+    engines: { node: ">=20" }
+
   prop-types@15.8.1:
     resolution:
       {
@@ -6898,6 +6908,8 @@ snapshots:
       prettier: 3.4.2
 
   prettier@3.4.2: {}
+
+  pretty-bytes@7.0.0: {}
 
   prop-types@15.8.1:
     dependencies:

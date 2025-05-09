@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import UploadFile from "@/components/UploadFile";
 import { useUpdateAcademy } from "@/hooks/useAcademy";
-import { Academy, AcademySchema } from "@/lib/validations/academy";
+import { Academy, AcademySchema } from "@/lib/validations/subject/academy";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
 import { SquarePen } from "lucide-react";

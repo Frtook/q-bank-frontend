@@ -11,7 +11,7 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
-import { useGetSubject } from "@/hooks/useSubject";
+import { useGetSubject } from "@/hooks/subject/useSubject";
 
 const Breadcrumbs = () => {
   const t = useTranslations("navitems");

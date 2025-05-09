@@ -1,10 +1,11 @@
 "use client";
 import apiClient from "@/lib/axios";
 import { ToastError } from "@/lib/helperClient";
-import { TOutcome } from "@/lib/validations/outcome";
+import { TOutcome } from "@/lib/validations/subject/outcome";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 type SearchParams = {
   subjec: string;
@@ -38,7 +39,7 @@ export const useAddOutcome = () => {
 
 export const useEditOutcome = (id: number) => {
   const queryClient = useQueryClient();
-
+  const t = useTranslations("toast");
   return useMutation({
     mutationKey: ["outcome"],
     mutationFn: async (data: TOutcome) => {
@@ -46,7 +47,7 @@ export const useEditOutcome = (id: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
-      toast.success("Success Update Outcome");
+      toast.success(t("outcomeUpdated"));
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });

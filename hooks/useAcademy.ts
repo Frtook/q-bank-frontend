@@ -4,6 +4,7 @@ import apiClient from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ToastError } from "@/lib/helperClient";
+import { useTranslations } from "next-intl";
 
 export const useGetacademy = () => {
   return useQuery({
@@ -17,6 +18,7 @@ export const useGetacademy = () => {
 
 export const useAddAcademy = () => {
   const queryClient = useQueryClient();
+  const t = useTranslations("toast");
   return useMutation({
     mutationKey: ["academy"],
     mutationFn: (data: FormData) => {
@@ -25,7 +27,7 @@ export const useAddAcademy = () => {
     onSuccess: (data) => {
       toast.dismiss();
       queryClient.invalidateQueries({ queryKey: ["academy"] });
-      toast.success("success");
+      toast.success(t("academyAdded"));
       return data;
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
@@ -34,6 +36,7 @@ export const useAddAcademy = () => {
 
 export const useUpdateAcademy = () => {
   const queryClient = useQueryClient();
+  const t = useTranslations("toast");
   return useMutation({
     mutationKey: ["academy"],
     mutationFn: (data: { id: number; formData: FormData }) => {
@@ -41,7 +44,7 @@ export const useUpdateAcademy = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["academy"] });
-      toast.success("success");
+      toast.success(t("academyUpdated"));
       return data;
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),

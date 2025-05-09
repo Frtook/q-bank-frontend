@@ -20,11 +20,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useGetOutcome } from "@/hooks/useOutcome";
+import { useGetOutcome } from "@/hooks/subject/useOutcome";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useUpdataTopic } from "@/hooks/useTopic";
-import { schemaTopic, TTopic } from "@/lib/validations/topic";
+import { useUpdataTopic } from "@/hooks/subject/useTopic";
+import { schemaTopic, TTopic } from "@/lib/validations/subject/topic";
 import { MultiSelect } from "@/components/ui/multi-selector";
 import { CirclePlus } from "lucide-react";
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import AddQuestionDialog from "./dialogs/AddQuestion";
-import { useGetQuestion } from "@/hooks/useQuestion";
+import { useGetQuestion } from "@/hooks/subject/useQuestion";
 import QuestionList from "./QuestionList";
 import CardIcon from "@/components/card-icon";
 import { MailQuestion, ShieldCheck, ShieldX } from "lucide-react";

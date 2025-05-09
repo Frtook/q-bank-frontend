@@ -23,7 +23,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
-import { SchemaSubject, schemaSubject } from "@/lib/validations/subject";
+import {
+  SchemaSubject,
+  schemaSubject,
+} from "@/lib/validations/subject/subject";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown, SquarePen } from "lucide-react";
 import {
@@ -40,7 +43,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useGetacademy } from "@/hooks/useAcademy";
-import { useUpdateSubject } from "@/hooks/useSubject";
+import { useUpdateSubject } from "@/hooks/subject/useSubject";
 
 export default function EditSubjectDialog({
   name,

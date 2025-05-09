@@ -10,7 +10,7 @@ import Permission from "@/app/(dashboard)/subject/[id]/_components/permission/pe
 import Questions from "./_components/questions/questions";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import { use } from "react";
-import { useGetSubject } from "@/hooks/useSubject";
+import { useGetSubject } from "@/hooks/subject/useSubject";
 import { notFound } from "next/navigation";
 
 export default function Page({
@@ -27,38 +27,45 @@ export default function Page({
       notFound();
     }
   }
-
+  const taps = [
+    {
+      label: "Outcomes",
+      value: "outcomes",
+      icon: <MdOutlineTopic />,
+      component: <Outcomes />,
+    },
+    {
+      label: "Topics",
+      value: "topics",
+      icon: <LiaClipboardListSolid />,
+      component: <Topics />,
+    },
+    {
+      label: "Questions",
+      value: "questions",
+      icon: <QuestionMarkCircledIcon />,
+      component: <Questions />,
+    },
+    {
+      label: "Permission",
+      value: "permission",
+      icon: <ShieldCheck />,
+      component: <Permission />,
+    },
+  ];
   return (
     <TabsContainer
-      tabs={[
-        { label: "Outcomes", value: "outcomes", icon: <MdOutlineTopic /> },
-        { label: "Topics", value: "topics", icon: <LiaClipboardListSolid /> },
-        {
-          label: "Questions",
-          value: "questions",
-          icon: <QuestionMarkCircledIcon />,
-        },
-        {
-          label: "Permission",
-          value: "permission",
-          icon: <ShieldCheck />,
-        },
-      ]}
+      tabs={taps}
       defaultValue="outcomes"
     >
-      <Tabs.Content value="outcomes">
-        <Outcomes />
-      </Tabs.Content>
-
-      <Tabs.Content value="topics">
-        <Topics />
-      </Tabs.Content>
-      <Tabs.Content value="questions">
-        <Questions />
-      </Tabs.Content>
-      <Tabs.Content value="permission">
-        <Permission />
-      </Tabs.Content>
+      {taps.map((tap) => (
+        <Tabs.Content
+          value={tap.value}
+          key={tap.value}
+        >
+          {tap.component}
+        </Tabs.Content>
+      ))}
     </TabsContainer>
   );
 }

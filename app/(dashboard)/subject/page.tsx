@@ -1,5 +1,5 @@
 "use client";
-import { useGetSubject } from "@/hooks/useSubject";
+import { useGetSubject } from "@/hooks/subject/useSubject";
 import AddSubjectDialog from "./_components/dialogs/AddSubjectDialog";
 import { useGetacademy } from "@/hooks/useAcademy";
 import { getColumns } from "./_components/columns";
