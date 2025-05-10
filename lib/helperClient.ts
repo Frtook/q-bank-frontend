@@ -2,7 +2,7 @@ import { toast } from "sonner";
 
 export const getSubjectName = (id: number, academies: IAcademy[]) => {
   const academy = academies.find((academy) => academy.id === id);
-  return academy?.name ?? "Unknown";
+  return academy?.name ?? "_";
 };
 
 export const ToastError = (errors: Error) => {
@@ -14,4 +14,8 @@ export const ToastError = (errors: Error) => {
       toast.error(`${field}: ${message}`);
     });
   });
+};
+
+export const IsDev = () => {
+  return process.env.NODE_ENV === "development";
 };

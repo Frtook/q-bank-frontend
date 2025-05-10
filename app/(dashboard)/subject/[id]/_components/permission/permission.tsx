@@ -4,12 +4,14 @@ import { useGetPrivilege } from "@/hooks/usePrivilege";
 import AddPermissionDialog from "./dialogs/AddPermission";
 import { usePathname } from "next/navigation";
 import { DataTable } from "@/components/table/data-table";
-import { columns } from "./columns";
+import { useColumns } from "./columns";
 import TableSkeleton from "@/components/table/table-skeleton";
+import { useTranslations } from "next-intl";
 
 export default function Permission() {
   const subjectID = usePathname().split("/")[2];
-
+  const t = useTranslations("subject.search");
+  const column = useColumns();
   const { data: privilege, isLoading } = useGetPrivilege({
     id: subjectID,
     type: "subject",
@@ -20,10 +22,10 @@ export default function Permission() {
         <TableSkeleton />
       ) : (
         <DataTable
-          columns={columns}
+          columns={column}
           data={privilege || []}
           sortValue="fullname"
-          placeholderInput="Search by name "
+          placeholderInput={t("permission")}
           button={<AddPermissionDialog />}
         />
       )}

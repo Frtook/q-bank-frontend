@@ -12,6 +12,7 @@ import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import { use } from "react";
 import { useGetSubject } from "@/hooks/subject/useSubject";
 import { notFound } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Page({
   params,
@@ -20,6 +21,7 @@ export default function Page({
     id: string;
   }>;
 }) {
+  const t = useTranslations("tabs"); // Add translation hook
   const { id } = use(params);
   const { data: subjects } = useGetSubject();
   if (subjects) {
@@ -29,25 +31,25 @@ export default function Page({
   }
   const taps = [
     {
-      label: "Outcomes",
+      label: t("outcomes"), // Use translated label
       value: "outcomes",
       icon: <MdOutlineTopic />,
       component: <Outcomes />,
     },
     {
-      label: "Topics",
+      label: t("topics"), // Use translated label
       value: "topics",
       icon: <LiaClipboardListSolid />,
       component: <Topics />,
     },
     {
-      label: "Questions",
+      label: t("questions"), // Use translated label
       value: "questions",
       icon: <QuestionMarkCircledIcon />,
       component: <Questions />,
     },
     {
-      label: "Permission",
+      label: t("permission"), // Use translated label
       value: "permission",
       icon: <ShieldCheck />,
       component: <Permission />,

@@ -16,7 +16,7 @@ import {
   FilePenLine,
   Book,
   Home,
-  ScrollText,
+  // ScrollText,
   Bot,
   UserPlus,
   Settings,
@@ -43,11 +43,11 @@ export function AppSidebar() {
       href: "/",
       icon: Home,
     },
-    {
-      lable: "questions",
-      href: "/questions",
-      icon: ScrollText,
-    },
+    // {
+    //   lable: "questions",
+    //   href: "/questions",
+    //   icon: ScrollText,
+    // },
     {
       lable: "academy",
       href: "/academy",
@@ -57,7 +57,7 @@ export function AppSidebar() {
       lable: "subject",
       href: "/subject",
       icon: Book,
-      subnav: subject || [],
+      subnav: subject,
     },
     {
       lable: "exams",

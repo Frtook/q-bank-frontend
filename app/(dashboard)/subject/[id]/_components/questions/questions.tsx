@@ -6,8 +6,10 @@ import QuestionList from "./QuestionList";
 import CardIcon from "@/components/card-icon";
 import { MailQuestion, ShieldCheck, ShieldX } from "lucide-react";
 import { MultiSelect } from "@/components/ui/multi-selector";
+import { useTranslations } from "next-intl";
 
 export default function Questions() {
+  const t = useTranslations("subject");
   const { data, isLoading } = useGetQuestion();
   const [filter, setFilter] = useState<string[]>([]);
   useEffect(() => {
@@ -24,17 +26,17 @@ export default function Questions() {
       <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-3">
         <CardIcon
           count={data?.length}
-          title="Totla Questions"
+          title={t("questions.totalQuestions")}
           icon={<MailQuestion />}
         />
         <CardIcon
           count={data?.filter((questions) => questions.setting.active).length}
-          title="Active Questions"
+          title={t("questions.activeQuestions")}
           icon={<ShieldCheck className="text-green-700" />}
         />
         <CardIcon
           count={data?.filter((questions) => !questions.setting.active).length}
-          title="Inctive Questions"
+          title={t("questions.inactiveQuestions")}
           icon={<ShieldX className="text-red-700" />}
         />
       </div>
@@ -44,7 +46,7 @@ export default function Questions() {
           className="border-2"
           onValueChange={(value) => setFilter(value)}
           options={options}
-          placeholder="Filter Question"
+          placeholder={t("search.question")}
         />
         <AddQuestionDialog />
       </div>

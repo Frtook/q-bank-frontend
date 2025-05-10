@@ -4,8 +4,8 @@
     "NumberOfQuestions": "عدد الأسئلة",
     "Exam": "الاختبارات",
     "Users": "المستخدمين",
-    "Academy": "كلية",
-    "Topic": "مواضيع",
+    "Academy": "الأكاديمية",
+    "Topic": "الموضوع",
     "AddNewQuestion": "إضافة سؤال جديد",
     "GenerateExam": "إنشاء اختبار",
     "History": "السجل",
@@ -65,5 +65,130 @@
     "questionUpdated": "تم تحديث السؤال بنجاح",
     "outcomeUpdated": "تم تحديث النتيجة بنجاح",
     "deleteSuccess": "تم الحذف بنجاح"
+  },
+  "tabs": {
+    "outcomes": "مخرجات التعلم",
+    "topics": "المواضيع",
+    "questions": "الأسئلة",
+    "permission": "الصلاحيات"
+  },
+  "subject": {
+    "home": {
+      "newSubject": "إضافة مادة جديدة",
+      "name": "اسم المادة",
+      "academyPlaseholder": "أدخل اسم الكلية",
+      "academyName": "اسم الكلية",
+      "noAcademy": "لم يتم العثور على كلية.",
+      "submit": "إرسال",
+      "Submitting": "جارٍ الإرسال...",
+      "selectAcademy": "اختر الكلية",
+      "searchAcademy": "بحث عن الكلية..."
+    },
+    "search": {
+      "outcomes": "بحث عن مخرج التعلم..",
+      "question": "البحث ب السؤال",
+      "permission": "البحث بالاسم",
+      "subject": "البحث بالمادة"
+    },
+    "outcomes": {
+      "totalOutcomes": "إجمالي المخرجات التعلم"
+    },
+    "topics": {
+      "totalTopics": "إجمالي المواضيع"
+    },
+    "questions": {
+      "totalQuestions": "إجمالي الأسئلة",
+      "activeQuestions": "الأسئلة النشطة",
+      "inactiveQuestions": "الأسئلة غير النشطة",
+      "questionText": "نص السؤال",
+      "hint": "تلميح",
+      "image": "صورة",
+      "settings": "الإعدادات",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "type": "النوع",
+      "difficulty": "الصعوبة",
+      "randomizable": "عشوائي",
+      "answers": "الإجابات",
+      "perfectAnswer": "الإجابة المثالية",
+      "multiChoice": "اختيار من متعدد",
+      "trueFalse": "صح/خطأ",
+      "shortAnswer": "إجابة قصيرة",
+      "unknown": "غير معروف"
+    }
+  },
+  "dialogs": {
+    "addNewOutcome": "+ إضافة مخرج التعلم جديد",
+    "addNewPermission": "+ إضافة صلاحية جديدة",
+    "addNewQuestion": "+ إضافة سؤال جديد",
+    "addNewTopic": "+ إضافة موضوع جديد",
+    "addNewSubject": "+ إضافة مادة جديدة",
+    "addPermission": "إضافة صلاحية",
+    "addQuestion": "إضافة سؤال",
+    "addTopic": "إضافة موضوع",
+    "addUser": "إضافة مستخدم",
+    "actionCannotBeUndone": "لا يمكن التراجع عن هذا الإجراء. سيؤدي ذلك إلى حذف حسابك وإزالة بياناتك من خوادمنا.",
+    "submitting": "جارٍ الإرسال...",
+    "submit": "إرسال",
+    "saving": "جارٍ الحفظ...",
+    "save": "حفظ",
+    "back": "رجوع",
+    "permissionLabel": "الصلاحية",
+    "permissionPlaceholder": "اختر الصلاحية",
+    "userLabel": "المستخدم",
+    "userPlaceholder": "اختر المستخدم",
+    "topicName": "اسم الموضوع",
+    "enterTopicText": "أدخل نص الموضوع",
+    "selectOutcomes": "اختر المخرجات التعلم",
+    "typeOfQuestion": "نوع السؤال",
+    "selectType": "اختر النوع",
+    "selectTopic": "اختر الموضوع",
+    "difficultyLevel": "مستوى الصعوبة ({value}/10)",
+    "active": "نشط",
+    "isQuestionActive": "هل السؤال نشط",
+    "randomizable": "عشوائي",
+    "isQuestionRandomizable": "هل يمكن عشوائية السؤال",
+    "questionName": "اسم السؤال",
+    "enterQuestionName": "أدخل اسم السؤال",
+    "addOption": "إضافة خيار",
+    "outcomeText": "نص المخرج التعلم",
+    "enterOutcomeText": "أدخل نص المخرج التعلم"
+  },
+  "column": {
+    "id": "المعرف",
+    "fullName": "الاسم الكامل",
+    "Permission": "الصلاحية",
+    "Outcome": "مخرج التعلم",
+    "Academy": "الأكاديمية",
+    "Active": "نشط",
+    "unactive": "غير نشط",
+    "Logo": "الشعار",
+    "email": "البريد الإلكتروني",
+    "actions": "الإجراءات",
+    "users": "إجمالي المستخدمين",
+    "filterName": "البحث ب الاسم...",
+    "subject": "المادة"
+  },
+
+  "academy": {
+    "totalAcademies": "إجمالي الكليات",
+    "activeAcademies": "الكليات النشطة",
+    "inactiveAcademies": "الكليات غير النشطة",
+    "search": {
+      "filterAcademy": "البحث ب الكليات ..."
+    }
+  },
+  "profile": {
+    "personalInfo": "المعلومات الشخصية",
+    "updateDetails": "قم بتحديث صورتك وبياناتك الشخصية.",
+    "fullname": "الاسم الكامل",
+    "fullnamePlaceholder": "اسمك الكامل",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "اسم المستخدم الخاص بك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "بريدك الإلكتروني",
+    "cancel": "إلغاء",
+    "saving": "جارٍ الحفظ...",
+    "saveChanges": "حفظ التغييرات"
   }
 }

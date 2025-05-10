@@ -11,30 +11,31 @@ import {
 } from "lucide-react";
 import DeleteDialog from "@/components/DeleteDialog";
 import EditQuestionDialog from "./dialogs/EditQuestion";
+import { useTranslations } from "next-intl";
 
-const getTypeDetails = (type: number) => {
+const getTypeDetails = (type: number, t: any) => {
   switch (type) {
     case 1:
       return {
-        label: "Multi Choice",
+        label: t("questions.multiChoice"),
         icon: ClipboardList,
         color: "bg-blue-100 text-blue-800",
       };
     case 2:
       return {
-        label: "True/False",
+        label: t("questions.trueFalse"),
         icon: ShieldCheck,
         color: "bg-purple-100 text-purple-800",
       };
     case 3:
       return {
-        label: "Short Answer",
+        label: t("questions.shortAnswer"),
         icon: HelpCircle,
         color: "bg-orange-100 text-orange-800",
       };
     default:
       return {
-        label: "Unknown",
+        label: t("questions.unknown"),
         icon: Beaker,
         color: "bg-gray-100 text-gray-800",
       };
@@ -42,11 +43,12 @@ const getTypeDetails = (type: number) => {
 };
 
 export default function QuestionList({ questions }: { questions: Question[] }) {
+  const t = useTranslations("subject");
   return (
     <div className="my-5">
       <div className="space-y-5">
         {questions.map((question) => {
-          const typeDetails = getTypeDetails(question.setting.type);
+          const typeDetails = getTypeDetails(question.setting.type, t);
           const TypeIcon = typeDetails.icon;
 
           return (
@@ -90,7 +92,7 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                 <div className="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
                   <h4 className="mb-3 flex items-center text-sm font-medium text-gray-700 dark:text-gray-200">
                     <Beaker className="mr-2 h-5 w-5" />
-                    Question Settings
+                    {t("questions.settings")}
                   </h4>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="flex items-center">
@@ -100,7 +102,9 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                         <X className="h-5 w-5 text-red-600 dark:text-red-400" />
                       )}
                       <span className="ml-2 text-gray-600 dark:text-gray-300">
-                        {question.setting.active ? "Active" : "Inactive"}
+                        {question.setting.active
+                          ? t("questions.active")
+                          : t("questions.inactive")}
                       </span>
                     </div>
 
@@ -114,7 +118,7 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                     <div className="flex items-center">
                       <ArrowUp className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                       <span className="ml-2 text-gray-600 dark:text-gray-300">
-                        Difficulty {question.setting.level}/10
+                        {t("questions.difficulty")} {question.setting.level}/10
                       </span>
                     </div>
 
@@ -125,7 +129,9 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                         <X className="h-5 w-5 text-red-600 dark:text-red-400" />
                       )}
                       <span className="ml-2 text-gray-600 dark:text-gray-300">
-                        Randomizable
+                        {question.setting.rondomnizable
+                          ? t("questions.randomizable")
+                          : t("questions.notRandomizable")}
                       </span>
                     </div>
                   </div>
@@ -134,7 +140,7 @@ export default function QuestionList({ questions }: { questions: Question[] }) {
                 <div className="space-y-2">
                   <h4 className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200">
                     <ClipboardList className="mr-2 h-5 w-5" />
-                    Answers ({question.answers.length})
+                    {t("questions.answers")} ({question.answers.length})
                   </h4>
                   <div className="space-y-2">
                     {question.answers.map((answer) => (

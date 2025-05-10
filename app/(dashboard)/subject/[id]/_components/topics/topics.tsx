@@ -11,8 +11,10 @@ import DeleteDialog from "@/components/DeleteDialog";
 import EditTopicDialog from "./dialogs/EditTopic";
 import { usePathname } from "next/navigation";
 import CardIcon from "@/components/card-icon";
+import { useTranslations } from "next-intl";
 
 const Topics = () => {
+  const t = useTranslations("subject.topics");
   const subjectID = usePathname().split("/")[2];
   const { data: topics, isLoading } = useGetTopic({
     subjec: subjectID,
@@ -26,7 +28,7 @@ const Topics = () => {
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
         <CardIcon
           count={topics?.length}
-          title="Totla Topic"
+          title={t("totalTopics")}
           icon={<BookA />}
         />
       </div>
@@ -43,7 +45,10 @@ const Topics = () => {
         </div>
       )}
 
-      <div className="mt-6 space-y-4">
+      <div
+        className="mt-6 space-y-4"
+        dir="ltr"
+      >
         {topics?.map((topic) => (
           <Collapsible key={topic.id}>
             <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md focus:shadow-xl dark:bg-secondary">

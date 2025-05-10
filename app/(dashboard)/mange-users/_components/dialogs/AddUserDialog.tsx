@@ -26,8 +26,10 @@ import { useEffect, useRef } from "react";
 import { useAddMangeUser } from "@/hooks/useMageUsers";
 import { schemaUser, SchemaUser } from "@/lib/validations/mange-user";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslations } from "next-intl";
 
 export default function AddUserDialog() {
+  const t = useTranslations("dialogs");
   const { mutate: addUser, isPending, isSuccess } = useAddMangeUser();
   const refClose = useRef<HTMLButtonElement>(null);
   const form = useForm<SchemaUser>({
@@ -52,7 +54,7 @@ export default function AddUserDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add User</Button>
+        <Button>{t("addUser")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

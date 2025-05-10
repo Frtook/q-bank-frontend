@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { useGetProfile, useUpdateProfile } from "@/hooks/useProfile";
 import { schemaProfile, TschemaProfile } from "@/lib/validations/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -35,18 +37,20 @@ export default function Page() {
   }, [profile, form]);
 
   const onSubmit = (data: TschemaProfile) => updateProfile(data);
+  const locale = useLocale();
+  const t = useTranslations("profile");
   return (
     <div className="space-y-5">
-      <div className="h-60 rounded-xl bg-gradient-to-r from-[#0C7FDA] to-white p-10 text-[#E9F5FE] dark:from-primary dark:to-secondary">
+      <div
+        className={`h-60 rounded-xl bg-gradient-to-r ${locale === "en" ? "from-[#0C7FDA] to-white dark:from-primary dark:to-secondary" : "from-white to-[#0C7FDA] dark:from-secondary dark:to-primary"} p-10 text-[#E9F5FE]`}
+      >
         <p className="font-semibold">{profile?.username}</p>
         <p className="mt-5 text-3xl font-bold">{profile?.fullname}</p>
         <p className="text-xl text-gray-300">{profile?.email}</p>
       </div>
       <div className="p-4">
-        <p className="text-xl font-bold">Personal info</p>
-        <p className="mt-4 text-gray-500">
-          Update your photo and personal details.
-        </p>
+        <p className="text-xl font-bold">{t("personalInfo")}</p>
+        <p className="mt-4 text-gray-500">{t("updateDetails")}</p>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -58,11 +62,11 @@ export default function Page() {
                 name="fullname"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Fullname</FormLabel>
+                    <FormLabel>{t("fullname")}</FormLabel>
                     <FormControl>
                       <Input
                         className="dark:border-white"
-                        placeholder="your Full Name"
+                        placeholder={t("fullnamePlaceholder")}
                         {...field}
                       />
                     </FormControl>
@@ -75,11 +79,11 @@ export default function Page() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t("username")}</FormLabel>
                     <FormControl>
                       <Input
                         className="dark:border-white"
-                        placeholder="your Username"
+                        placeholder={t("usernamePlaceholder")}
                         {...field}
                       />
                     </FormControl>
@@ -92,12 +96,12 @@ export default function Page() {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="col-span-2">
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
                         className="dark:border-white"
-                        placeholder="your Email"
+                        placeholder={t("emailPlaceholder")}
                         {...field}
                       />
                     </FormControl>
@@ -108,13 +112,13 @@ export default function Page() {
             </div>
             <div className="mt-5 flex justify-end gap-5">
               <Link href="/">
-                <Button variant="secondary">Cancel</Button>
+                <Button variant="secondary">{t("cancel")}</Button>
               </Link>
               <Button
                 type="submit"
                 disabled={isPending}
               >
-                {isPending ? "Saving..." : "Save Changes"}
+                {isPending ? t("saving") : t("saveChanges")}
               </Button>
             </div>
           </form>

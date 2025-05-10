@@ -1,22 +1,25 @@
 "use client";
 // import { DataTable } from "./data-table";
-import { columns } from "./_components/columns";
+import { useColumns } from "./_components/columns";
 import { useGetMangeUser } from "@/hooks/useMageUsers";
 import AddUserDialog from "./_components/dialogs/AddUserDialog";
 import { DataTable } from "@/components/table/data-table";
 import TableSkeleton from "@/components/table/table-skeleton";
 import CardIcon from "@/components/card-icon";
 import { User } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const { data } = useGetMangeUser();
+  const columns = useColumns();
+  const t = useTranslations("column");
 
   return (
     <div>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
         <CardIcon
           count={data?.length}
-          title="Totla Users"
+          title={t("users")}
           icon={<User />}
         />
       </div>
@@ -24,7 +27,7 @@ export default function Page() {
         <DataTable
           columns={columns}
           data={data}
-          placeholderInput="Filter name..."
+          placeholderInput={t("filterName")}
           sortValue="fullname"
           button={<AddUserDialog />}
         />
