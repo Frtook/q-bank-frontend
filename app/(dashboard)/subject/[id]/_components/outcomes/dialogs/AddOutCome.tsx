@@ -25,8 +25,10 @@ import { useAddOutcome } from "@/hooks/subject/useOutcome";
 import { TOutcome, schemaOutcome } from "@/lib/validations/subject/outcome";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function AddOutcomeDialog() {
+  const t = useTranslations("dialogs");
   const subjectID = usePathname().split("/")[2];
   const { mutate: addOutcome, isPending } = useAddOutcome();
   const form = useForm<TOutcome>({
@@ -57,15 +59,12 @@ export default function AddOutcomeDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Outcome</Button>
+        <Button>{t("addNewOutcome")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle></DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogDescription>{t("actionCannotBeUndone")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -77,10 +76,10 @@ export default function AddOutcomeDialog() {
               name="text"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Outcome Text</FormLabel>
+                  <FormLabel>{t("outcomeText")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Outcome text"
+                      placeholder={t("enterOutcomeText")}
                       {...field}
                     />
                   </FormControl>
@@ -94,7 +93,7 @@ export default function AddOutcomeDialog() {
               disabled={isPending}
               type="submit"
             >
-              {isPending ? "Submitting..." : "Submit"}
+              {isPending ? t("submitting") : t("submit")}
             </Button>
           </form>
         </Form>

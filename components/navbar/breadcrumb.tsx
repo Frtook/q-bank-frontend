@@ -12,6 +12,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
 import { useGetSubject } from "@/hooks/subject/useSubject";
+import { useGetQuestion } from "@/hooks/subject/useQuestion";
+import { sliceString } from "@/lib/helperClient";
 
 const Breadcrumbs = () => {
   const t = useTranslations("navitems");
@@ -20,6 +22,7 @@ const Breadcrumbs = () => {
     .filter((path) => path);
   const locale = useLocale();
   const { data: subjects } = useGetSubject();
+  const { data: question } = useGetQuestion();
   const navItems = [
     {
       lable: "dashboard",
@@ -36,16 +39,10 @@ const Breadcrumbs = () => {
     {
       lable: "subject",
       href: "/subject",
-      subnav: subjects || [],
     },
     {
       lable: "exams",
       href: "/exams",
-    },
-    {
-      lable: "ai",
-      href: "/ai",
-      disable: true,
     },
     {
       lable: "users",
@@ -56,6 +53,17 @@ const Breadcrumbs = () => {
       href: "/profile",
     },
   ];
+  const getPath = (id: string): string => {
+    if (subjects && question) {
+      const subject = subjects?.find((sub) => String(sub.id) === id)?.name;
+      if (subject) return sliceString(subject, 0, 10);
+
+      const qusetion = question?.find((qus) => String(qus.id) === id)?.text;
+      if (qusetion) return sliceString(qusetion, 0, 10);
+      return id;
+    }
+    return "...";
+  };
   return (
     <Breadcrumb>
       <BreadcrumbList className="text-md">
@@ -83,10 +91,12 @@ const Breadcrumbs = () => {
             <Fragment key={index}>
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage>{page ? t(page.lable) : path}</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    {page ? t(page.lable) : getPath(path)}
+                  </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink href={page?.href}>
-                    {page ? t(page.lable) : path}
+                    {page ? t(page.lable) : getPath(path)}
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

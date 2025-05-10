@@ -36,7 +36,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRef, useState } from "react";
 import { CloudUpload, Trash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { IsDev } from "@/lib/helperClient";
+import { useTranslations } from "next-intl";
 export default function AddQuestionDialog() {
+  const t = useTranslations("dialogs");
   const subjectID = usePathname().split("/")[2];
   const { mutateAsync: addQusetion, isPending } = useAddQuestion();
   const { data: topics } = useGetTopic({ subjec: subjectID });
@@ -91,13 +94,13 @@ export default function AddQuestionDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Qusetion</Button>
+        <Button>{t("addNewQuestion")}</Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader className="inline">
           <DialogTitle>
-            Add Question
-            {form.formState.errors && JSON.stringify(form.formState.errors)}
+            {t("addQuestion")}
+            {IsDev() && JSON.stringify(form.formState.errors)}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -105,7 +108,10 @@ export default function AddQuestionDialog() {
             onSubmit={form.handleSubmit(onsubmit)}
             className="h- flex flex-col justify-between"
           >
-            <div className="mb-5 grid grid-cols-3 gap-2">
+            <div
+              className="mb-5 grid grid-cols-3 gap-2"
+              dir={locale === "ar" ? "rtl" : "ltr"}
+            >
               <div
                 className={`col-span-1 space-y-4 ${locale === "ar" && "border-l-4 pl-5"}`}
               >
@@ -114,7 +120,7 @@ export default function AddQuestionDialog() {
                   name="setting.type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Type of Qustion</FormLabel>
+                      <FormLabel>{t("typeOfQuestion")}</FormLabel>
                       <FormControl>
                         <SingleSelect
                           options={TypeQuestion.map((type) => ({
@@ -124,7 +130,7 @@ export default function AddQuestionDialog() {
                           onValueChange={(value) =>
                             field.onChange(Number(value))
                           }
-                          placeholder="Select Type"
+                          placeholder={t("selectType")}
                         />
                       </FormControl>
                     </FormItem>
@@ -135,7 +141,7 @@ export default function AddQuestionDialog() {
                   name="setting.topic"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Topic</FormLabel>
+                      <FormLabel>{t("selectTopic")}</FormLabel>
                       <FormControl>
                         <SingleSelect
                           options={
@@ -147,7 +153,7 @@ export default function AddQuestionDialog() {
                           onValueChange={(value) =>
                             field.onChange(Number(value))
                           }
-                          placeholder="Select Topic"
+                          placeholder={t("selectTopic")}
                         />
                       </FormControl>
                     </FormItem>
@@ -158,7 +164,7 @@ export default function AddQuestionDialog() {
                   name="setting.level"
                   render={({ field: { value, onChange } }) => (
                     <FormItem>
-                      <FormLabel>Difficulty level ({value}/10)</FormLabel>
+                      <FormLabel>{t("difficultyLevel", { value })}</FormLabel>
                       <FormControl>
                         <Slider
                           min={0}
@@ -181,13 +187,16 @@ export default function AddQuestionDialog() {
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
                         <Checkbox
+                          className={locale === "ar" ? "ml-4" : ""}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>Active</FormLabel>
-                        <FormDescription>is qusetion is active</FormDescription>
+                        <FormLabel>{t("active")}</FormLabel>
+                        <FormDescription>
+                          {t("isQuestionActive")}
+                        </FormDescription>
                         <FormMessage />
                       </div>
                     </FormItem>
@@ -200,14 +209,15 @@ export default function AddQuestionDialog() {
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
                         <Checkbox
+                          className={locale === "ar" ? "ml-4" : ""}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>Rondomnizable </FormLabel>
+                        <FormLabel>{t("randomizable")}</FormLabel>
                         <FormDescription>
-                          is qusetion can be Rondomnizable
+                          {t("isQuestionRandomizable")}
                         </FormDescription>
                         <FormMessage />
                       </div>
@@ -223,10 +233,10 @@ export default function AddQuestionDialog() {
                   name="text"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Qusetion name</FormLabel>
+                      <FormLabel>{t("questionName")}</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Qustion name"
+                          placeholder={t("enterQuestionName")}
                           {...field}
                         />
                       </FormControl>
@@ -361,7 +371,7 @@ export default function AddQuestionDialog() {
                   variant={"outline"}
                   type="button"
                 >
-                  Add option
+                  {t("addOption")}
                 </Button>
               </div>
             </div>
@@ -371,14 +381,14 @@ export default function AddQuestionDialog() {
                 disabled={isPending}
                 type="submit"
               >
-                {isPending ? "Saving..." : "Save"}
+                {isPending ? t("saving") : t("save")}
               </Button>
               <Button
                 type="button"
                 onClick={() => refClose.current?.click()}
                 variant="outline"
               >
-                Back
+                {t("back")}
               </Button>
             </div>
           </form>

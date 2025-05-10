@@ -4,6 +4,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import React from "react";
 import clsx from "clsx";
+import { useLocale } from "next-intl";
 
 type TabItem = {
   label: string;
@@ -24,9 +25,11 @@ const TabsContainer: React.FC<TabsContainerProps> = ({
   children,
   fullWidth = false,
 }) => {
+  const locale = useLocale();
   return (
     <Tabs.Root defaultValue={defaultValue}>
       <Tabs.List
+        dir={locale === "ar" ? "rtl" : "ltr"}
         className={clsx(
           "mb-6 flex border-b border-gray-300 dark:border-gray-700",
           fullWidth && "w-full"
@@ -57,7 +60,7 @@ const TabsContainer: React.FC<TabsContainerProps> = ({
           </Tabs.Trigger>
         ))}
       </Tabs.List>
-      {children}
+      <div dir={locale === "ar" ? "rtl" : "ltr"}>{children}</div>
     </Tabs.Root>
   );
 };

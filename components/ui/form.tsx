@@ -14,6 +14,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { useLocale } from "next-intl";
 
 const Form = FormProvider;
 
@@ -77,11 +78,13 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId();
+  const locale = useLocale();
 
   return (
     <FormItemContext.Provider value={{ id }}>
       <div
         ref={ref}
+        dir={locale === "ar" ? "rtl" : "ltr"}
         className={cn("space-y-2", className)}
         {...props}
       />

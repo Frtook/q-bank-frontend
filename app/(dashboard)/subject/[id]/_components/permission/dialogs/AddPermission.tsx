@@ -25,8 +25,10 @@ import { TPermission, schemaPermission } from "@/lib/validations/permission";
 import { useGetPermission } from "@/hooks/usePermission";
 import { useGetMangeUser } from "@/hooks/useMageUsers";
 import { SingleSelect } from "@/components/ui/single-select";
+import { useTranslations } from "next-intl";
 
 export default function AddPermissionDialog() {
+  const t = useTranslations("dialogs");
   const subjectID = usePathname().split("/")[2];
   const { mutate: addPrivilege, isPending, isSuccess } = useAddPrivilege();
   const { data: permission } = useGetPermission({
@@ -66,15 +68,12 @@ export default function AddPermissionDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Permission</Button>
+        <Button>{t("addNewPermission")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Permisstion</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>{t("addPermission")}</DialogTitle>
+          <DialogDescription>{t("actionCannotBeUndone")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -86,7 +85,7 @@ export default function AddPermissionDialog() {
               name="permission"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Permission</FormLabel>
+                  <FormLabel>{t("permissionLabel")}</FormLabel>
                   <SingleSelect
                     options={
                       permission?.map((perm) => ({
@@ -94,7 +93,7 @@ export default function AddPermissionDialog() {
                         label: perm.name,
                       })) || []
                     }
-                    placeholder="Select Permission"
+                    placeholder={t("permissionPlaceholder")}
                     onValueChange={(value) => field.onChange(Number(value))}
                   />
                   <FormMessage />
@@ -106,7 +105,7 @@ export default function AddPermissionDialog() {
               name="user"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>User</FormLabel>
+                  <FormLabel>{t("userLabel")}</FormLabel>
                   <SingleSelect
                     options={
                       users?.map((user) => ({
@@ -114,7 +113,7 @@ export default function AddPermissionDialog() {
                         label: user.fullname,
                       })) || []
                     }
-                    placeholder="Select User"
+                    placeholder={t("userPlaceholder")}
                     onValueChange={(value) => field.onChange(Number(value))}
                   />
                   <FormMessage />
@@ -126,7 +125,7 @@ export default function AddPermissionDialog() {
               disabled={isPending}
               type="submit"
             >
-              {isPending ? "Submitting..." : "Submit"}
+              {isPending ? t("submitting") : t("submit")}
             </Button>
           </form>
         </Form>

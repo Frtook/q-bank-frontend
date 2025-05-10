@@ -3,11 +3,11 @@ import CardIcon from "@/components/card-icon";
 import { useGetDocument } from "@/hooks/useDocument";
 import { FileText } from "lucide-react";
 import Image from "next/image";
-import AddDocumentDialog from "./_components/dialogs/AddDocument";
 import { useGetSubject } from "@/hooks/subject/useSubject";
 import DeleteDialog from "@/components/DeleteDialog";
+import AddDocumentDialog from "./dialogs/AddDocument";
 
-export default function Document() {
+export default function Ai() {
   const { data } = useGetDocument();
   const { data: subjects } = useGetSubject();
   return (

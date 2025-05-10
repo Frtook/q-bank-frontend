@@ -65,5 +65,133 @@
     "questionUpdated": "Question updated successfully",
     "outcomeUpdated": "Outcome updated successfully",
     "deleteSuccess": "Delete successful"
+  },
+  "tabs": {
+    "outcomes": "Outcomes",
+    "topics": "Topics",
+    "questions": "Questions",
+    "permission": "Permission",
+    "ai": "AI"
+  },
+  "subject": {
+    "home": {
+      "newSubject": "Add a new Subject",
+      "name": "Name of Subject",
+      "academyPlaseholder": "Enter academy name",
+      "academyName": "Academy name",
+      "noAcademy": "No Academy found.",
+      "submit": "Submit",
+      "Submitting": "Submitting...",
+      "selectAcademy": "Select Academy",
+      "searchAcademy": "Search Academy..."
+    },
+    "search": {
+      "outcomes": "Search Outcome..",
+      "question": "Filter Question",
+      "permission": "Search by name ",
+      "subject": "Search Subject.."
+    },
+    "outcomes": {
+      "totalOutcomes": "Total Outcomes"
+    },
+    "topics": {
+      "totalTopics": "Total Topics"
+    },
+    "questions": {
+      "totalQuestions": "Total Questions",
+      "activeQuestions": "Active Questions",
+      "inactiveQuestions": "Inactive Questions",
+      "questionText": "Question Text",
+      "hint": "Hint",
+      "image": "Image",
+      "settings": "Settings",
+      "active": "Active",
+      "inactive": "Inactive",
+      "type": "Type",
+      "difficulty": "Difficulty",
+      "randomizable": "Randomizable",
+      "answers": "Answers",
+      "perfectAnswer": "Perfect Answer",
+      "multiChoice": "Multi Choice",
+      "trueFalse": "True/False",
+      "shortAnswer": "Short Answer",
+      "unknown": "Unknown"
+    }
+  },
+  "dialogs": {
+    "addNewOutcome": "+ New Outcome",
+    "addNewPermission": "+ New Permission",
+    "addNewQuestion": "+ New Question",
+    "addNewTopic": "+ New Topic",
+    "addNewSubject": "+ New Subject",
+    "addPermission": "Add Permission",
+    "addQuestion": "Add Question",
+    "addTopic": "Add Topic",
+    "addUser": "Add User",
+    "actionCannotBeUndone": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+    "submitting": "Submitting...",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "save": "Save",
+    "back": "Back",
+    "permissionLabel": "Academy name",
+    "permissionPlaceholder": "Select Academy",
+    "userLabel": "User",
+    "userPlaceholder": "Select User",
+    "topicName": "Name",
+    "enterTopicText": "Enter academy name",
+    "selectOutcomes": "Select Outcomes",
+    "typeOfQuestion": "Type of Question",
+    "selectType": "Select Type",
+    "selectTopic": "Select Topic",
+    "difficultyLevel": "Difficulty level ({value}/10)",
+    "active": "Active",
+    "isQuestionActive": "Is question active",
+    "randomizable": "Randomizable",
+    "isQuestionRandomizable": "Is question randomizable",
+    "questionName": "Question Name",
+    "enterQuestionName": "Enter Question Name",
+    "addOption": "Add Option",
+    "outcomeText": "Outcome Text",
+    "enterOutcomeText": "Enter Outcome text"
+  },
+  "column": {
+    "id": "ID",
+    "fullName": "Full Name",
+    "Permission": "Permission",
+    "Outcome": "Outcome",
+    "Academy": "Academy",
+    "status": "Status",
+    "Active": "Active",
+    "unactive": "unactive",
+    "Logo": "Logo",
+    "email": "Email",
+    "actions": "Actions",
+    "users": "Total Users",
+    "filterName": "Filter name...",
+    "subject": "subject",
+    "question": "Question name",
+    "typeQuestion": "type of question"
+  },
+  "academy": {
+    "totalAcademies": "Total Academies",
+    "activeAcademies": "Active Academies",
+    "inactiveAcademies": "Inactive Academies",
+    "search": {
+      "filterAcademy": "Filter Academy..."
+    }
+  },
+  "profile": {
+    "personalInfo": "Personal info",
+    "updateDetails": "Update your photo and personal details.",
+    "fullname": "Fullname",
+    "fullnamePlaceholder": "Your Full Name",
+    "username": "Username",
+    "usernamePlaceholder": "Your Username",
+    "email": "Email",
+    "emailPlaceholder": "Your Email",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes"
   }
 }

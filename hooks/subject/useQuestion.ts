@@ -16,6 +16,15 @@ export const useGetQuestion = () => {
   });
 };
 
+export const useGetOneQuestion = (id: string) => {
+  return useQuery({
+    queryKey: ["question", id],
+    queryFn: async () => {
+      const res = await apiClient.get(`/bank/question/${id}/`);
+      return res.data as Question;
+    },
+  });
+};
 export const useAddQuestion = () => {
   const queryClient = useQueryClient();
   const t = useTranslations("toast");

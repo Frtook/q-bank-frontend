@@ -13,7 +13,7 @@ export const schemaQuestion = z.object({
           (img) => img.startsWith("data:image/"),
           "Please select a valid base64 image"
         ),
-      z.string().optional(),
+      z.string().nullable(),
     ])
     .optional(),
   answers: z

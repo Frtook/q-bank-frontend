@@ -16,8 +16,6 @@ import {
   FilePenLine,
   Book,
   Home,
-  ScrollText,
-  Bot,
   UserPlus,
   Settings,
 } from "lucide-react";
@@ -44,11 +42,6 @@ export function AppSidebar() {
       icon: Home,
     },
     {
-      lable: "questions",
-      href: "/questions",
-      icon: ScrollText,
-    },
-    {
       lable: "academy",
       href: "/academy",
       icon: School,
@@ -57,18 +50,13 @@ export function AppSidebar() {
       lable: "subject",
       href: "/subject",
       icon: Book,
-      subnav: subject || [],
+      subnav: subject,
     },
     {
       lable: "exams",
       href: "/exams",
       icon: FilePenLine,
       disable: true,
-    },
-    {
-      lable: "ai",
-      href: "/ai",
-      icon: Bot,
     },
     {
       lable: "users",

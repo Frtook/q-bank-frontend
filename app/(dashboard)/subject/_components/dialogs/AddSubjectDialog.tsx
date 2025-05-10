@@ -2,7 +2,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -44,8 +43,10 @@ import {
 } from "@/components/ui/command";
 import { useGetacademy } from "@/hooks/useAcademy";
 import { useAddSubject } from "@/hooks/subject/useSubject";
+import { useTranslations } from "next-intl";
 
 export default function AddSubjectDialog() {
+  const t = useTranslations("");
   const { data: academies } = useGetacademy();
   const { mutate: addSubject, isPending, isSuccess } = useAddSubject();
   const refClose = useRef<HTMLButtonElement>(null);
@@ -71,15 +72,11 @@ export default function AddSubjectDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Subject</Button>
+        <Button>{t("dialogs.addNewSubject")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle></DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>{t("subject.home.newSubject")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -91,10 +88,10 @@ export default function AddSubjectDialog() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("subject.home.name")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter academy name"
+                      placeholder={t("subject.home.academyPlaseholder")}
                       {...field}
                     />
                   </FormControl>
@@ -107,7 +104,7 @@ export default function AddSubjectDialog() {
               name="academy"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>academy name</FormLabel>
+                  <FormLabel>{t("subject.home.academyName")}</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -123,16 +120,20 @@ export default function AddSubjectDialog() {
                             ? academies?.find(
                                 (academy) => academy.id === Number(field.value)
                               )?.name
-                            : "Select Academy"}
+                            : t("subject.home.selectAcademy")}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-full p-0">
                       <Command>
-                        <CommandInput placeholder="Search Academy..." />
+                        <CommandInput
+                          placeholder={t("subject.home.searchAcademy")}
+                        />
                         <CommandList>
-                          <CommandEmpty>No Academy found.</CommandEmpty>
+                          <CommandEmpty>
+                            {t("subject.home.noAcademy")}
+                          </CommandEmpty>
                           <CommandGroup>
                             {academies?.map((academy) => (
                               <CommandItem
@@ -167,7 +168,9 @@ export default function AddSubjectDialog() {
               disabled={isPending}
               type="submit"
             >
-              {isPending ? "Submitting..." : "Submit"}
+              {isPending
+                ? t("subject.home.Submitting")
+                : t("subject.home.submit")}
             </Button>
           </form>
         </Form>

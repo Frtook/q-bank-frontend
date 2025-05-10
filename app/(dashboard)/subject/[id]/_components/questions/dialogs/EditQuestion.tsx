@@ -36,6 +36,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useEffect, useRef, useState } from "react";
 import { CloudUpload, SquarePen, Trash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { IsDev } from "@/lib/helperClient";
 
 export default function EditQuestionDialog({
   question,
@@ -89,7 +90,7 @@ export default function EditQuestionDialog({
         <DialogHeader className="inline">
           <DialogTitle>
             Update Question
-            {form.formState.errors && JSON.stringify(form.formState.errors)}
+            {IsDev() && JSON.stringify(form.formState.errors)}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

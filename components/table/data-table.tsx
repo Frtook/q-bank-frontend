@@ -91,9 +91,11 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn(sortValue)?.setFilterValue(event.target.value)
             }
-            className="max-w-sm border-2 bg-white py-6 pl-10 dark:border-white dark:bg-gray-800"
+            className="max-w-sm border-2 bg-white px-10 py-6 dark:border-white dark:bg-gray-800"
           />
-          <Search className="absolute left-3 top-[50%] size-5 -translate-y-1/2 text-gray-400" />
+          <Search
+            className={`absolute ${locale === "en" ? "left-3" : "right-3"} top-[50%] size-5 -translate-y-1/2 text-gray-400`}
+          />
         </div>
         {button && button}
       </div>

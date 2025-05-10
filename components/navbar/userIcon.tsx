@@ -19,7 +19,7 @@ export default function UserIcon() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="rounded-3xl bg-gray-200 p-2">
+        <div className="rounded-3xl bg-gray-200 p-2 dark:bg-primary">
           <User />
         </div>
       </PopoverTrigger>
@@ -28,12 +28,13 @@ export default function UserIcon() {
         className="w-52"
       >
         <div>
-          <div className="flex items-center gap-2 rounded-md bg-white p-2 shadow-sm">
+          <div className="flex items-center gap-2 rounded-md bg-white p-2 shadow-sm dark:bg-primary">
             <User />
             <p className="text-sm font-semibold">
-              {profile?.fullname || "..."}
+              {profile?.username || "..."}
             </p>
           </div>
+
           <div
             className="mt-2 flex cursor-pointer justify-center gap-3 px-4"
             onClick={() => logout()}

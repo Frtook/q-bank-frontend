@@ -5,13 +5,15 @@ import { MdOutlineTopic } from "react-icons/md";
 import Outcomes from "@/app/(dashboard)/subject/[id]/_components/outcomes/outcomes";
 import Topics from "@/app/(dashboard)/subject/[id]/_components/topics/topics";
 import { LiaClipboardListSolid } from "react-icons/lia";
-import { ShieldCheck } from "lucide-react";
+import { Bot, ShieldCheck } from "lucide-react";
 import Permission from "@/app/(dashboard)/subject/[id]/_components/permission/permission";
 import Questions from "./_components/questions/questions";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 import { use } from "react";
 import { useGetSubject } from "@/hooks/subject/useSubject";
 import { notFound } from "next/navigation";
+import { useTranslations } from "next-intl";
+import Ai from "./_components/ai/Ai";
 
 export default function Page({
   params,
@@ -20,6 +22,7 @@ export default function Page({
     id: string;
   }>;
 }) {
+  const t = useTranslations("tabs"); // Add translation hook
   const { id } = use(params);
   const { data: subjects } = useGetSubject();
   if (subjects) {
@@ -29,25 +32,31 @@ export default function Page({
   }
   const taps = [
     {
-      label: "Outcomes",
+      label: t("outcomes"), // Use translated label
       value: "outcomes",
       icon: <MdOutlineTopic />,
       component: <Outcomes />,
     },
     {
-      label: "Topics",
+      label: t("topics"), // Use translated label
       value: "topics",
       icon: <LiaClipboardListSolid />,
       component: <Topics />,
     },
     {
-      label: "Questions",
+      label: t("questions"), // Use translated label
       value: "questions",
       icon: <QuestionMarkCircledIcon />,
       component: <Questions />,
     },
     {
-      label: "Permission",
+      label: t("ai"), // Use translated label
+      value: "ai",
+      icon: <Bot />,
+      component: <Ai />,
+    },
+    {
+      label: t("permission"), // Use translated label
       value: "permission",
       icon: <ShieldCheck />,
       component: <Permission />,

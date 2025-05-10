@@ -27,8 +27,10 @@ import { useEffect } from "react";
 import { useAddTopic } from "@/hooks/subject/useTopic";
 import { schemaTopic, TTopic } from "@/lib/validations/subject/topic";
 import { MultiSelect } from "@/components/ui/multi-selector";
+import { useTranslations } from "next-intl";
 
 export default function AddTopicDialog() {
+  const t = useTranslations("dialogs");
   const subjectID = usePathname().split("/")[2];
   const { data: outcomes } = useGetOutcome({ subjec: subjectID });
   const { mutate: addTopic, isPending } = useAddTopic();
@@ -62,15 +64,12 @@ export default function AddTopicDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mt-5">+ New Topic</Button>
+        <Button className="mt-5">{t("addNewTopic")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Topic</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>{t("addTopic")}</DialogTitle>
+          <DialogDescription>{t("actionCannotBeUndone")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -82,10 +81,10 @@ export default function AddTopicDialog() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Topic Name</FormLabel>
+                  <FormLabel>{t("topicName")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Topic text"
+                      placeholder={t("enterTopicText")}
                       {...field}
                     />
                   </FormControl>
@@ -98,7 +97,7 @@ export default function AddTopicDialog() {
               name="outcomes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Topic Name</FormLabel>
+                  <FormLabel>{t("outcomeText")}</FormLabel>
                   <FormControl>
                     <MultiSelect
                       options={
@@ -111,7 +110,7 @@ export default function AddTopicDialog() {
                         field.onChange(value.map((val) => Number(val)))
                       }
                       // defaultValue={field.value}
-                      placeholder="Select options"
+                      placeholder={t("selectOutcomes")}
                       variant="inverted"
                     />
                   </FormControl>
@@ -124,7 +123,7 @@ export default function AddTopicDialog() {
               disabled={isPending}
               type="submit"
             >
-              {isPending ? "Submitting..." : "Submit"}
+              {isPending ? t("submitting") : t("submit")}
             </Button>
           </form>
         </Form>
