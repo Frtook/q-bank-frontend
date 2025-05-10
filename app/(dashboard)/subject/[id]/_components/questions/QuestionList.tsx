@@ -13,42 +13,42 @@ import DeleteDialog from "@/components/DeleteDialog";
 import EditQuestionDialog from "./dialogs/EditQuestion";
 import { useTranslations } from "next-intl";
 
-const getTypeDetails = (type: number, t: any) => {
-  switch (type) {
-    case 1:
-      return {
-        label: t("questions.multiChoice"),
-        icon: ClipboardList,
-        color: "bg-blue-100 text-blue-800",
-      };
-    case 2:
-      return {
-        label: t("questions.trueFalse"),
-        icon: ShieldCheck,
-        color: "bg-purple-100 text-purple-800",
-      };
-    case 3:
-      return {
-        label: t("questions.shortAnswer"),
-        icon: HelpCircle,
-        color: "bg-orange-100 text-orange-800",
-      };
-    default:
-      return {
-        label: t("questions.unknown"),
-        icon: Beaker,
-        color: "bg-gray-100 text-gray-800",
-      };
-  }
-};
-
 export default function QuestionList({ questions }: { questions: Question[] }) {
   const t = useTranslations("subject");
+  const getTypeQuestion = (type: number) => {
+    switch (type) {
+      case 1:
+        return {
+          label: t("questions.multiChoice"),
+          icon: ClipboardList,
+          color: "bg-blue-100 text-blue-800",
+        };
+      case 2:
+        return {
+          label: t("questions.trueFalse"),
+          icon: ShieldCheck,
+          color: "bg-purple-100 text-purple-800",
+        };
+      case 3:
+        return {
+          label: t("questions.shortAnswer"),
+          icon: HelpCircle,
+          color: "bg-orange-100 text-orange-800",
+        };
+      default:
+        return {
+          label: t("questions.unknown"),
+          icon: Beaker,
+          color: "bg-gray-100 text-gray-800",
+        };
+    }
+  };
+
   return (
     <div className="my-5">
       <div className="space-y-5">
         {questions.map((question) => {
-          const typeDetails = getTypeDetails(question.setting.type, t);
+          const typeDetails = getTypeQuestion(question.setting.type);
           const TypeIcon = typeDetails.icon;
 
           return (

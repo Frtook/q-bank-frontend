@@ -27,14 +27,13 @@ import { CloudUpload, Trash } from "lucide-react";
 
 import { useAddDocument } from "@/hooks/useDocument";
 import { TDocment, DocmentSchema } from "@/lib/validations/document";
-import { SingleSelect } from "@/components/ui/single-select";
-import { useGetSubject } from "@/hooks/subject/useSubject";
 import prettyBytes from "pretty-bytes";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function AddDocumentDialog() {
+  const subjectID = usePathname().split("/")[2];
   const { mutate: addDocument, isPending, isSuccess } = useAddDocument();
-  const { data: subjects } = useGetSubject();
   const refClose = useRef<HTMLButtonElement>(null);
 
   const form = useForm<TDocment>({
@@ -61,6 +60,15 @@ export default function AddDocumentDialog() {
     return () => {};
   }, [isSuccess]);
 
+  useEffect(() => {
+    if (subjectID) {
+      form.reset({
+        file: undefined,
+        name: "",
+        subject: Number(subjectID),
+      });
+    }
+  }, [subjectID, form]);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -75,44 +83,23 @@ export default function AddDocumentDialog() {
             onSubmit={form.handleSubmit(onsubmit)}
             className="mx-auto max-w-3xl space-y-8 py-10"
           >
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>File name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter file name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="subject"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select Subject</FormLabel>
-                    <FormControl>
-                      <SingleSelect
-                        options={
-                          subjects?.map((subject) => ({
-                            label: subject.name,
-                            value: String(subject.id),
-                          })) || []
-                        }
-                        onValueChange={(value) => field.onChange(Number(value))}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>File name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter file name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="file"

@@ -70,7 +70,8 @@
     "outcomes": "مخرجات التعلم",
     "topics": "المواضيع",
     "questions": "الأسئلة",
-    "permission": "الصلاحيات"
+    "permission": "الصلاحيات",
+    "ai": "الذكاء الاصطناعي"
   },
   "subject": {
     "home": {
@@ -160,14 +161,17 @@
     "Permission": "الصلاحية",
     "Outcome": "مخرج التعلم",
     "Academy": "الأكاديمية",
+    "status": "الحاله",
     "Active": "نشط",
     "unactive": "غير نشط",
     "Logo": "الشعار",
     "email": "البريد الإلكتروني",
     "actions": "الإجراءات",
     "users": "إجمالي المستخدمين",
-    "filterName": "البحث ب الاسم...",
-    "subject": "المادة"
+    "filterName": "البحث بالاسم...",
+    "subject": "المادة",
+    "question": "اسم السؤال",
+    "typeQuestion": "نوع السؤال"
   },
 
   "academy": {

@@ -19,3 +19,10 @@ export const ToastError = (errors: Error) => {
 export const IsDev = () => {
   return process.env.NODE_ENV === "development";
 };
+
+export const sliceString = (str: string, start: number, end: number) => {
+  if (str.length > start + end) {
+    return str.slice(start, end) + "...";
+  }
+  return str;
+};
