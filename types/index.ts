@@ -89,6 +89,32 @@ type Question = {
   answers: Answer[];
 };
 
+export interface ExamSetting {
+  id: number;
+  marks: number;
+  subject: number;
+  updatedAt: string;
+  createdAt: string;
+  periodOfTime: string;
+  generation_config: string;
+  level: number;
+  academy: number;
+}
+
+export interface Exam {
+  id: number;
+  name: string;
+  confirmed: boolean;
+  academy_name: string;
+  academy_logo: string;
+  questions: {
+    id: number;
+    text: string;
+    answers: { id: number; text: string; isPerfectAns: boolean }[];
+  }[];
+  setting: ExamSetting;
+}
+
 type Documents = {
   id: number;
   name: string;
