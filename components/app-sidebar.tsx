@@ -56,7 +56,6 @@ export function AppSidebar() {
       lable: "exams",
       href: "/exams",
       icon: FilePenLine,
-      disable: true,
     },
     {
       lable: "users",
