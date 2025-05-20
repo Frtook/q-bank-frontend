@@ -2,6 +2,7 @@ import apiClient from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../use-toast";
 import { TExam } from "@/lib/validations/subject/exam";
+import { Exam } from "@/types";
 
 export const useGetExams = () => {
   return useQuery({
@@ -60,6 +61,30 @@ export const useDeleteExam = () => {
     onError: () => {
       toast({
         title: "Failed to delete exam",
+        variant: "destructive",
+      });
+    },
+  });
+};
+export const useUpdateExam = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (updatedExam: TExam & { id: number }) => {
+      const res = await apiClient.put(
+        `/bank/exam/${updatedExam.id}/`,
+        updatedExam
+      );
+      return res.data;
+    },
+    onMutate: () => toast({ title: "Updating exam...", variant: "info" }),
+    onSuccess: () => {
+      toast({ title: "Exam updated successfully!", variant: "success" });
+      queryClient.invalidateQueries({ queryKey: ["exams"] });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to update exam. Check input data.",
         variant: "destructive",
       });
     },

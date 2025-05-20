@@ -101,7 +101,7 @@ type ExamSetting = {
   academy: number;
 };
 
-type Exam = {
+export type Exam = {
   id: number;
   name: string;
   confirmed: boolean;

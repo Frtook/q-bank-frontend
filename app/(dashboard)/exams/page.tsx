@@ -8,12 +8,27 @@ import { useGetExams, useDeleteExam } from "@/hooks/subject/useGetExam";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { useRouter } from "next/navigation";
 import { MdTimer } from "react-icons/md";
+import { useState } from "react";
+import EditExamDialog from "./_components/editExam/editDialog";
+import { Exam } from "@/types";
 
 export default function Home() {
   const { data, isLoading } = useGetExams();
   const deleteExam = useDeleteExam();
   const router = useRouter();
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [currentExam, setCurrentExam] = useState<Exam | null>(null);
 
+  // ... keep all your existing code ...
+
+  const handleEdit = (index: number) => {
+    const examId = formattedData[index].id as number;
+    const examToEdit = data?.find((exam) => exam.id === examId);
+    if (examToEdit) {
+      setCurrentExam(examToEdit);
+      setEditDialogOpen(true);
+    }
+  };
   const formatDate = (isoDate: string) =>
     new Date(isoDate).toLocaleString("en-US", {
       year: "numeric",
@@ -134,14 +149,22 @@ export default function Home() {
         {isLoading ? (
           <TableSkeleton />
         ) : (
-          <DataTable
-            columns={columns}
-            data={formattedData}
-            onRowClick={(row) => router.push(`/exams/${row.id}`)}
-            onDelete={handleDelete}
-            deleteDialogTitle="Delete Exam"
-            deleteDialogDescription="Are you sure you want to delete this exam? All related data will be permanently removed."
-          />
+          <>
+            <DataTable
+              columns={columns}
+              data={formattedData}
+              onRowClick={(row) => router.push(`/exams/${row.id}`)}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              deleteDialogTitle="Delete Exam"
+              deleteDialogDescription="Are you sure you want to delete this exam? All related data will be permanently removed."
+            />
+            <EditExamDialog
+              open={editDialogOpen}
+              onOpenChange={setEditDialogOpen}
+              exam={currentExam}
+            />
+          </>
         )}
       </div>
     </div>

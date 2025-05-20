@@ -1,10 +1,10 @@
+"use client";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -16,23 +16,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
 import SearchInput from "@/components/ui/search";
 import DataTable from "@/components/ui/dataTable";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TExam, schemaExam } from "@/lib/validations/subject/exam";
 import { useState, useEffect } from "react";
-import { useAddExam } from "@/hooks/subject/useGetExam";
+import { useUpdateExam } from "@/hooks/subject/useGetExam";
 import { useGetQuestion } from "@/hooks/subject/useQuestion";
 import { MdTimer } from "react-icons/md";
+import { Exam } from "@/types";
 
-const ExamDialog = () => {
+interface EditExamDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  exam: Exam | null;
+}
+
+const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
-  const { mutate: addExam } = useAddExam();
-  const { data: questionsData } = useGetQuestion({ subject: 1 });
+  const { mutate: updateExam } = useUpdateExam();
+  const { data: questionsData } = useGetQuestion({});
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(questionsData);
+
   const [time, setTime] = useState({ hours: 1, minutes: 0, seconds: 0 });
 
   const form = useForm<TExam>({
@@ -40,7 +46,7 @@ const ExamDialog = () => {
     defaultValues: {
       name: "",
       confirmed: true,
-      questions: selectedQuestions,
+      questions: [],
       setting: {
         marks: 100,
         subject: 0,
@@ -52,6 +58,34 @@ const ExamDialog = () => {
     },
   });
 
+  // Initialize form with exam data when dialog opens or exam changes
+  useEffect(() => {
+    if (exam) {
+      form.reset({
+        name: exam.name,
+        confirmed: exam.confirmed,
+        questions: exam.questions?.map((q) => q.id) || [],
+        setting: {
+          marks: exam.setting?.marks || 100,
+          subject: exam.setting?.subject || 0,
+          periodOfTime: exam.setting?.periodOfTime || "01:00:00",
+          generation_config: exam.setting?.generation_config || "",
+          level: exam.setting?.level || 1,
+          academy: exam.setting?.academy || 2,
+        },
+      });
+
+      // Set selected questions
+      setSelectedQuestions(exam.questions?.map((q) => q.id) || []);
+
+      // Parse time if it exists
+      if (exam.setting?.periodOfTime) {
+        const [h, m, s] = exam.setting.periodOfTime.split(":").map(Number);
+        setTime({ hours: h, minutes: m, seconds: s });
+      }
+    }
+  }, [exam, form]);
+
   useEffect(() => {
     form.setValue(
       "setting.periodOfTime",
@@ -60,19 +94,14 @@ const ExamDialog = () => {
   }, [time, form]);
 
   useEffect(() => {
-    const value = form.getValues("setting.periodOfTime");
-    if (value && /^\d{2}:\d{2}:\d{2}$/.test(value)) {
-      const [h, m, s] = value.split(":").map(Number);
-      setTime({ hours: h, minutes: m, seconds: s });
-    }
-  }, []);
-
-  useEffect(() => {
     form.setValue("questions", selectedQuestions);
   }, [selectedQuestions, form]);
 
   const onSubmit = (data: TExam) => {
+    if (!exam) return;
+
     const payload = {
+      id: exam.id,
       name: data.name,
       confirmed: true,
       questions: data.questions,
@@ -86,8 +115,8 @@ const ExamDialog = () => {
       },
     };
 
-    console.log("Submitting payload:", payload);
-    addExam(payload);
+    updateExam(payload);
+    onOpenChange(false);
   };
 
   const convertToMinutes = (timeStr: string) => {
@@ -156,15 +185,15 @@ const ExamDialog = () => {
   ];
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>+ New Exam</Button>
-      </DialogTrigger>
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Add New Exam</DialogTitle>
+          <DialogTitle>Edit Exam</DialogTitle>
           <DialogDescription>
-            Fill out the fields below to create a new exam.
+            Update the fields below to edit this exam.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -213,6 +242,11 @@ const ExamDialog = () => {
                   );
                   setSelectedQuestions(selectedIds);
                 }}
+                initialSelectedRows={formattedQuestions
+                  .map((q, index) =>
+                    selectedQuestions.includes(q.id) ? index : -1
+                  )
+                  .filter((i) => i !== -1)}
               />
             </div>
 
@@ -341,10 +375,14 @@ const ExamDialog = () => {
             />
 
             <div className="flex justify-end gap-2 pt-4">
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <Button type="submit">Submit</Button>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Update</Button>
             </div>
           </form>
         </Form>
@@ -353,4 +391,4 @@ const ExamDialog = () => {
   );
 };
 
-export default ExamDialog;
+export default EditExamDialog;
