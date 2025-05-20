@@ -2,13 +2,15 @@
 
 import CardIcon from "@/components/card-icon";
 import { useGetCountState } from "@/hooks/useCountState";
+import { useGetHistory } from "@/hooks/useHistory";
 import { Book, CircleHelp, FileText, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("homePage");
   const { data: countState } = useGetCountState();
-
+  const { data: history } = useGetHistory();
+  console.log(history);
   return (
     <div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:gap-9">

@@ -1,6 +1,8 @@
 import apiClient from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "./use-toast";
+import { AxiosError } from "axios";
+import { ToastError } from "@/lib/helperClient";
 
 export const useGetDocument = () => {
   return useQuery({
@@ -18,9 +20,20 @@ export const useAddDocument = () => {
     mutationKey: ["document"],
     mutationFn: async (data: FormData) =>
       apiClient.post("/bank/document/", data),
+    onMutate: () =>
+      toast({
+        title: "Uploading...",
+        description: "Your document is being uploaded.",
+        variant: "info",
+      }),
     onSuccess: () => {
-      toast.success("Success Upload");
+      toast({
+        title: "Success Upload",
+        description: "Your document has been successfully uploaded.",
+        variant: "success",
+      });
       queryClient.invalidateQueries({ queryKey: ["document"] });
     },
+    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
 };

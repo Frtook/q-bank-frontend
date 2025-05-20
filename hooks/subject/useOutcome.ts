@@ -4,7 +4,7 @@ import { ToastError } from "@/lib/helperClient";
 import { TOutcome } from "@/lib/validations/subject/outcome";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { toast } from "sonner";
+import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
 
 type SearchParams = {
@@ -19,6 +19,7 @@ export const useGetOutcome = (params: SearchParams) => {
       );
       return res.data as Outcome[];
     },
+    enabled: params.subjec !== undefined,
   });
 };
 
@@ -30,6 +31,8 @@ export const useAddOutcome = () => {
     mutationFn: async (data: TOutcome) => {
       return await apiClient.post("/bank/outcome/", data);
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
     },
@@ -47,7 +50,7 @@ export const useEditOutcome = (id: number) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
-      toast.success(t("outcomeUpdated"));
+      toast({ title: t("outcomeUpdated"), variant: "success" });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });

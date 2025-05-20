@@ -25,9 +25,17 @@ export default function Page({
   }>;
 }) {
   const { question: qustionID } = use(params);
-  const { data: question } = useGetOneQuestion(qustionID);
-  console.log(question);
+  const { data: question, isLoading } = useGetOneQuestion(qustionID);
   const t = useTranslations("subject");
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="size-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+      </div>
+    );
+  }
+
   const getTypeQuestion = (type: number) => {
     switch (type) {
       case 1:
@@ -56,6 +64,7 @@ export default function Page({
         };
     }
   };
+
   if (question) {
     const typeDetails = getTypeQuestion(question.setting.type);
     const TypeIcon = typeDetails.icon;

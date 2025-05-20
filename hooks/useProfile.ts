@@ -3,8 +3,9 @@ import { ToastError } from "@/lib/helperClient";
 import { TschemaProfile } from "@/lib/validations/profile";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { toast } from "sonner";
+
 import { useTranslations } from "next-intl";
+import { toast } from "./use-toast";
 
 export const useGetProfile = () => {
   return useQuery({
@@ -23,10 +24,22 @@ export const useUpdateProfile = () => {
     mutationKey: ["profile"],
     mutationFn: async (data: TschemaProfile) =>
       await apiClient.patch("/myprofile/", data),
+    onMutate: () => {
+      toast({
+        title: "updating Profile",
+        description: "please Wait",
+        variant: "info",
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
-      toast.success(t("profileUpdated"));
+      toast({
+        title: t("profileUpdated"),
+        variant: "success",
+      });
     },
-    onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
+    onError: (error: AxiosError) => {
+      ToastError(error?.response?.data as Error);
+    },
   });
 };

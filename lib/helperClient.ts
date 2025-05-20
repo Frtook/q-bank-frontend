@@ -1,4 +1,4 @@
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 
 export const getSubjectName = (id: number, academies: IAcademy[]) => {
   const academy = academies.find((academy) => academy.id === id);
@@ -8,10 +8,16 @@ export const getSubjectName = (id: number, academies: IAcademy[]) => {
 export const ToastError = (errors: Error) => {
   Object?.entries(errors).forEach(([field, messages]) => {
     if (typeof messages === "string") {
-      toast.error(`${field}: ${messages}`);
+      toast({
+        title: `${field}: ${messages}`,
+        variant: "destructive",
+      });
     }
     messages.forEach((message) => {
-      toast.error(`${field}: ${message}`);
+      toast({
+        title: `${field}: ${message}`,
+        variant: "destructive",
+      });
     });
   });
 };

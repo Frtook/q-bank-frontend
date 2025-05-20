@@ -4,7 +4,7 @@ import apiClient from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { toast } from "./use-toast";
 import { ToastError } from "@/lib/helperClient";
 import { useTranslations } from "next-intl";
 
@@ -17,8 +17,13 @@ export const useRegister = () => {
     mutationFn: async (registerData: IRegister) => {
       return await apiClient.post("/auth/register/", registerData);
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: async (data) => {
-      toast.success(t("registrationSuccess"));
+      toast({
+        title: t("registrationSuccess"),
+        variant: "success",
+      });
       push("/login");
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
@@ -32,8 +37,14 @@ export const useToken = () => {
     mutationFn: async (tokenData: ILogin) => {
       return await apiClient.post("/auth/token/", tokenData);
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: async (data) => {
-      toast.success(t("welcomeBack"));
+      toast({
+        title: t("welcomeBack"),
+
+        variant: "success",
+      });
       await setCookies("accessToken", data.data.access, DAYS);
       await setCookies("refreshToken", data.data.refresh, DAYS * 30);
       push("/");

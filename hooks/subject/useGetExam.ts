@@ -1,11 +1,6 @@
 import apiClient from "@/lib/axios";
-import { ToastError } from "@/lib/helperClient";
-import { TQuestion } from "@/lib/validations/subject/question";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { toast } from "sonner";
-import { useTranslations } from "next-intl";
-import { Exam } from "@/types";
+import { toast } from "../use-toast";
 import { TExam } from "@/lib/validations/subject/exam";
 
 export const useGetExams = () => {
@@ -36,13 +31,17 @@ export const useAddExam = () => {
       const res = await apiClient.post("/bank/exam/", newExam); // Adjust if needed
       return res.data;
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
-      toast.success("Exam created successfully!");
-      queryClient.invalidateQueries(["exams"]);
+      toast({ title: "Exam created successfully!", variant: "success" });
+      queryClient.invalidateQueries({ queryKey: ["exams"] });
     },
-    onError: (error: AxiosError) => {
-      ToastError(error);
-      toast.error("Failed to create exam. Check input data.");
+    onError: () => {
+      toast({
+        title: "Failed to create exam. Check input data.",
+        variant: "destructive",
+      });
     },
   });
 };
