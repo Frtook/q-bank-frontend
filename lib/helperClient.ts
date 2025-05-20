@@ -1,4 +1,5 @@
 import { toast } from "@/hooks/use-toast";
+import Cookies from "js-cookie";
 
 export const getSubjectName = (id: number, academies: IAcademy[]) => {
   const academy = academies.find((academy) => academy.id === id);
@@ -31,4 +32,10 @@ export const sliceString = (str: string, start: number, end: number) => {
     return str.slice(start, end) + "...";
   }
   return str;
+};
+export const getLocate = () => {
+  const locale = Cookies.get("locale");
+  if (locale) {
+    return locale;
+  }
 };

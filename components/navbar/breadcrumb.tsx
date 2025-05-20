@@ -22,7 +22,7 @@ const Breadcrumbs = () => {
     .filter((path) => path);
   const locale = useLocale();
   const { data: subjects } = useGetSubject();
-  const { data: question } = useGetQuestion();
+  const { data: question } = useGetQuestion({});
   const navItems = [
     {
       lable: "dashboard",

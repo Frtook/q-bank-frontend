@@ -30,7 +30,7 @@ import { MdTimer } from "react-icons/md";
 const ExamDialog = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const { mutate: addExam } = useAddExam();
-  const { data: questionsData } = useGetQuestion();
+  const { data: questionsData } = useGetQuestion({});
   const [searchTerm, setSearchTerm] = useState("");
 
   const [time, setTime] = useState({ hours: 1, minutes: 0, seconds: 0 });
