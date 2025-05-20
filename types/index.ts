@@ -89,7 +89,7 @@ type Question = {
   answers: Answer[];
 };
 
-export interface ExamSetting {
+type ExamSetting = {
   id: number;
   marks: number;
   subject: number;
@@ -99,9 +99,9 @@ export interface ExamSetting {
   generation_config: string;
   level: number;
   academy: number;
-}
+};
 
-export interface Exam {
+type Exam = {
   id: number;
   name: string;
   confirmed: boolean;
@@ -113,7 +113,7 @@ export interface Exam {
     answers: { id: number; text: string; isPerfectAns: boolean }[];
   }[];
   setting: ExamSetting;
-}
+};
 
 type Documents = {
   id: number;

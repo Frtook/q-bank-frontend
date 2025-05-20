@@ -3,7 +3,7 @@ import { ToastError } from "@/lib/helperClient";
 import { TTopic } from "@/lib/validations/subject/topic";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { toast } from "sonner";
+import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
 
 type SearchParams = {
@@ -26,9 +26,11 @@ export const useAddTopic = () => {
     mutationKey: ["topic"],
     mutationFn: async (data: TTopic) =>
       await apiClient.post("/bank/topic/", data),
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["topic"] });
-      toast.success(t("topicAdded"));
+      toast({ title: t("topicAdded"), variant: "success" });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
@@ -41,9 +43,11 @@ export const useUpdataTopic = (id: number) => {
     mutationKey: ["topic"],
     mutationFn: async (body: TTopic) =>
       await apiClient.patch(`/bank/topic/${id}/`, body),
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["topic"] });
-      toast.success(t("topicUpdated"));
+      toast({ title: t("topicUpdated"), variant: "success" });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });

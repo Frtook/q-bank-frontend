@@ -1,5 +1,5 @@
 "use client";
-import { toast } from "sonner";
+import { toast } from "./use-toast";
 import apiClient from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -24,10 +24,14 @@ export const useAddAcademy = () => {
     mutationFn: (data: FormData) => {
       return apiClient.post("/bank/academy/", data);
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: (data) => {
-      toast.dismiss();
       queryClient.invalidateQueries({ queryKey: ["academy"] });
-      toast.success(t("academyAdded"));
+      toast({
+        title: t("academyAdded"),
+        variant: "success",
+      });
       return data;
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
@@ -42,9 +46,14 @@ export const useUpdateAcademy = () => {
     mutationFn: (data: { id: number; formData: FormData }) => {
       return apiClient.patch(`/bank/academy/${data.id}/`, data.formData);
     },
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["academy"] });
-      toast.success(t("academyUpdated"));
+      toast({
+        title: t("academyUpdated"),
+        variant: "success",
+      });
       return data;
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),

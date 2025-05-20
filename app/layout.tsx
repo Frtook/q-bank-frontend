@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ProviderQuery from "@/components/QueryClientProvider";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { getLangDir } from "rtl-detect-intl";
@@ -42,7 +42,7 @@ export default async function RootLayout({
           <ProviderQuery>
             <>
               {children}
-              <Toaster richColors />
+              <Toaster />
             </>
           </ProviderQuery>
         </NextIntlClientProvider>

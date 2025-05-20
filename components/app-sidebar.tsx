@@ -92,7 +92,6 @@ export function AppSidebar() {
                         >
                           <Link
                             href={item.href}
-                            aria-disabled={item.disable}
                             className={cn(
                               "flex w-full items-center gap-2 p-3",
                               {
@@ -137,7 +136,6 @@ export function AppSidebar() {
                     >
                       <Link
                         href={item.href}
-                        aria-disabled={item.disable}
                         className={cn("p-3", {
                           "bg-foreground text-white dark:bg-primary":
                             item.href === pathname,

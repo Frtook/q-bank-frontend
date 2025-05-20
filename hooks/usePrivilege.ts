@@ -3,8 +3,8 @@ import { ToastError } from "@/lib/helperClient";
 import { TPermission } from "@/lib/validations/permission";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { toast } from "./use-toast";
 
 type SearchParams = {
   type: "subject" | "acadmey";
@@ -29,9 +29,17 @@ export const useAddPrivilege = () => {
     mutationKey: ["privilege"],
     mutationFn: async (data: TPermission) =>
       await apiClient.post("/bank/subject/1/privilege/", data),
+    onMutate: () =>
+      toast({
+        title: "Adding Privilege...",
+        variant: "info",
+      }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["privilege"] });
-      toast.success(t("privilegeAdded"));
+      toast({
+        title: t("privilegeAdded"),
+        variant: "success",
+      });
       return data;
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),

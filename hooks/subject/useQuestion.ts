@@ -3,7 +3,7 @@ import { ToastError } from "@/lib/helperClient";
 import { TQuestion } from "@/lib/validations/subject/question";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { toast } from "sonner";
+import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
 
 export const useGetQuestion = () => {
@@ -23,6 +23,7 @@ export const useGetOneQuestion = (id: string) => {
       const res = await apiClient.get(`/bank/question/${id}/`);
       return res.data as Question;
     },
+    enabled: id !== undefined,
   });
 };
 export const useAddQuestion = () => {
@@ -32,9 +33,11 @@ export const useAddQuestion = () => {
     mutationKey: ["question"],
     mutationFn: async (data: TQuestion) =>
       apiClient.post("/bank/question/", data),
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["question"] });
-      toast.success(t("questionAdded"));
+      toast({ title: t("questionAdded"), variant: "success" });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
@@ -47,9 +50,11 @@ export const useUpdateQuestion = (id: number) => {
     mutationKey: ["question"],
     mutationFn: async (body: TQuestion) =>
       apiClient.patch(`/bank/question/${id}/`, body),
+    onMutate: () =>
+      toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["question"] });
-      toast.success(t("questionUpdated"));
+      toast({ title: t("questionUpdated"), variant: "success" });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
