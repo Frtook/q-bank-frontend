@@ -45,3 +45,23 @@ export const useAddExam = () => {
     },
   });
 };
+export const useDeleteExam = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      const res = await apiClient.delete(`/bank/exam/${id}/`);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast({ title: "Exam deleted successfully", variant: "success" });
+      queryClient.invalidateQueries({ queryKey: ["exams"] }); // Add this line
+    },
+    onError: () => {
+      toast({
+        title: "Failed to delete exam",
+        variant: "destructive",
+      });
+    },
+  });
+};

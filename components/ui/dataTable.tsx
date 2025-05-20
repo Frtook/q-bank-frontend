@@ -1,3 +1,4 @@
+// components/ui/dataTable.tsx
 "use client";
 import React, { useState } from "react";
 import {
@@ -15,6 +16,7 @@ import {
   TrashIcon,
   DotsVerticalIcon,
 } from "@radix-ui/react-icons";
+import { DeleteDialog } from "./deleteDialog";
 
 interface Column {
   accessor: string;
@@ -33,6 +35,8 @@ interface DataTableProps {
   onEdit?: (rowIndex: number) => void;
   onDelete?: (rowIndex: number) => void;
   onRowClick?: (rowData: DataRow) => void;
+  deleteDialogTitle?: string;
+  deleteDialogDescription?: string;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -43,8 +47,12 @@ const DataTable: React.FC<DataTableProps> = ({
   onEdit,
   onDelete,
   onRowClick,
+  deleteDialogTitle = "Are you sure you want to delete this item?",
+  deleteDialogDescription = "This action cannot be undone.",
 }) => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const visibleColumns = columns.filter((col) => col.accessor !== "id");
   const hasActions = !!onEdit || !!onDelete;
@@ -66,6 +74,19 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handleRowClick = (rowData: DataRow) => {
     onRowClick?.(rowData);
+  };
+
+  const handleDeleteClick = (index: number) => {
+    setDeleteIndex(index);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteIndex !== null) {
+      onDelete?.(deleteIndex);
+    }
+    setIsDeleteDialogOpen(false);
+    setDeleteIndex(null);
   };
 
   return (
@@ -146,7 +167,7 @@ const DataTable: React.FC<DataTableProps> = ({
                       {onDelete && (
                         <button
                           className="text-[#D92D20]"
-                          onClick={() => onDelete(rowIndex)}
+                          onClick={() => handleDeleteClick(rowIndex)}
                         >
                           <TrashIcon className="h-5 w-5" />
                         </button>
@@ -159,6 +180,16 @@ const DataTable: React.FC<DataTableProps> = ({
           </TableBody>
         </Table>
       </ScrollArea>
+
+      {hasActions && onDelete && (
+        <DeleteDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+          onConfirm={handleConfirmDelete}
+          title={deleteDialogTitle}
+          description={deleteDialogDescription}
+        />
+      )}
     </div>
   );
 };

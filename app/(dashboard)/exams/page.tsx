@@ -1,16 +1,18 @@
+// app/exams/page.tsx
 "use client";
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/dataTable";
 import SearchInput from "@/components/ui/search";
 import ExamDialog from "./_components/createExam/createDialog";
-import { useGetExams } from "@/hooks/subject/useGetExam";
+import { useGetExams, useDeleteExam } from "@/hooks/subject/useGetExam";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { useRouter } from "next/navigation";
 import { MdTimer } from "react-icons/md";
 
 export default function Home() {
   const { data, isLoading } = useGetExams();
-  const router = useRouter(); // use it here
+  const deleteExam = useDeleteExam();
+  const router = useRouter();
 
   const formatDate = (isoDate: string) =>
     new Date(isoDate).toLocaleString("en-US", {
@@ -21,6 +23,11 @@ export default function Home() {
       minute: "2-digit",
     });
 
+  const convertToMinutes = (timeStr: string) => {
+    const [hours, minutes, seconds] = timeStr.split(":").map(Number);
+    return hours * 60 + minutes + Math.floor(seconds / 60);
+  };
+
   const columns = [
     { accessor: "id", header: "ID" },
     { accessor: "name", header: "Exam Name" },
@@ -30,15 +37,9 @@ export default function Home() {
     { accessor: "generation_config", header: "Config" },
     { accessor: "createdAt", header: "Created At" },
   ];
-  const convertToMinutes = (timeStr: string) => {
-    const [hours, minutes, seconds] = timeStr.split(":").map(Number);
-    return hours * 60 + minutes + Math.floor(seconds / 60);
-  };
 
   const formattedData = (data ?? []).map((exam) => {
     const level = exam.setting?.level ?? "-";
-
-    // Difficulty badge color
     let levelClass = "bg-green-100 text-green-800";
     if (level > 7) levelClass = "bg-red-100 text-red-800";
     else if (level > 5) levelClass = "bg-yellow-100 text-yellow-800";
@@ -53,11 +54,6 @@ export default function Home() {
       marks: (
         <span className="inline-block rounded-md bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">
           {exam.setting?.marks ?? "-"}
-        </span>
-      ),
-      academy: (
-        <span className="text-xs text-gray-500 dark:text-gray-400">
-          {exam.setting?.academy ?? "-"}
         </span>
       ),
       level:
@@ -78,7 +74,6 @@ export default function Home() {
             : "-"}
         </span>
       ),
-
       generation_config: (
         <span className="inline-block rounded bg-gray-100 px-2 py-1 font-mono text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-200">
           {exam.setting?.generation_config ?? "-"}
@@ -93,6 +88,11 @@ export default function Home() {
       ),
     };
   });
+
+  const handleDelete = (index: number) => {
+    const examId = formattedData[index].id as number;
+    deleteExam.mutate(examId);
+  };
 
   return (
     <div className="mx-1">
@@ -138,6 +138,9 @@ export default function Home() {
             columns={columns}
             data={formattedData}
             onRowClick={(row) => router.push(`/exams/${row.id}`)}
+            onDelete={handleDelete}
+            deleteDialogTitle="Delete Exam"
+            deleteDialogDescription="Are you sure you want to delete this exam? All related data will be permanently removed."
           />
         )}
       </div>
