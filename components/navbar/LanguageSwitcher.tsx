@@ -3,19 +3,17 @@
 import { useRouter } from "next/navigation";
 import { Globe } from "lucide-react";
 import { useLocale } from "next-intl";
-import { setCookies } from "@/lib/helperServer";
-
+import Cookies from "js-cookie";
 const LanguageSwitcher = () => {
   const router = useRouter();
   const lang = useLocale();
 
   const toggleLocale = async () => {
-    const days = 60 * 60 * 24 * 7;
     router.refresh();
     if (lang == "ar") {
-      await setCookies("locale", "en", days);
+      Cookies.set("locale", "en");
     } else {
-      await setCookies("locale", "ar", days);
+      Cookies.set("locale", "ar");
     }
   };
 

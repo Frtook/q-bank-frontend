@@ -50,7 +50,7 @@ export default function ActivityCard({
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
       <div className="grid gap-4 md:gap-6">
-        {data.map((item) => (
+        {data?.map((item) => (
           <div
             key={item.id}
             className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"

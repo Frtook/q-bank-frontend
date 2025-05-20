@@ -13,19 +13,12 @@ type Params = {
   active?: boolean;
   subject?: string;
 };
+
 export const useGetQuestion = (params: Params) => {
   return useQuery({
     queryKey: ["question", params],
     queryFn: async () => {
-      const res = await apiClient.get("/bank/question/", {
-        params: {
-          outcome: params.outcome,
-          topic: params.topic,
-          level: params.level,
-          active: params.active,
-          subject: params.subject,
-        },
-      });
+      const res = await apiClient.get("/bank/question/", { params });
       return res.data as Question[];
     },
     enabled: !!params?.subject,
