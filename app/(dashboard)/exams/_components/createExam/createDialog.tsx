@@ -26,11 +26,30 @@ import { useState, useEffect } from "react";
 import { useAddExam } from "@/hooks/subject/useGetExam";
 import { useGetQuestion } from "@/hooks/subject/useQuestion";
 import { MdTimer } from "react-icons/md";
+import { usePathname } from "next/navigation";
+import { useGetOutcome } from "@/hooks/subject/useOutcome";
+import { useGetTopic } from "@/hooks/subject/useTopic";
+import { MultiSelect } from "@/components/ui/multi-selector";
+import { Checkbox } from "@/components/ui/checkbox";
+import TableSkeleton from "@/components/table/table-skeleton";
 
 const ExamDialog = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
   const { mutate: addExam } = useAddExam();
-  const { data: questionsData } = useGetQuestion({ subject: 1 });
+  const subjectID = usePathname().split("/")[2];
+  const { data: topic } = useGetTopic({ subjec: subjectID });
+  const { data: outcome } = useGetOutcome({ subjec: subjectID });
+  const [topics, settopics] = useState<string[]>([]);
+  const [levels, setLevels] = useState<string[]>([]);
+  const [outcomes, setOutcome] = useState<string[]>([]);
+  const [active, setActive] = useState(true);
+  const { data: questionsData } = useGetQuestion({
+    level: levels.join(","),
+    outcome: outcomes.join(","),
+    topic: topics.join(","),
+    active: active,
+    subject: subjectID,
+  });
   const [searchTerm, setSearchTerm] = useState("");
   console.log(questionsData);
   const [time, setTime] = useState({ hours: 1, minutes: 0, seconds: 0 });
@@ -192,28 +211,78 @@ const ExamDialog = () => {
               <h2 className="my-2 font-medium">
                 - Select Questions for the Exam
               </h2>
-              <div className="flex w-full justify-between gap-2 px-4">
+              <div className="flex w-full flex-col gap-2 px-4">
                 <SearchInput
                   placeholder="Search Questions"
                   onSearch={(value) => setSearchTerm(value)}
                 />
-                <Button
-                  className="border border-[#D5D7DA] shadow-sm dark:border-none"
-                  variant="secondary"
-                >
-                  Filters
-                </Button>
+                <div className="flex flex-1 gap-5">
+                  <MultiSelect
+                    className="border-2"
+                    onValueChange={(value) => {
+                      settopics(value);
+                    }}
+                    options={
+                      topic?.map((t) => ({
+                        value: String(t.id),
+                        label: t.name,
+                      })) || []
+                    }
+                    placeholder="Select Topic"
+                  />
+                  <MultiSelect
+                    className="border-2"
+                    onValueChange={(value) => {
+                      setOutcome(value);
+                    }}
+                    options={
+                      outcome?.map((outcome) => ({
+                        value: String(outcome.id),
+                        label: outcome.text,
+                      })) || []
+                    }
+                    placeholder="Select Outcome"
+                  />
+                  <MultiSelect
+                    className="border-2"
+                    onValueChange={(value) => {
+                      setLevels(value);
+                    }}
+                    options={[...Array(10)].map((_, index) => ({
+                      value: String(index + 1),
+                      label: String(index + 1),
+                    }))}
+                    placeholder="Select Level"
+                  />
+                  <div className="flex w-full items-center space-x-2">
+                    <Checkbox
+                      checked={active}
+                      onCheckedChange={() => setActive(!active)}
+                      id="terms"
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      is Active
+                    </label>
+                  </div>
+                </div>
               </div>
-              <DataTable
-                columns={columns}
-                data={formattedQuestions}
-                onRowSelectionChange={(selectedIndexes: number[]) => {
-                  const selectedIds = selectedIndexes.map(
-                    (index) => formattedQuestions[index].id
-                  );
-                  setSelectedQuestions(selectedIds);
-                }}
-              />
+              {questionsData ? (
+                <DataTable
+                  columns={columns}
+                  data={formattedQuestions}
+                  onRowSelectionChange={(selectedIndexes: number[]) => {
+                    const selectedIds = selectedIndexes.map(
+                      (index) => formattedQuestions[index].id
+                    );
+                    setSelectedQuestions(selectedIds);
+                  }}
+                />
+              ) : (
+                <TableSkeleton />
+              )}
             </div>
 
             <FormField

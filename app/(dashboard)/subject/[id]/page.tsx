@@ -5,7 +5,7 @@ import { MdOutlineTopic } from "react-icons/md";
 import Outcomes from "@/app/(dashboard)/subject/[id]/_components/outcomes/outcomes";
 import Topics from "@/app/(dashboard)/subject/[id]/_components/topics/topics";
 import { LiaClipboardListSolid } from "react-icons/lia";
-import { Bot, ShieldCheck } from "lucide-react";
+import { Bot, FilePenLine, ShieldCheck } from "lucide-react";
 import Permission from "@/app/(dashboard)/subject/[id]/_components/permission/permission";
 import Questions from "./_components/questions/questions";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
@@ -14,6 +14,7 @@ import { useGetSubject } from "@/hooks/subject/useSubject";
 import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Ai from "./_components/ai/Ai";
+import Exams from "../../exams/page";
 
 export default function Page({
   params,
@@ -48,6 +49,12 @@ export default function Page({
       value: "questions",
       icon: <QuestionMarkCircledIcon />,
       component: <Questions />,
+    },
+    {
+      label: "Exams", // Use translated label
+      value: "exams",
+      icon: <FilePenLine />,
+      component: <Exams />,
     },
     {
       label: t("ai"), // Use translated label

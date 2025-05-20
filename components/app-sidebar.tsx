@@ -11,14 +11,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from "@/components/ui/sidebar";
-import {
-  School,
-  FilePenLine,
-  Book,
-  Home,
-  UserPlus,
-  Settings,
-} from "lucide-react";
+import { School, Book, Home, UserPlus, Settings } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -52,11 +45,12 @@ export function AppSidebar() {
       icon: Book,
       subnav: subject,
     },
-    {
-      lable: "exams",
-      href: "/exams",
-      icon: FilePenLine,
-    },
+    // {
+    //   lable: "exams",
+    //   href: "/exams",
+    //   icon: FilePenLine,
+
+    // },
     {
       lable: "users",
       href: "/mange-users",

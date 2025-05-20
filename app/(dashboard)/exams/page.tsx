@@ -12,7 +12,7 @@ import { useState } from "react";
 import EditExamDialog from "./_components/editExam/editDialog";
 import { Exam } from "@/types";
 
-export default function Home() {
+export default function Exams() {
   const { data, isLoading } = useGetExams();
   const deleteExam = useDeleteExam();
   const router = useRouter();
