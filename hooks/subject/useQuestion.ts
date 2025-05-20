@@ -6,13 +6,29 @@ import { AxiosError } from "axios";
 import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
 
-export const useGetQuestion = () => {
+type Params = {
+  outcome?: string;
+  topic?: string;
+  level?: string;
+  active?: boolean;
+  subject?: string;
+};
+export const useGetQuestion = (params: Params) => {
   return useQuery({
-    queryKey: ["question"],
+    queryKey: ["question", params],
     queryFn: async () => {
-      const res = await apiClient.get("/bank/question/");
+      const res = await apiClient.get("/bank/question/", {
+        params: {
+          outcome: params.outcome,
+          topic: params.topic,
+          level: params.level,
+          active: params.active,
+          subject: params.subject,
+        },
+      });
       return res.data as Question[];
     },
+    enabled: !!params?.subject,
   });
 };
 

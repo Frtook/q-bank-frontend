@@ -12,15 +12,29 @@ import { useGetTopic } from "@/hooks/subject/useTopic";
 import { usePathname } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGetOutcome } from "@/hooks/subject/useOutcome";
+import { useEffect, useState } from "react";
 
 export default function Questions() {
   const t = useTranslations("subject");
   const subjectID = usePathname().split("/")[2];
 
-  const { data } = useGetQuestion();
   const columns = useColumns();
   const { data: topic } = useGetTopic({ subjec: subjectID });
-  const { data: outcomes } = useGetOutcome({ subjec: subjectID });
+  const { data: outcome } = useGetOutcome({ subjec: subjectID });
+  const [topics, settopics] = useState<string[]>([]);
+  const [levels, setLevels] = useState<string[]>([]);
+  const [outcomes, setOutcome] = useState<string[]>([]);
+  const [active, setActive] = useState(true);
+  const { data } = useGetQuestion({
+    level: levels.join(","),
+    outcome: outcomes.join(","),
+    topic: topics.join(","),
+    active: active,
+    subject: subjectID,
+  });
+  useEffect(() => {
+    console.log(outcomes);
+  }, [outcomes]);
   return (
     <div>
       <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-3">
@@ -46,7 +60,7 @@ export default function Questions() {
           <MultiSelect
             className="border-2"
             onValueChange={(value) => {
-              console.log(value);
+              settopics(value);
             }}
             options={
               topic?.map((t) => ({
@@ -59,20 +73,20 @@ export default function Questions() {
           <MultiSelect
             className="border-2"
             onValueChange={(value) => {
-              console.log(value);
+              setOutcome(value);
             }}
             options={
-              outcomes?.map((outcome) => ({
+              outcome?.map((outcome) => ({
                 value: String(outcome.id),
                 label: outcome.text,
               })) || []
             }
-            placeholder="Select Topic"
+            placeholder="Select Outcome"
           />
           <MultiSelect
             className="border-2"
             onValueChange={(value) => {
-              console.log(value);
+              setLevels(value);
             }}
             options={[...Array(10)].map((_, index) => ({
               value: String(index + 1),
@@ -81,7 +95,11 @@ export default function Questions() {
             placeholder="Select Level"
           />
           <div className="flex w-full items-center space-x-2">
-            <Checkbox id="terms" />
+            <Checkbox
+              checked={active}
+              onCheckedChange={() => setActive(!active)}
+              id="terms"
+            />
             <label
               htmlFor="terms"
               className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

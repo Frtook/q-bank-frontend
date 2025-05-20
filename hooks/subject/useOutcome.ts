@@ -19,7 +19,7 @@ export const useGetOutcome = (params: SearchParams) => {
       );
       return res.data as Outcome[];
     },
-    enabled: params.subjec !== undefined,
+    enabled: !!params.subjec,
   });
 };
 

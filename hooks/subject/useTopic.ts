@@ -16,6 +16,7 @@ export const useGetTopic = (params: SearchParams) => {
       const res = await apiClient.get(`/bank/topic/?subject=${params.subjec}`);
       return res.data as Topic[];
     },
+    enabled: !!params.subjec,
   });
 };
 
