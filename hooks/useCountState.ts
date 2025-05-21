@@ -1,4 +1,5 @@
 import apiClient from "@/lib/axios";
+import { CountState } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetCountState = () => {

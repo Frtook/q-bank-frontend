@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
+import { Outcome } from "@/types";
 
 type SearchParams = {
   subjec: string;

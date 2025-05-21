@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "../use-toast";
 import { useTranslations } from "next-intl";
+import { ISubject } from "@/types";
 
 export const useGetSubject = () => {
   return useQuery({

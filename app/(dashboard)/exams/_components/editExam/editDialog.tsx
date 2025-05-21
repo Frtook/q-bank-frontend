@@ -40,7 +40,12 @@ interface EditExamDialogProps {
 }
 
 const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
-  const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
+  const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<
+    number[]
+  >([]);
+  const [workingSelectedQuestions, setWorkingSelectedQuestions] = useState<
+    number[]
+  >([]);
   const { mutate: updateExam } = useUpdateExam();
   const subjectID = usePathname().split("/")[2];
   const { data: topic } = useGetTopic({ subjec: subjectID });
@@ -79,10 +84,11 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
   // Initialize form with exam data when dialog opens or exam changes
   useEffect(() => {
     if (exam) {
+      const initialQuestions = exam.questions?.map((q) => q.id) || [];
       form.reset({
         name: exam.name,
         confirmed: exam.confirmed,
-        questions: exam.questions?.map((q) => q.id) || [],
+        questions: initialQuestions,
         setting: {
           marks: exam.setting?.marks || 100,
           subject: exam.setting?.subject || 0,
@@ -93,8 +99,9 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
         },
       });
 
-      // Set selected questions
-      setSelectedQuestions(exam.questions?.map((q) => q.id) || []);
+      // Set both original and working selections
+      setOriginalSelectedQuestions(initialQuestions);
+      setWorkingSelectedQuestions(initialQuestions);
 
       // Parse time if it exists
       if (exam.setting?.periodOfTime) {
@@ -104,16 +111,10 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
     }
   }, [exam, form]);
 
+  // Update form value when working selection changes
   useEffect(() => {
-    form.setValue(
-      "setting.periodOfTime",
-      `${String(time.hours).padStart(2, "0")}:${String(time.minutes).padStart(2, "0")}:${String(time.seconds).padStart(2, "0")}`
-    );
-  }, [time, form]);
-
-  useEffect(() => {
-    form.setValue("questions", selectedQuestions);
-  }, [selectedQuestions, form]);
+    form.setValue("questions", workingSelectedQuestions);
+  }, [workingSelectedQuestions, form]);
 
   const onSubmit = (data: TExam) => {
     if (!exam) return;
@@ -134,8 +135,17 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
     };
 
     updateExam(payload);
+    // Update the original selection only on submit
+    setOriginalSelectedQuestions(data.questions);
     onOpenChange(false);
   };
+
+  // Reset working selection when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setWorkingSelectedQuestions(originalSelectedQuestions);
+    }
+  }, [open, originalSelectedQuestions]);
 
   const convertToMinutes = (timeStr: string) => {
     const [hours, minutes, seconds] = timeStr.split(":").map(Number);
@@ -299,17 +309,18 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               </div>
               {questionsData ? (
                 <DataTable
+                  key={`exam-${exam?.id}`} // Important for resetting the table state
                   columns={columns}
                   data={formattedQuestions}
                   onRowSelectionChange={(selectedIndexes: number[]) => {
                     const selectedIds = selectedIndexes.map(
                       (index) => formattedQuestions[index].id
                     );
-                    setSelectedQuestions(selectedIds);
+                    setWorkingSelectedQuestions(selectedIds);
                   }}
                   initialSelectedRows={formattedQuestions
                     .map((q, index) =>
-                      selectedQuestions.includes(q.id) ? index : -1
+                      workingSelectedQuestions.includes(q.id) ? index : -1
                     )
                     .filter((i) => i !== -1)}
                 />

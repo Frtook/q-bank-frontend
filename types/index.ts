@@ -1,4 +1,4 @@
-interface IRegister {
+export interface IRegister {
   fullname: string;
   username: string;
   email: string;
@@ -7,25 +7,25 @@ interface IRegister {
   academy: { name: string };
 }
 
-interface ILogin {
+export interface ILogin {
   username: string;
   password: string;
 }
 
-interface IAcademy {
+export interface IAcademy {
   id: number;
   name: string;
   logo: string;
   active: boolean;
 }
 
-type ISubject = {
+export type ISubject = {
   id: number;
   name: string;
   academy: number;
 };
 
-type MangeUsers = {
+export type MangeUsers = {
   id: number;
   username: string;
   is_active: boolean;
@@ -33,20 +33,20 @@ type MangeUsers = {
   fullname: string;
 };
 
-type Outcome = {
+export type Outcome = {
   id: number;
   subject: number;
   text: string;
 };
 
-type Topic = {
+export type Topic = {
   id: number;
   name: string;
   subject: number;
   outcomes: number[];
 };
 
-type CountState = {
+export type CountState = {
   academy_count: number;
   exam_count: number;
   question_count: number;
@@ -55,7 +55,7 @@ type CountState = {
   user_count: number;
 };
 
-type Privilege = {
+export type Privilege = {
   id: number;
   object_pk: string;
   user: number;
@@ -80,7 +80,7 @@ type Setting = {
   topic: number;
 };
 
-type Question = {
+export type Question = {
   id: number;
   text: string;
   hint: string;
@@ -115,7 +115,7 @@ export type Exam = {
   setting: ExamSetting;
 };
 
-type Documents = {
+export type Documents = {
   id: number;
   name: string;
   file: string;

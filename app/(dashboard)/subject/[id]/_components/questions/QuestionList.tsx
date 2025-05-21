@@ -12,6 +12,7 @@ import {
 import DeleteDialog from "@/components/DeleteDialog";
 import EditQuestionDialog from "./dialogs/EditQuestion";
 import { useTranslations } from "next-intl";
+import { Question } from "@/types";
 
 export default function QuestionList({ questions }: { questions: Question[] }) {
   const t = useTranslations("subject");

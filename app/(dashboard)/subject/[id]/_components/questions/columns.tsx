@@ -5,6 +5,7 @@ import DeleteDialog from "@/components/DeleteDialog";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
+import { Question } from "@/types";
 export const useColumns = (): ColumnDef<Question>[] => {
   const router = useRouter();
   const t = useTranslations("");

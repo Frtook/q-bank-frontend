@@ -1,5 +1,6 @@
 "use client";
 import DeleteDialog from "@/components/DeleteDialog";
+import { Privilege } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 

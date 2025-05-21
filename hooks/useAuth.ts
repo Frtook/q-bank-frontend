@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "./use-toast";
 import { ToastError } from "@/lib/helperClient";
 import { useTranslations } from "next-intl";
+import { ILogin, IRegister } from "@/types";
 
 const DAYS = 60 * 60 * 1000 * 7;
 

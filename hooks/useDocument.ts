@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "./use-toast";
 import { AxiosError } from "axios";
 import { ToastError } from "@/lib/helperClient";
+import { Documents } from "@/types";
 
 export const useGetDocument = () => {
   return useQuery({

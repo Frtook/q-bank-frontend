@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useTranslations } from "next-intl";
 import { toast } from "./use-toast";
+import { Privilege } from "@/types";
 
 type SearchParams = {
   type: "subject" | "acadmey";

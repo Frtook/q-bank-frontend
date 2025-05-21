@@ -1,4 +1,5 @@
 import { toast } from "@/hooks/use-toast";
+import { IAcademy } from "@/types";
 import Cookies from "js-cookie";
 
 export const getSubjectName = (id: number, academies: IAcademy[]) => {

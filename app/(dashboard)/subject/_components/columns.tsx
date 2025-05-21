@@ -7,6 +7,7 @@ import DeleteDialog from "@/components/DeleteDialog";
 import { useRouter } from "next/navigation";
 import { useGetacademy } from "@/hooks/useAcademy";
 import { useTranslations } from "next-intl";
+import { ISubject } from "@/types";
 export const useColumns = (): ColumnDef<ISubject>[] => {
   const router = useRouter();
   const { data: academies } = useGetacademy();

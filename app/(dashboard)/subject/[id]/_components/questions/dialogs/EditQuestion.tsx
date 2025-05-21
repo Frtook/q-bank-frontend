@@ -37,6 +37,7 @@ import { useEffect, useRef, useState } from "react";
 import { CloudUpload, SquarePen, Trash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { IsDev } from "@/lib/helperClient";
+import { Question } from "@/types";
 
 export default function EditQuestionDialog({
   question,

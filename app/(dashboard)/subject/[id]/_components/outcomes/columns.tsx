@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import DeleteDialog from "@/components/DeleteDialog";
 import EditOutcomeDialog from "./dialogs/EditOutCome";
 import { useTranslations } from "next-intl";
+import { Outcome } from "@/types";
 
 export const useColumns = (): ColumnDef<Outcome>[] => {
   const t = useTranslations("column");

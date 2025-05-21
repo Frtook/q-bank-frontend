@@ -5,6 +5,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useTranslations } from "next-intl";
+import { MangeUsers } from "@/types";
 
 export const useColumns = (): ColumnDef<MangeUsers>[] => {
   const t = useTranslations("column");

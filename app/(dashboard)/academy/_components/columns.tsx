@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import EditAcademyDialog from "./dialogs/EditAcademyDialog";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useLocale, useTranslations } from "next-intl";
+import { IAcademy } from "@/types";
 
 export const useColumns = (): ColumnDef<IAcademy>[] => {
   const t = useTranslations("column");

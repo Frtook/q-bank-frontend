@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ToastError } from "@/lib/helperClient";
 import { useTranslations } from "next-intl";
+import { IAcademy } from "@/types";
 
 export const useGetacademy = () => {
   return useQuery({

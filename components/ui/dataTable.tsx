@@ -1,6 +1,6 @@
 // components/ui/dataTable.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableHeader,
@@ -25,6 +25,7 @@ interface Column {
 
 interface DataRow {
   [key: string]: React.ReactNode;
+  id?: number | string; // Ensure id is optional
 }
 
 interface DataTableProps {
@@ -37,6 +38,7 @@ interface DataTableProps {
   onRowClick?: (rowData: DataRow) => void;
   deleteDialogTitle?: string;
   deleteDialogDescription?: string;
+  initialSelectedRows?: number[];
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -49,12 +51,20 @@ const DataTable: React.FC<DataTableProps> = ({
   onRowClick,
   deleteDialogTitle = "Are you sure you want to delete this item?",
   deleteDialogDescription = "This action cannot be undone.",
+  initialSelectedRows = [],
 }) => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  // Initialize state with initialSelectedRows
+  const [selectedRows, setSelectedRows] =
+    useState<number[]>(initialSelectedRows);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  const visibleColumns = columns.filter((col) => col.accessor !== "id");
+  // Memoize visible columns to prevent unnecessary recalculations
+  const visibleColumns = useMemo(
+    () => columns.filter((col) => col.accessor !== "id"),
+    [columns]
+  );
+
   const hasActions = !!onEdit || !!onDelete;
 
   const handleRowSelection = (index: number) => {
@@ -84,6 +94,8 @@ const DataTable: React.FC<DataTableProps> = ({
   const handleConfirmDelete = () => {
     if (deleteIndex !== null) {
       onDelete?.(deleteIndex);
+      // Remove deleted row from selection
+      setSelectedRows(selectedRows.filter((i) => i !== deleteIndex));
     }
     setIsDeleteDialogOpen(false);
     setDeleteIndex(null);
@@ -101,7 +113,9 @@ const DataTable: React.FC<DataTableProps> = ({
             <TableRow className="bg-gray-100 dark:bg-[#353a3e]">
               <TableHead className="px-4 text-left">
                 <Checkbox
-                  checked={selectedRows.length === data.length}
+                  checked={
+                    data.length > 0 && selectedRows.length === data.length
+                  }
                   onCheckedChange={handleSelectAll}
                 />
               </TableHead>
@@ -126,7 +140,7 @@ const DataTable: React.FC<DataTableProps> = ({
           <TableBody>
             {data.map((row, rowIndex) => (
               <TableRow
-                key={rowIndex}
+                key={row.id ?? rowIndex} // Use row.id if available, fallback to rowIndex
                 className="border-b hover:bg-gray-50 dark:hover:bg-primary"
                 onClick={() => handleRowClick(row)}
                 style={{ cursor: onRowClick ? "pointer" : "default" }}
