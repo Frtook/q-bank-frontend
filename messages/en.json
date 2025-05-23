@@ -17,7 +17,7 @@
     "register": "Register"
   },
   "login": {
-    "welcome": "Welcome Back",
+    "welcome": "Login To Question Bank",
     "noaccount": "Don't have an account yet?",
     "register": "register",
     "username": "Username",
