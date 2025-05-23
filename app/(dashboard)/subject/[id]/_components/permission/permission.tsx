@@ -1,12 +1,12 @@
 "use client";
 
-import { useGetPrivilege } from "@/hooks/usePrivilege";
 import AddPermissionDialog from "./dialogs/AddPermission";
 import { usePathname } from "next/navigation";
 import { DataTable } from "@/components/table/data-table";
 import { useColumns } from "./columns";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { useTranslations } from "next-intl";
+import { useGetPrivilege } from "@/hooks/permission/usePrivilege";
 
 export default function Permission() {
   const subjectID = usePathname().split("/")[2];

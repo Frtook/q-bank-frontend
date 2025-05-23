@@ -23,7 +23,7 @@ export default function Page({
     id: string;
   }>;
 }) {
-  const t = useTranslations("tabs"); // Add translation hook
+  const t = useTranslations("tabs");
   const { id } = use(params);
   const { data: subjects } = useGetSubject();
   if (subjects) {
@@ -33,37 +33,37 @@ export default function Page({
   }
   const taps = [
     {
-      label: t("outcomes"), // Use translated label
+      label: t("outcomes"),
       value: "outcomes",
       icon: <MdOutlineTopic />,
       component: <Outcomes />,
     },
     {
-      label: t("topics"), // Use translated label
+      label: t("topics"),
       value: "topics",
       icon: <LiaClipboardListSolid />,
       component: <Topics />,
     },
     {
-      label: t("questions"), // Use translated label
+      label: t("questions"),
       value: "questions",
       icon: <QuestionMarkCircledIcon />,
       component: <Questions />,
     },
     {
-      label: "Exams", // Use translated label
+      label: "Exams",
       value: "exams",
       icon: <FilePenLine />,
       component: <Exams />,
     },
     {
-      label: t("ai"), // Use translated label
+      label: t("ai"),
       value: "ai",
       icon: <Bot />,
       component: <Ai />,
     },
     {
-      label: t("permission"), // Use translated label
+      label: t("permission"),
       value: "permission",
       icon: <ShieldCheck />,
       component: <Permission />,

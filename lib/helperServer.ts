@@ -1,5 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
+import { jwtDecode } from "jwt-decode";
+import { JwtDecode } from "@/types";
 
 export async function getCookies(key: string) {
   const data = (await cookies()).get(key)?.value;
@@ -35,3 +37,14 @@ export async function logoutAction() {
   (await cookies()).delete("accessToken");
   (await cookies()).delete("refreshToken");
 }
+
+export const isAdmin = async (): Promise<boolean> => {
+  const token = await getCookies("accessToken");
+
+  let decoded: JwtDecode;
+  if (token) {
+    decoded = jwtDecode(token);
+    return decoded.adm;
+  }
+  return false;
+};

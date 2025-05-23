@@ -6,9 +6,12 @@ import Image from "next/image";
 import { useGetSubject } from "@/hooks/subject/useSubject";
 import DeleteDialog from "@/components/DeleteDialog";
 import AddDocumentDialog from "./dialogs/AddDocument";
+import { usePathname } from "next/navigation";
 
 export default function Ai() {
-  const { data } = useGetDocument();
+  const subjectID = usePathname().split("/")[2];
+
+  const { data } = useGetDocument({ subject: subjectID });
   const { data: subjects } = useGetSubject();
   return (
     <div>

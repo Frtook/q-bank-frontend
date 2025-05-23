@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
-import { useAddMangeUser } from "@/hooks/useMageUsers";
+import { useAddMangeUser } from "@/hooks/permission/useMageUsers";
 import { schemaUser, SchemaUser } from "@/lib/validations/mange-user";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";

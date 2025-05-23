@@ -1,39 +1,15 @@
-"use client";
-// import { DataTable } from "./data-table";
-import { useColumns } from "./_components/columns";
-import { useGetMangeUser } from "@/hooks/useMageUsers";
-import AddUserDialog from "./_components/dialogs/AddUserDialog";
-import { DataTable } from "@/components/table/data-table";
-import TableSkeleton from "@/components/table/table-skeleton";
-import CardIcon from "@/components/card-icon";
-import { User } from "lucide-react";
-import { useTranslations } from "next-intl";
+import React from "react";
+import Table from "./_components/table";
+import { isAdmin } from "@/lib/helperServer";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  const { data } = useGetMangeUser();
-  const columns = useColumns();
-  const t = useTranslations("column");
-
+export default async function page() {
+  if (!(await isAdmin())) {
+    redirect("/");
+  }
   return (
     <div>
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
-        <CardIcon
-          count={data?.length}
-          title={t("users")}
-          icon={<User />}
-        />
-      </div>
-      {data ? (
-        <DataTable
-          columns={columns}
-          data={data}
-          placeholderInput={t("filterName")}
-          sortValue="fullname"
-          button={<AddUserDialog />}
-        />
-      ) : (
-        <TableSkeleton />
-      )}
+      <Table />
     </div>
   );
 }

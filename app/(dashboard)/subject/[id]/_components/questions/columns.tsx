@@ -66,11 +66,6 @@ export const useColumns = (): ColumnDef<Question>[] => {
               onClick={() => router.push(`${pathName}/${question.id}`)}
               className="cursor-pointer"
             />
-            {/* <EditSubjectDialog
-              academy={subject.academy}
-              name={subject.name}
-              id={subject.id}
-            /> */}
             <DeleteDialog
               mutationKey="subject"
               url="/bank/subject"

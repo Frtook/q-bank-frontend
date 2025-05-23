@@ -62,7 +62,7 @@ export default function AddQuestionDialog() {
       setting: {
         active: true,
         level: 5,
-        periodOfTime: "000500",
+        periodOfTime: 60,
         rondomnizable: true,
         topic: undefined,
         type: undefined,
