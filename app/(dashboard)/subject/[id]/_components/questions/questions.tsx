@@ -9,7 +9,7 @@ import { DataTable } from "@/components/table/data-table";
 import TableSkeleton from "@/components/table/table-skeleton";
 import { useColumns } from "./columns";
 import { useGetTopic } from "@/hooks/subject/useTopic";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGetOutcome } from "@/hooks/subject/useOutcome";
 import { useEffect, useState } from "react";
@@ -17,7 +17,8 @@ import { useEffect, useState } from "react";
 export default function Questions() {
   const t = useTranslations("subject");
   const subjectID = usePathname().split("/")[2];
-
+  const router = useRouter();
+  const pathname = usePathname();
   const columns = useColumns();
   const { data: topic } = useGetTopic({ subjec: subjectID });
   const { data: outcome } = useGetOutcome({ subjec: subjectID });
@@ -111,13 +112,15 @@ export default function Questions() {
         <AddQuestionDialog />
       </div>
 
-      {/* {data && <QuestionList questions={data} />} */}
       {data ? (
         <DataTable
           data={data}
           columns={columns}
           placeholderInput="Search by name"
           sortValue="text"
+          onRowClick={(_, { original }) => {
+            router.push(`${pathname}/${original.id}`);
+          }}
         />
       ) : (
         <TableSkeleton />

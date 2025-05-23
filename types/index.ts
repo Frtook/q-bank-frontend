@@ -72,7 +72,7 @@ type Answer = {
 
 type Setting = {
   active: boolean;
-  periodOfTime: string;
+  periodOfTime: number;
   type: number;
   level: number;
   rondomnizable: boolean;
@@ -120,4 +120,28 @@ export type Documents = {
   name: string;
   file: string;
   subject: number;
+};
+
+export type JwtDecode = {
+  adm: boolean;
+  aid: number;
+};
+
+export interface UserPermission {
+  id: number;
+  username: string;
+  fullname: string;
+  is_active: boolean;
+  is_superuser: boolean;
+  user_permissions: Permission[];
+}
+
+export interface Permission {
+  id: number;
+  name: string;
+}
+
+export type PermissionNested = {
+  model: string;
+  permissions: Permission[];
 };

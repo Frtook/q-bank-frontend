@@ -5,13 +5,17 @@ import { AxiosError } from "axios";
 import { ToastError } from "@/lib/helperClient";
 import { Documents } from "@/types";
 
-export const useGetDocument = () => {
+type Params = {
+  subject: string;
+};
+export const useGetDocument = (params: Params) => {
   return useQuery({
     queryKey: ["document"],
     queryFn: async () => {
-      const res = await apiClient.get("/bank/document/");
+      const res = await apiClient.get("/bank/document/", { params });
       return res.data as Documents[];
     },
+    enabled: !!params.subject,
   });
 };
 
