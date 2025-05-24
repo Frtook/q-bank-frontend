@@ -26,7 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   schemaUserPermission,
   SchemaUserPermission,
-} from "@/lib/validations/user-permission";
+} from "@/lib/validations/permission/user-permission";
 import { useUpdateUserPermission } from "@/hooks/permission/useUserPermission";
 import { PenSquare } from "lucide-react";
 import { UserPermission } from "@/types";
@@ -59,7 +59,6 @@ export default function UpdateUserDialog({
 
   useEffect(() => {
     if (user) {
-      console.log("gg", user);
       form.reset(user);
     }
   }, [user]);

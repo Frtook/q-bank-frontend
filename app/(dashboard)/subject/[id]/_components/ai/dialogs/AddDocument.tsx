@@ -25,11 +25,11 @@ import { useEffect, useRef } from "react";
 
 import { CloudUpload, Trash } from "lucide-react";
 
-import { useAddDocument } from "@/hooks/useDocument";
-import { TDocment, DocmentSchema } from "@/lib/validations/document";
+import { TDocment, DocmentSchema } from "@/lib/validations/subject/document";
 import prettyBytes from "pretty-bytes";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useAddDocument } from "@/hooks/subject/useDocument";
 
 export default function AddDocumentDialog() {
   const subjectID = usePathname().split("/")[2];

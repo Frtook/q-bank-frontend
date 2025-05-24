@@ -1,6 +1,6 @@
 import apiClient from "@/lib/axios";
 import { ToastError } from "@/lib/helperClient";
-import { SchemaUser } from "@/lib/validations/mange-user";
+import { SchemaUser } from "@/lib/validations/permission/mange-user";
 import { MangeUsers } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";

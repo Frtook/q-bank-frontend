@@ -1,6 +1,6 @@
 import apiClient from "@/lib/axios";
 import { ToastError } from "@/lib/helperClient";
-import { TPermission } from "@/lib/validations/permission";
+import { TPermission } from "@/lib/validations/permission/permission";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useTranslations } from "next-intl";

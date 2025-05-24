@@ -1,6 +1,6 @@
 "use client";
 import CardIcon from "@/components/card-icon";
-import { useGetDocument } from "@/hooks/useDocument";
+import { useGetDocument } from "@/hooks/subject/useDocument";
 import { FileText } from "lucide-react";
 import Image from "next/image";
 import { useGetSubject } from "@/hooks/subject/useSubject";
