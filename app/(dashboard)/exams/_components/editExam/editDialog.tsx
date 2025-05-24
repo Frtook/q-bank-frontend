@@ -179,7 +179,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
       periodOfTime: question.setting.periodOfTime ? (
         <span className="flex w-fit items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
           <MdTimer />
-          {`${convertToMinutes(question.setting.periodOfTime)} ${t("mins")}`}
+          {`${convertToMinutes(question.setting.periodOfTime.toString())} mins`}
         </span>
       ) : (
         <span className="flex items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">

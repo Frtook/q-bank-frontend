@@ -15,6 +15,16 @@ export const useGetMangeUser = () => {
   });
 };
 
+export const useGetOneMangeUser = (id: string) => {
+  return useQuery({
+    queryKey: ["mange-user", id],
+    queryFn: async () => {
+      const res = await apiClient.get(`/manage/user/${id}/`);
+      return res.data as MangeUsers;
+    },
+    enabled: !!id,
+  });
+};
 export const useAddMangeUser = () => {
   const queryClient = useQueryClient();
 

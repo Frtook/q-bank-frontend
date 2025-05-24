@@ -14,6 +14,7 @@ import { Fragment } from "react";
 import { useGetSubject } from "@/hooks/subject/useSubject";
 import { useGetQuestion } from "@/hooks/subject/useQuestion";
 import { sliceString } from "@/lib/helperClient";
+import { useGetMangeUser } from "@/hooks/permission/useMageUsers";
 
 const Breadcrumbs = () => {
   const t = useTranslations("navitems");
@@ -23,6 +24,7 @@ const Breadcrumbs = () => {
   const locale = useLocale();
   const { data: subjects } = useGetSubject();
   const { data: question } = useGetQuestion({});
+  const { data: users } = useGetMangeUser();
   const navItems = [
     {
       lable: "dashboard",
@@ -52,14 +54,21 @@ const Breadcrumbs = () => {
       lable: "settings",
       href: "/profile",
     },
+    {
+      lable: "admin",
+      href: "/admin",
+    },
   ];
   const getPath = (id: string): string => {
-    if (subjects && question) {
+    if (subjects && question && users) {
       const subject = subjects?.find((sub) => String(sub.id) === id)?.name;
       if (subject) return sliceString(subject, 0, 10);
 
       const qusetion = question?.find((qus) => String(qus.id) === id)?.text;
       if (qusetion) return sliceString(qusetion, 0, 10);
+
+      const user = users.find((user) => String(user.id) === id)?.fullname;
+      if (user) return sliceString(user, 0, 10);
       return id;
     }
     return "...";

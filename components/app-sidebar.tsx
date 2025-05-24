@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { useGetSubject } from "@/hooks/subject/useSubject";
+import Image from "next/image";
 export function AppSidebar() {
   const pathname = usePathname();
   const t = useTranslations("navitems");
@@ -67,8 +68,16 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="font-bold">
-            {t("title")}
+          <SidebarGroupLabel>
+            <div className="flex items-center">
+              <Image
+                width={50}
+                height={50}
+                src={"/images/logo.png"}
+                alt="logo"
+              />
+              <span className="">{t("title")}</span>
+            </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

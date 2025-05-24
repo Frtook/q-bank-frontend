@@ -33,7 +33,7 @@ export const schemaQuestion = z.object({
     ),
   setting: z.object({
     active: z.boolean(),
-    periodOfTime: z.string(),
+    periodOfTime: z.coerce.number(),
     type: z.number(),
     level: z.number(),
     rondomnizable: z.boolean(),

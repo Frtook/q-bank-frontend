@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/form";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { useAddPrivilege } from "@/hooks/usePrivilege";
+import { useAddPrivilege } from "@/hooks/permission/usePrivilege";
 import { TPermission, schemaPermission } from "@/lib/validations/permission";
-import { useGetPermission } from "@/hooks/usePermission";
-import { useGetMangeUser } from "@/hooks/useMageUsers";
+import { useGetPermission } from "@/hooks/permission/usePermission";
+import { useGetMangeUser } from "@/hooks/permission/useMageUsers";
 import { SingleSelect } from "@/components/ui/single-select";
 import { useTranslations } from "next-intl";
 

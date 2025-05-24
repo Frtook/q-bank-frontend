@@ -4,8 +4,8 @@ import { TPermission } from "@/lib/validations/permission";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useTranslations } from "next-intl";
-import { toast } from "./use-toast";
 import { Privilege } from "@/types";
+import { toast } from "../use-toast";
 
 type SearchParams = {
   type: "subject" | "acadmey";
@@ -20,6 +20,7 @@ export const useGetPrivilege = (params: SearchParams) => {
       );
       return res.data as Privilege[];
     },
+    enabled: !!params.id,
   });
 };
 

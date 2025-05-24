@@ -1,14 +1,16 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, RotateCwSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/DeleteDialog";
 import { useTranslations } from "next-intl";
 import { MangeUsers } from "@/types";
+import { useRouter } from "next/navigation";
 
 export const useColumns = (): ColumnDef<MangeUsers>[] => {
   const t = useTranslations("column");
+  const router = useRouter();
   return [
     {
       accessorKey: "fullname",
@@ -45,11 +47,17 @@ export const useColumns = (): ColumnDef<MangeUsers>[] => {
       cell: ({ row }) => {
         const user = row.original;
         return (
-          <DeleteDialog
-            id={user.id}
-            url="/manage/user"
-            mutationKey="mange-user"
-          />
+          <div className="flex items-center gap-3">
+            <RotateCwSquare
+              onClick={() => router.push(`/mange-users/${user.id}`)}
+              className="cursor-pointer"
+            />
+            <DeleteDialog
+              id={user.id}
+              url="/manage/user"
+              mutationKey="mange-user"
+            />
+          </div>
         );
       },
     },

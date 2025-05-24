@@ -17,7 +17,7 @@
     "register": "Register"
   },
   "login": {
-    "welcome": "Welcome Back",
+    "welcome": "Login To Question Bank",
     "noaccount": "Don't have an account yet?",
     "register": "register",
     "username": "Username",
@@ -47,7 +47,8 @@
     "exams": "Exams",
     "ai": "AI",
     "users": "Manage Users",
-    "settings": "Profile"
+    "settings": "Profile",
+    "admin": "admin"
   },
   "toast": {
     "profileUpdated": "Profile updated successfully",
