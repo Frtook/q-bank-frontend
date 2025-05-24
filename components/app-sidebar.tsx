@@ -69,10 +69,10 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <div className="flex items-center">
+            <div className="flex w-full flex-col items-center border-b border-gray-200 pb-2">
               <Image
-                width={50}
-                height={50}
+                width={100}
+                height={100}
                 src={"/images/logo.png"}
                 alt="logo"
               />
@@ -80,7 +80,7 @@ export function AppSidebar() {
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="my-5">
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.lable}>
                   {item.subnav && item.subnav.length > 0 ? (
