@@ -2,7 +2,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -24,7 +23,10 @@ import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useEffect, useRef } from "react";
 import { useAddMangeUser } from "@/hooks/permission/useMageUsers";
-import { schemaUser, SchemaUser } from "@/lib/validations/mange-user";
+import {
+  schemaUser,
+  SchemaUser,
+} from "@/lib/validations/permission/mange-user";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
 
@@ -58,11 +60,7 @@ export default function AddUserDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle></DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>Add User Perimmsion</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form

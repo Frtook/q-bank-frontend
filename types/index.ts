@@ -145,3 +145,10 @@ export type PermissionNested = {
   model: string;
   permissions: Permission[];
 };
+
+export interface UserGroupPermission {
+  id: number;
+  name: string;
+  permissions: Permission[];
+  academy_name: string;
+}

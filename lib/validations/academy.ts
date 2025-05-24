@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ACCEPTED_IMAGE_TYPES } from "../../constants";
+import { ACCEPTED_IMAGE_TYPES } from "../constants";
 
 export type Academy = z.infer<typeof AcademySchema>;
 

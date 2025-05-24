@@ -1,5 +1,4 @@
 "use client";
-// import { DataTable } from "./data-table";
 import { useColumns } from "./columns";
 import { useGetMangeUser } from "@/hooks/permission/useMageUsers";
 import AddUserDialog from "./dialogs/AddUserDialog";
@@ -9,11 +8,10 @@ import CardIcon from "@/components/card-icon";
 import { User } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export default function Table() {
+export default function UserPermission() {
   const { data } = useGetMangeUser();
   const columns = useColumns();
   const t = useTranslations("column");
-  console.log(data);
   return (
     <div>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
@@ -23,6 +21,7 @@ export default function Table() {
           icon={<User />}
         />
       </div>
+
       {data ? (
         <DataTable
           columns={columns}

@@ -36,6 +36,10 @@ export const useAddOutcome = () => {
       toast({ title: "Processing your request...", variant: "info" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["outcome"] });
+      toast({
+        title: "success add outcome",
+        variant: "success",
+      });
     },
     onError: (error: AxiosError) => ToastError(error?.response?.data as Error),
   });
