@@ -90,3 +90,32 @@ export const useUpdateExam = () => {
     },
   });
 };
+
+export const useGenerateExam = (examId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: {
+      subject: number;
+      difficulty_level: number;
+      outcomeWeights: { outcome: number; weight: number }[];
+      countOfQuestions: number;
+      timeToSolve: string;
+    }) => {
+      const res = await apiClient.post(`/bank/exam/${examId}/generate/`, data);
+      return res.data;
+    },
+    onMutate: () => toast({ title: "Generating exam...", variant: "info" }),
+    onSuccess: () => {
+      toast({ title: "Exam generated successfully!", variant: "success" });
+      queryClient.invalidateQueries({ queryKey: ["exam", examId] });
+      queryClient.invalidateQueries({ queryKey: ["exams"] });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to generate exam",
+        variant: "destructive",
+      });
+    },
+  });
+};

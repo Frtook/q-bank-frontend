@@ -32,13 +32,18 @@ import { useGetTopic } from "@/hooks/subject/useTopic";
 import { MultiSelect } from "@/components/ui/multi-selector";
 import { Checkbox } from "@/components/ui/checkbox";
 import TableSkeleton from "@/components/table/table-skeleton";
+import { useGetacademy } from "@/hooks/useAcademy";
+import { useLocale, useTranslations } from "next-intl";
 
 const ExamDialog = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<number[]>([]);
+  const lang = useLocale();
+  const t = useTranslations("examDialog");
   const { mutate: addExam } = useAddExam();
   const subjectID = usePathname().split("/")[2];
   const { data: topic } = useGetTopic({ subjec: subjectID });
   const { data: outcome } = useGetOutcome({ subjec: subjectID });
+  const { data: academy } = useGetacademy();
   const [topics, settopics] = useState<string[]>([]);
   const [levels, setLevels] = useState<string[]>([]);
   const [outcomes, setOutcome] = useState<string[]>([]);
@@ -66,7 +71,7 @@ const ExamDialog = () => {
         periodOfTime: "01:00:00",
         generation_config: "",
         level: 1,
-        academy: 2,
+        academy: 0,
       },
     },
   });
@@ -97,11 +102,11 @@ const ExamDialog = () => {
       questions: data.questions,
       setting: {
         marks: data.setting.marks,
-        subject: 1,
+        subject: Number(subjectID),
         periodOfTime: data.setting.periodOfTime,
         generation_config: data.setting.generation_config || "",
         level: data.setting.level,
-        academy: 1,
+        academy: Number(academy?.[0]?.id),
       },
     };
 
@@ -143,7 +148,7 @@ const ExamDialog = () => {
       periodOfTime: question.setting.periodOfTime ? (
         <span className="flex w-fit items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
           <MdTimer />
-          {`${convertToMinutes(question.setting.periodOfTime)} mins`}
+          {`${convertToMinutes(question.setting.periodOfTime)} ${t("minutes")}`}
         </span>
       ) : (
         <span className="flex items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
@@ -154,11 +159,11 @@ const ExamDialog = () => {
       type:
         question.setting.type === 1 ? (
           <span className="inline-block rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
-            MCQ
+            {t("questionTypes.mcq")}
           </span>
         ) : question.setting.type === 2 ? (
           <span className="inline-block rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800">
-            True/False
+            {t("questionTypes.trueFalse")}
           </span>
         ) : (
           "-"
@@ -167,39 +172,37 @@ const ExamDialog = () => {
   });
 
   const columns = [
-    { accessor: "text", header: "Question" },
-    { accessor: "level", header: "Level" },
-    { accessor: "periodOfTime", header: "Time Limit" },
-    { accessor: "createdBy", header: "Created By" },
-    { accessor: "type", header: "Question Type" },
+    { accessor: "text", header: t("columns.question") },
+    { accessor: "level", header: t("columns.level") },
+    { accessor: "periodOfTime", header: t("columns.timeLimit") },
+    { accessor: "createdBy", header: t("columns.createdBy") },
+    { accessor: "type", header: t("columns.questionType") },
   ];
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>+ New Exam</Button>
+        <Button>+ {t("newExam")}</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-6xl">
         <DialogHeader>
-          <DialogTitle>Add New Exam</DialogTitle>
-          <DialogDescription>
-            Fill out the fields below to create a new exam.
-          </DialogDescription>
+          <DialogTitle>{t("addNewExam")}</DialogTitle>
+          <DialogDescription>{t("dialogDescription")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4"
+            className="mx-1 space-y-4"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("formLabels.name")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Exam Name"
+                      placeholder={t("placeholders.examName")}
                       {...field}
                     />
                   </FormControl>
@@ -207,52 +210,44 @@ const ExamDialog = () => {
                 </FormItem>
               )}
             />
-            <div className="flex w-full flex-col rounded-md bg-white shadow-sm dark:bg-[#19191d]">
-              <h2 className="my-2 font-medium">
-                - Select Questions for the Exam
-              </h2>
+            <div className="flex w-full flex-col gap-2 rounded-md bg-white p-3 shadow-sm dark:bg-[#19191d]">
+              <h2 className="my-2 font-medium">{t("selectQuestionsTitle")}</h2>
               <div className="flex w-full flex-col gap-2 px-4">
                 <SearchInput
-                  placeholder="Search Questions"
+                  placeholder={t("placeholders.searchQuestions")}
                   onSearch={(value) => setSearchTerm(value)}
                 />
                 <div className="flex flex-1 gap-5">
                   <MultiSelect
                     className="border-2"
-                    onValueChange={(value) => {
-                      settopics(value);
-                    }}
+                    onValueChange={(value) => settopics(value)}
                     options={
                       topic?.map((t) => ({
                         value: String(t.id),
                         label: t.name,
                       })) || []
                     }
-                    placeholder="Select Topic"
+                    placeholder={t("placeholders.selectTopic")}
                   />
                   <MultiSelect
                     className="border-2"
-                    onValueChange={(value) => {
-                      setOutcome(value);
-                    }}
+                    onValueChange={(value) => setOutcome(value)}
                     options={
                       outcome?.map((outcome) => ({
                         value: String(outcome.id),
                         label: outcome.text,
                       })) || []
                     }
-                    placeholder="Select Outcome"
+                    placeholder={t("placeholders.selectOutcome")}
                   />
                   <MultiSelect
                     className="border-2"
-                    onValueChange={(value) => {
-                      setLevels(value);
-                    }}
+                    onValueChange={(value) => setLevels(value)}
                     options={[...Array(10)].map((_, index) => ({
                       value: String(index + 1),
                       label: String(index + 1),
                     }))}
-                    placeholder="Select Level"
+                    placeholder={t("placeholders.selectLevel")}
                   />
                   <div className="flex w-full items-center space-x-2">
                     <Checkbox
@@ -264,13 +259,14 @@ const ExamDialog = () => {
                       htmlFor="terms"
                       className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      is Active
+                      {t("isActive")}
                     </label>
                   </div>
                 </div>
               </div>
               {questionsData ? (
                 <DataTable
+                  direction={lang === "ar" ? "rtl" : "ltr"}
                   columns={columns}
                   data={formattedQuestions}
                   onRowSelectionChange={(selectedIndexes: number[]) => {
@@ -290,10 +286,10 @@ const ExamDialog = () => {
               name="setting.generation_config"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Generation Config</FormLabel>
+                  <FormLabel>{t("formLabels.generationConfig")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="generation_config"
+                      placeholder={t("placeholders.generationConfig")}
                       {...field}
                     />
                   </FormControl>
@@ -307,7 +303,7 @@ const ExamDialog = () => {
               name="setting.periodOfTime"
               render={() => (
                 <FormItem>
-                  <FormLabel>Period of Time</FormLabel>
+                  <FormLabel>{t("formLabels.periodOfTime")}</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
                       <select
@@ -315,7 +311,7 @@ const ExamDialog = () => {
                         onChange={(e) =>
                           setTime({ ...time, hours: Number(e.target.value) })
                         }
-                        className="rounded-md border px-2 py-1"
+                        className="rounded-md border border-gray-300 bg-white px-2 py-1 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                       >
                         {Array.from({ length: 24 }, (_, i) => (
                           <option
@@ -331,7 +327,7 @@ const ExamDialog = () => {
                         onChange={(e) =>
                           setTime({ ...time, minutes: Number(e.target.value) })
                         }
-                        className="rounded-md border px-2 py-1"
+                        className="rounded-md border border-gray-300 bg-white px-2 py-1 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                       >
                         {Array.from({ length: 60 }, (_, i) => (
                           <option
@@ -347,7 +343,7 @@ const ExamDialog = () => {
                         onChange={(e) =>
                           setTime({ ...time, seconds: Number(e.target.value) })
                         }
-                        className="rounded-md border px-2 py-1"
+                        className="rounded-md border border-gray-300 bg-white px-2 py-1 text-black dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                       >
                         {Array.from({ length: 60 }, (_, i) => (
                           <option
@@ -370,7 +366,7 @@ const ExamDialog = () => {
               name="setting.marks"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Marks</FormLabel>
+                  <FormLabel>{t("formLabels.totalMarks")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -388,7 +384,9 @@ const ExamDialog = () => {
               name="setting.level"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Difficulty Level: {field.value}/10</FormLabel>
+                  <FormLabel>
+                    {t("formLabels.difficultyLevel")}: {field.value}/10
+                  </FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-4">
                       <input
@@ -411,9 +409,9 @@ const ExamDialog = () => {
 
             <div className="flex justify-end gap-2 pt-4">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">{t("buttons.cancel")}</Button>
               </DialogClose>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">{t("buttons.submit")}</Button>
             </div>
           </form>
         </Form>

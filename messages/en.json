@@ -70,6 +70,7 @@
     "outcomes": "Outcomes",
     "topics": "Topics",
     "questions": "Questions",
+    "exams": "Exams",
     "permission": "Permission",
     "ai": "AI"
   },
@@ -193,5 +194,127 @@
     "cancel": "Cancel",
     "saving": "Saving...",
     "saveChanges": "Save Changes"
+  },
+  "exams": {
+    "columns": {
+      "id": "ID",
+      "name": "Exam Name",
+      "marks": "Marks",
+      "level": "Level",
+      "duration": "Duration",
+      "questions": "Questions",
+      "createdAt": "Created At"
+    },
+    "minutes": "mins",
+    "stats": {
+      "totalExams": "Total Exams",
+      "activeExams": "Active Exams",
+      "upcomingExams": "Upcoming Exams"
+    },
+    "search": {
+      "placeholder": "Search exams..."
+    },
+    "filters": "Filters",
+    "deleteDialog": {
+      "title": "Delete Exam",
+      "description": "Are you sure you want to delete this exam? All related data will be permanently removed."
+    }
+  },
+  "examDialog": {
+    "newExam": "New Exam",
+    "addNewExam": "Add New Exam",
+    "dialogDescription": "Fill out the fields below to create a new exam.",
+    "selectQuestionsTitle": "Select Questions for the Exam",
+    "isActive": "is Active",
+    "minutes": "mins",
+    "questionTypes": {
+      "mcq": "MCQ",
+      "trueFalse": "True/False"
+    },
+    "columns": {
+      "question": "Question",
+      "level": "Level",
+      "timeLimit": "Time Limit",
+      "createdBy": "Created By",
+      "questionType": "Question Type"
+    },
+    "formLabels": {
+      "name": "Name",
+      "generationConfig": "Generation Config",
+      "periodOfTime": "Period of Time",
+      "totalMarks": "Total Marks",
+      "difficultyLevel": "Difficulty Level"
+    },
+    "placeholders": {
+      "examName": "Exam Name",
+      "searchQuestions": "Search Questions",
+      "selectTopic": "Select Topic",
+      "selectOutcome": "Select Outcome",
+      "selectLevel": "Select Level",
+      "generationConfig": "generation_config"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "submit": "Submit"
+    }
+  },
+  "examDetails": {
+    "totalQuestions": "Total Questions",
+    "difficulty": "Difficulty",
+    "duration": "Duration",
+    "marks": "Marks",
+    "minutes": "minutes",
+    "academy": "Academy",
+    "subject": "Subject",
+    "instructions": "Instructions",
+    "instructionsContent": "Answer all questions. Choose the correct option for each question.",
+    "questions": "Questions",
+    "examQuestions": "Exam Questions",
+    "noQuestionsPrompt": "🚀 No questions yet? Kickstart your exam with auto-generated questions!",
+    "exportDocx": "Export To DOCX",
+    "exportPdf": "Export To PDF",
+    "errorFetchingExam": "Error fetching exam data."
+  },
+  "editExamT": {
+    "editExam": "Edit Exam",
+    "updateFields": "Update the exam fields below",
+    "name": "Name",
+    "examName": "Exam name",
+    "selectQuestions": "Select Questions",
+    "searchQuestions": "Search questions...",
+    "selectTopic": "Select Topic(s)",
+    "selectOutcome": "Select Outcome(s)",
+    "selectLevel": "Select Level(s)",
+    "isActive": "Active Only",
+    "question": "Question",
+    "level": "Level",
+    "timeLimit": "Time Limit",
+    "createdBy": "Created By",
+    "questionType": "Question Type",
+    "mins": "mins",
+    "generationConfig": "Generation Configuration",
+    "periodOfTime": "Period of Time",
+    "totalMarks": "Total Marks",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "ExamGenerator": {
+    "autoGenerateExam": "Auto Generate Exam",
+    "examGenerator": "Exam Generator",
+    "configureParameters": "Configure the parameters for generating a new exam",
+    "numberOfQuestions": "Number of Questions",
+    "difficultyLevel": "Difficulty Level",
+    "timeToSolve": "Time to Solve",
+    "outcomeWeights": "Outcome Weights",
+    "remove": "Remove",
+    "noOutcomeWeights": "No outcome weights added yet",
+    "selectOutcome": "Select Outcome",
+    "weightPercent": "Weight %",
+    "add": "Add",
+    "selectTopics": "Select Topics",
+    "selectExams": "Select Exams",
+    "cancel": "Cancel",
+    "generating": "Generating...",
+    "generateExam": "Generate Exam"
   }
 }

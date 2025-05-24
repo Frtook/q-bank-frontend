@@ -1,3 +1,5 @@
+"use client";
+
 import {
   MdQuestionAnswer,
   MdOutlineCheckCircle,
@@ -12,14 +14,16 @@ import { useGetExamById } from "@/hooks/subject/useGetExam";
 import { GoNumber } from "react-icons/go";
 import { LuFileQuestion } from "react-icons/lu";
 import { BsFiletypeDocx, BsFileEarmarkPdf } from "react-icons/bs";
+import ExamGenerator from "../autoGenerate/generateExam";
+import { useTranslations } from "next-intl";
 
 export default function ExamDetails({ examId }: { examId: number }) {
+  const t = useTranslations("examDetails");
   const { data: exam, isLoading, isError } = useGetExamById(examId);
 
   if (isLoading) {
     return (
       <div className="animate-pulse space-y-8">
-        {/* Stats cards skeleton */}
         <div className="grid w-full grid-cols-1 gap-4 rounded-xl bg-white p-6 shadow-md dark:bg-[#18181b] sm:grid-cols-2 lg:grid-cols-4">
           {[1, 2, 3, 4].map((item) => (
             <div
@@ -33,8 +37,6 @@ export default function ExamDetails({ examId }: { examId: number }) {
             </div>
           ))}
         </div>
-
-        {/* Questions section skeleton */}
         <div className="w-full space-y-6 rounded-xl bg-white p-6 shadow-md dark:bg-[#18181b]">
           <div className="mb-6 flex items-center justify-between">
             <div className="h-7 w-48 rounded bg-gray-300 dark:bg-gray-700"></div>
@@ -43,8 +45,6 @@ export default function ExamDetails({ examId }: { examId: number }) {
               <div className="h-10 w-28 rounded-md bg-gray-300 dark:bg-gray-700"></div>
             </div>
           </div>
-
-          {/* Questions list skeleton */}
           {[1, 2].map((q) => (
             <div
               key={q}
@@ -68,13 +68,10 @@ export default function ExamDetails({ examId }: { examId: number }) {
       </div>
     );
   }
-  if (isError) {
-    return <div>Error fetching exam data.</div>;
-  }
-  //  academy_logo, confirmed
-  const { name, academy_name, questions, setting } = exam!;
 
-  // Convert duration to minutes (assuming the format is "HH:mm:ss")
+  if (isError) return <div>{t("errorFetchingExam")}</div>;
+
+  const { name, academy_name, questions, setting } = exam!;
   const convertDurationToMinutes = (duration: string) => {
     const [hours, minutes] = duration.split(":").map(Number);
     return hours * 60 + minutes;
@@ -82,13 +79,83 @@ export default function ExamDetails({ examId }: { examId: number }) {
 
   const totalQuestions = questions.length;
   const durationInMinutes = convertDurationToMinutes(setting.periodOfTime);
-  const staticDifficulty = "7/10"; // Static difficulty value
+  const staticDifficulty = setting.level;
 
-  const exportToDocx = () => {
+  function exportToPdf() {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    const center = pageWidth / 2;
+
+    const img = new Image();
+    img.src = "/images/image.jpeg";
+
+    img.onload = () => {
+      const imgProps = doc.getImageProperties(img);
+      const imgWidth = 25;
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+      const imgX = (pageWidth - imgWidth) / 2;
+      const imgY = 10;
+
+      doc.addImage(img, "JPEG", imgX, imgY, imgWidth, imgHeight);
+
+      const textY = imgY + imgHeight / 2 + 3;
+      const sideMargin = 10;
+
+      doc.setFont("helvetica", "bold").setFontSize(12);
+      doc.text(`${t("academy")}: ${academy_name}`, sideMargin, textY);
+      doc.text(
+        `${t("duration")}: ${durationInMinutes} ${t("minutes")}`,
+        sideMargin,
+        textY + 7
+      );
+      const rightX = pageWidth - sideMargin - 70;
+      doc.text(`${t("marks")}: ${setting.marks}`, rightX, textY);
+      doc.text(`${t("subject")}: ${name}`, rightX, textY + 7);
+
+      let y = imgY + imgHeight + 25;
+      doc.setFont("helvetica", "bold").setFontSize(11);
+      doc.text(`${t("instructions")}:`, sideMargin, y);
+      doc.setFont("helvetica", "normal");
+      doc.text(t("instructionsContent"), sideMargin + 5, y + 7);
+
+      y += 25;
+      doc.setFontSize(14).text(t("questions"), center, y, { align: "center" });
+      y += 10;
+      doc.setFontSize(11).setFont("helvetica", "normal");
+      const maxWidth = pageWidth - sideMargin * 2;
+
+      questions.forEach((q, idx) => {
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+        }
+        const questionText = `${idx + 1}. ${q.text}`;
+        const splitQuestion = doc.splitTextToSize(questionText, maxWidth);
+        doc.text(splitQuestion, sideMargin, y);
+        y += splitQuestion.length * 7 + 5;
+
+        q.answers.forEach((ans, i) => {
+          if (y > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          const answerText = `${["A", "B", "C", "D"][i]}. ${ans.text.replace(/^\d+\)\s*/, "")}`;
+          const splitAnswer = doc.splitTextToSize(answerText, maxWidth - 5);
+          doc.text(splitAnswer, sideMargin + 5, y);
+          y += splitAnswer.length * 7 + 5;
+        });
+
+        y += 5;
+      });
+
+      doc.save("exam-questions.pdf");
+    };
+  }
+
+  function exportToDocx() {
     const doc = new Document({
       sections: [
         {
-          properties: {},
           children: [
             new Paragraph({
               text: name,
@@ -102,70 +169,46 @@ export default function ExamDetails({ examId }: { examId: number }) {
               alignment: "center",
               spacing: { after: 400 },
             }),
-
             new Paragraph({
               children: [
-                new TextRun({
-                  text: "Duration: ",
-                  bold: true,
-                }),
-                new TextRun(`${durationInMinutes} minutes`),
+                new TextRun({ text: `${t("duration")}: `, bold: true }),
+                new TextRun(`${durationInMinutes} ${t("minutes")}`),
               ],
               spacing: { after: 100 },
             }),
-
             new Paragraph({
               children: [
-                new TextRun({
-                  text: "Total Questions: ",
-                  bold: true,
-                }),
+                new TextRun({ text: `${t("totalQuestions")}: `, bold: true }),
                 new TextRun(totalQuestions.toString()),
               ],
               spacing: { after: 100 },
             }),
-
             new Paragraph({
               children: [
-                new TextRun({
-                  text: "Difficulty: ",
-                  bold: true,
-                }),
-                new TextRun(staticDifficulty),
+                new TextRun({ text: `${t("difficulty")}: `, bold: true }),
+                new TextRun(String(staticDifficulty ?? "")),
               ],
               spacing: { after: 100 },
             }),
-
             new Paragraph({
               children: [
-                new TextRun({
-                  text: "Total Marks: ",
-                  bold: true,
-                }),
+                new TextRun({ text: `${t("marks")}: `, bold: true }),
                 new TextRun(setting.marks.toString()),
               ],
-              spacing: { after: 100 },
+              spacing: { after: 50 },
             }),
-
             new Paragraph({
               children: [
-                new TextRun({
-                  text: "Instructions: ",
-                  bold: true,
-                }),
-                new TextRun(
-                  "Answer all questions. Choose the correct option for each question."
-                ),
+                new TextRun({ text: `${t("instructions")}: `, bold: true }),
+                new TextRun(t("instructionsContent")),
               ],
               spacing: { after: 400 },
             }),
-
             new Paragraph({
-              text: "Questions",
+              text: t("questions"),
               heading: HeadingLevel.HEADING_2,
               spacing: { before: 400, after: 400 },
             }),
-
             ...questions.flatMap((q, index) => {
               const questionTitle = new Paragraph({
                 text: `${index + 1}. ${q.text}`,
@@ -173,13 +216,12 @@ export default function ExamDetails({ examId }: { examId: number }) {
                 spacing: { after: 200 },
               });
 
-              const answerLetters = ["A", "B", "C", "D"];
               const answerParagraphs = q.answers.map(
                 (ans, i) =>
                   new Paragraph({
                     children: [
                       new TextRun({
-                        text: `${answerLetters[i]}. ${ans.text.replace(/^\d+\)\s*/, "")}`,
+                        text: `${["A", "B", "C", "D"][i]}. ${ans.text.replace(/^\d+\)\s*/, "")}`,
                       }),
                     ],
                     indent: { left: 400 },
@@ -197,69 +239,7 @@ export default function ExamDetails({ examId }: { examId: number }) {
     Packer.toBlob(doc).then((blob) => {
       saveAs(blob, "exam-questions.docx");
     });
-  };
-
-  const exportToPdf = () => {
-    const doc = new jsPDF();
-    const margin = 14;
-    const pageWidth = doc.internal.pageSize.width;
-    const center = pageWidth / 2;
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.text(name, center, 20, { align: "center" });
-
-    doc.setFontSize(14);
-    doc.text(academy_name, center, 30, { align: "center" });
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Duration: ${durationInMinutes} minutes`, margin, 45);
-    doc.text(`Marks: ${setting.marks}`, margin, 55);
-    doc.text(`Difficulty: ${staticDifficulty}`, margin, 75);
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Instructions:", margin, 85);
-    doc.setFont("helvetica", "normal");
-    const instructions =
-      "Answer all questions. Choose the correct option for each question.";
-    doc.text(instructions, margin + 5, 95);
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Questions", center, 110, { align: "center" });
-
-    let y = 120;
-    const maxWidth = pageWidth - margin * 2;
-
-    questions.forEach((q, idx) => {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
-
-      const questionText = `${idx + 1}. ${q.text}`;
-      const splitQuestion = doc.splitTextToSize(questionText, maxWidth);
-      doc.text(splitQuestion, margin, y);
-      y += splitQuestion.length * 7 + 5;
-
-      q.answers.forEach((ans, i) => {
-        if (y > 270) {
-          doc.addPage();
-          y = 20;
-        }
-
-        const answerText = `${["A", "B", "C", "D"][i]}. ${ans.text.replace(/^\d+\)\s*/, "")}`;
-        const splitAnswer = doc.splitTextToSize(answerText, maxWidth - 10);
-        doc.text(splitAnswer, margin + 5, y);
-
-        y += splitAnswer.length * 7 + 5;
-      });
-
-      y += 5; // Extra space between questions
-    });
-
-    doc.save("exam-questions.pdf");
-  };
+  }
 
   return (
     <div className="space-y-8">
@@ -268,25 +248,25 @@ export default function ExamDetails({ examId }: { examId: number }) {
           {
             icon: <LuFileQuestion className="text-4xl text-white" />,
             bg: "bg-indigo-500",
-            label: "Total Questions",
+            label: t("totalQuestions"),
             value: totalQuestions,
           },
           {
             icon: <GoNumber className="text-4xl text-white" />,
             bg: "bg-emerald-500",
-            label: "Difficulty",
+            label: t("difficulty"),
             value: staticDifficulty,
           },
           {
             icon: <GiDuration className="text-4xl text-white" />,
             bg: "bg-rose-500",
-            label: "Duration",
-            value: `${durationInMinutes} minutes`,
+            label: t("duration"),
+            value: `${durationInMinutes} ${t("minutes")}`,
           },
           {
             icon: <TbNumber100Small className="text-4xl text-white" />,
             bg: "bg-amber-500",
-            label: "Marks",
+            label: t("marks"),
             value: setting.marks,
           },
         ].map((item, idx) => (
@@ -306,25 +286,40 @@ export default function ExamDetails({ examId }: { examId: number }) {
       </div>
 
       <div className="w-full space-y-6 rounded-xl bg-white p-6 shadow-md dark:bg-[#18181b]">
-        <div className="mb-4 flex items-center justify-between">
+        <div
+          className={`mb-4 flex ${questions.length === 0 ? "flex-col gap-4" : "items-center"} justify-between`}
+        >
           <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-800 dark:text-white">
             <MdQuestionAnswer className="text-primary" />
-            Exam Questions
+            {t("examQuestions")}
           </h2>
           <div className="flex gap-2">
-            <button
-              onClick={exportToDocx}
-              className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition hover:opacity-90"
-            >
-              Export To DOCX <BsFiletypeDocx className="h-6 w-6" />
-            </button>
-            <button
-              onClick={exportToPdf}
-              className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition hover:opacity-90"
-            >
-              Export To PDF
-              <BsFileEarmarkPdf className="h-6 w-6" />
-            </button>
+            {questions.length === 0 ? (
+              <div className="flex w-full flex-col items-center justify-center rounded-md border border-dashed border-primary bg-primary/10 p-6 text-center">
+                <p className="mb-3 text-sm font-medium text-primary">
+                  {t("noQuestionsPrompt")}
+                </p>
+                <ExamGenerator
+                  examId={exam?.id}
+                  subjectId={exam?.setting.subject}
+                />
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={exportToDocx}
+                  className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition hover:opacity-90"
+                >
+                  {t("exportDocx")} <BsFiletypeDocx className="h-6 w-6" />
+                </button>
+                <button
+                  onClick={exportToPdf}
+                  className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition hover:opacity-90"
+                >
+                  {t("exportPdf")} <BsFileEarmarkPdf className="h-6 w-6" />
+                </button>
+              </>
+            )}
           </div>
         </div>
 

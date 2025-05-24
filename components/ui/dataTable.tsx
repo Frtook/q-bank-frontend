@@ -39,6 +39,7 @@ interface DataTableProps {
   deleteDialogTitle?: string;
   deleteDialogDescription?: string;
   initialSelectedRows?: number[];
+  direction?: "rtl" | "ltr";
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -52,6 +53,7 @@ const DataTable: React.FC<DataTableProps> = ({
   deleteDialogTitle = "Are you sure you want to delete this item?",
   deleteDialogDescription = "This action cannot be undone.",
   initialSelectedRows = [],
+  direction = "ltr",
 }) => {
   // Initialize state with initialSelectedRows
   const [selectedRows, setSelectedRows] =
@@ -108,7 +110,10 @@ const DataTable: React.FC<DataTableProps> = ({
       )}
 
       <ScrollArea className="h-[430px] w-full">
-        <Table className="w-full">
+        <Table
+          className="w-full"
+          dir={direction}
+        >
           <TableHeader>
             <TableRow className="bg-gray-100 dark:bg-[#353a3e]">
               <TableHead className="px-4 text-left">
@@ -123,7 +128,7 @@ const DataTable: React.FC<DataTableProps> = ({
               {visibleColumns.map((col) => (
                 <TableHead
                   key={col.accessor}
-                  className="whitespace-nowrap px-4 text-left font-medium text-[#535862] dark:text-white"
+                  className={`whitespace-nowrap px-4 ${direction === "ltr" ? "text-left" : "text-right"} font-medium text-[#535862] dark:text-white`}
                 >
                   {col.header}
                 </TableHead>
@@ -146,7 +151,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 style={{ cursor: onRowClick ? "pointer" : "default" }}
               >
                 <TableCell
-                  className="px-4"
+                  className="px-4 text-left"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Checkbox

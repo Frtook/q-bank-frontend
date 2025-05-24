@@ -51,7 +51,7 @@ export default function Page({
       component: <Questions />,
     },
     {
-      label: "Exams", // Use translated label
+      label: t("exams"), // Use translated label
       value: "exams",
       icon: <FilePenLine />,
       component: <Exams />,

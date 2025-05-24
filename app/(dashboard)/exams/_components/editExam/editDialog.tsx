@@ -32,6 +32,7 @@ import { useGetTopic } from "@/hooks/subject/useTopic";
 import { MultiSelect } from "@/components/ui/multi-selector";
 import { Checkbox } from "@/components/ui/checkbox";
 import TableSkeleton from "@/components/table/table-skeleton";
+import { useLocale, useTranslations } from "next-intl";
 
 interface EditExamDialogProps {
   open: boolean;
@@ -40,6 +41,7 @@ interface EditExamDialogProps {
 }
 
 const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
+  const t = useTranslations("editExamT");
   const [originalSelectedQuestions, setOriginalSelectedQuestions] = useState<
     number[]
   >([]);
@@ -54,6 +56,8 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
   const [levels, setLevels] = useState<string[]>([]);
   const [outcomes, setOutcome] = useState<string[]>([]);
   const [active, setActive] = useState(true);
+  const lang = useLocale();
+
   const { data: questionsData } = useGetQuestion({
     level: levels.join(","),
     outcome: outcomes.join(","),
@@ -71,17 +75,16 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
       confirmed: true,
       questions: [],
       setting: {
-        marks: 100,
-        subject: 0,
-        periodOfTime: "01:00:00",
-        generation_config: "",
-        level: 1,
-        academy: 2,
+        marks: exam?.setting?.marks,
+        subject: exam?.setting?.subject,
+        periodOfTime: exam?.setting?.periodOfTime,
+        generation_config: exam?.setting?.generation_config,
+        level: exam?.setting?.level,
+        academy: exam?.setting?.academy,
       },
     },
   });
 
-  // Initialize form with exam data when dialog opens or exam changes
   useEffect(() => {
     if (exam) {
       const initialQuestions = exam.questions?.map((q) => q.id) || [];
@@ -90,20 +93,18 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
         confirmed: exam.confirmed,
         questions: initialQuestions,
         setting: {
-          marks: exam.setting?.marks || 100,
-          subject: exam.setting?.subject || 0,
-          periodOfTime: exam.setting?.periodOfTime || "01:00:00",
-          generation_config: exam.setting?.generation_config || "",
-          level: exam.setting?.level || 1,
-          academy: exam.setting?.academy || 2,
+          marks: exam.setting?.marks,
+          subject: exam.setting?.subject,
+          periodOfTime: exam.setting?.periodOfTime,
+          generation_config: exam.setting?.generation_config,
+          level: exam.setting?.level,
+          academy: exam.setting?.academy,
         },
       });
 
-      // Set both original and working selections
       setOriginalSelectedQuestions(initialQuestions);
       setWorkingSelectedQuestions(initialQuestions);
 
-      // Parse time if it exists
       if (exam.setting?.periodOfTime) {
         const [h, m, s] = exam.setting.periodOfTime.split(":").map(Number);
         setTime({ hours: h, minutes: m, seconds: s });
@@ -111,7 +112,6 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
     }
   }, [exam, form]);
 
-  // Update form value when working selection changes
   useEffect(() => {
     form.setValue("questions", workingSelectedQuestions);
   }, [workingSelectedQuestions, form]);
@@ -126,21 +126,19 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
       questions: data.questions,
       setting: {
         marks: data.setting.marks,
-        subject: 1,
+        subject: exam.setting.subject,
         periodOfTime: data.setting.periodOfTime,
-        generation_config: data.setting.generation_config || "",
+        generation_config: data.setting.generation_config,
         level: data.setting.level,
-        academy: 1,
+        academy: exam.setting.academy,
       },
     };
 
     updateExam(payload);
-    // Update the original selection only on submit
     setOriginalSelectedQuestions(data.questions);
     onOpenChange(false);
   };
 
-  // Reset working selection when dialog closes
   useEffect(() => {
     if (!open) {
       setWorkingSelectedQuestions(originalSelectedQuestions);
@@ -181,7 +179,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
       periodOfTime: question.setting.periodOfTime ? (
         <span className="flex w-fit items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
           <MdTimer />
-          {`${convertToMinutes(question.setting.periodOfTime)} mins`}
+          {`${convertToMinutes(question.setting.periodOfTime)} ${t("mins")}`}
         </span>
       ) : (
         <span className="flex items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
@@ -205,11 +203,11 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
   });
 
   const columns = [
-    { accessor: "text", header: "Question" },
-    { accessor: "level", header: "Level" },
-    { accessor: "periodOfTime", header: "Time Limit" },
-    { accessor: "createdBy", header: "Created By" },
-    { accessor: "type", header: "Question Type" },
+    { accessor: "text", header: t("question") },
+    { accessor: "level", header: t("level") },
+    { accessor: "periodOfTime", header: t("timeLimit") },
+    { accessor: "createdBy", header: t("createdBy") },
+    { accessor: "type", header: t("questionType") },
   ];
 
   return (
@@ -217,27 +215,25 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
       open={open}
       onOpenChange={onOpenChange}
     >
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-5xl">
         <DialogHeader>
-          <DialogTitle>Edit Exam</DialogTitle>
-          <DialogDescription>
-            Update the fields below to edit this exam.
-          </DialogDescription>
+          <DialogTitle>{t("editExam")}</DialogTitle>
+          <DialogDescription>{t("updateFields")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4"
+            className="mx-1 space-y-4"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Exam Name"
+                      placeholder={t("examName")}
                       {...field}
                     />
                   </FormControl>
@@ -246,12 +242,10 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               )}
             />
             <div className="flex w-full flex-col rounded-md bg-white shadow-sm dark:bg-[#19191d]">
-              <h2 className="my-2 font-medium">
-                - Select Questions for the Exam
-              </h2>
+              <h2 className="my-2 font-medium">{t("selectQuestions")}</h2>
               <div className="flex w-full flex-col gap-2 px-4">
                 <SearchInput
-                  placeholder="Search Questions"
+                  placeholder={t("searchQuestions")}
                   onSearch={(value) => setSearchTerm(value)}
                 />
                 <div className="flex flex-1 gap-5">
@@ -266,7 +260,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
                         label: t.name,
                       })) || []
                     }
-                    placeholder="Select Topic"
+                    placeholder={t("selectTopic")}
                   />
                   <MultiSelect
                     className="border-2"
@@ -279,7 +273,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
                         label: outcome.text,
                       })) || []
                     }
-                    placeholder="Select Outcome"
+                    placeholder={t("selectOutcome")}
                   />
                   <MultiSelect
                     className="border-2"
@@ -290,7 +284,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
                       value: String(index + 1),
                       label: String(index + 1),
                     }))}
-                    placeholder="Select Level"
+                    placeholder={t("selectLevel")}
                   />
                   <div className="flex w-full items-center space-x-2">
                     <Checkbox
@@ -302,14 +296,15 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
                       htmlFor="terms"
                       className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      is Active
+                      {t("isActive")}
                     </label>
                   </div>
                 </div>
               </div>
               {questionsData ? (
                 <DataTable
-                  key={`exam-${exam?.id}`} // Important for resetting the table state
+                  direction={lang === "ar" ? "rtl" : "ltr"}
+                  key={`exam-${exam?.id}`}
                   columns={columns}
                   data={formattedQuestions}
                   onRowSelectionChange={(selectedIndexes: number[]) => {
@@ -334,7 +329,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               name="setting.generation_config"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Generation Config</FormLabel>
+                  <FormLabel>{t("generationConfig")}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="generation_config"
@@ -351,7 +346,7 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               name="setting.periodOfTime"
               render={() => (
                 <FormItem>
-                  <FormLabel>Period of Time</FormLabel>
+                  <FormLabel>{t("periodOfTime")}</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
                       <select
@@ -414,12 +409,15 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               name="setting.marks"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Marks</FormLabel>
+                  <FormLabel>{t("totalMarks")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        field.onChange(value);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -427,41 +425,18 @@ const EditExamDialog = ({ open, onOpenChange, exam }: EditExamDialogProps) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="setting.level"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Difficulty Level: {field.value}/10</FormLabel>
-                  <FormControl>
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="range"
-                        min="1"
-                        max="10"
-                        value={field.value}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
-                      />
-                      <span className="w-8 text-center text-sm text-gray-500">
-                        {field.value}
-                      </span>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex justify-end gap-2 pt-4">
+            <div className="flex justify-end gap-4">
               <Button
-                variant="outline"
                 type="button"
-                onClick={() => onOpenChange(false)}
+                variant="outline"
+                onClick={() => {
+                  setWorkingSelectedQuestions(originalSelectedQuestions);
+                  onOpenChange(false);
+                }}
               >
-                Cancel
+                {t("cancel")}
               </Button>
-              <Button type="submit">Update</Button>
+              <Button type="submit">{t("save")}</Button>
             </div>
           </form>
         </Form>

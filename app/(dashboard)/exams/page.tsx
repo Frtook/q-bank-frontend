@@ -11,15 +11,17 @@ import { MdTimer } from "react-icons/md";
 import { useState } from "react";
 import EditExamDialog from "./_components/editExam/editDialog";
 import { Exam } from "@/types";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Exams() {
+  const t = useTranslations("exams");
   const { data, isLoading } = useGetExams();
   const deleteExam = useDeleteExam();
   const router = useRouter();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [currentExam, setCurrentExam] = useState<Exam | null>(null);
-
-  // ... keep all your existing code ...
+  const [searchTerm, setSearchTerm] = useState("");
+  const lang = useLocale();
 
   const handleEdit = (index: number) => {
     const examId = formattedData[index].id as number;
@@ -29,6 +31,7 @@ export default function Exams() {
       setEditDialogOpen(true);
     }
   };
+
   const formatDate = (isoDate: string) =>
     new Date(isoDate).toLocaleString("en-US", {
       year: "numeric",
@@ -44,16 +47,20 @@ export default function Exams() {
   };
 
   const columns = [
-    { accessor: "id", header: "ID" },
-    { accessor: "name", header: "Exam Name" },
-    { accessor: "marks", header: "Marks" },
-    { accessor: "level", header: "Level" },
-    { accessor: "periodOfTime", header: "Duration" },
-    { accessor: "generation_config", header: "Config" },
-    { accessor: "createdAt", header: "Created At" },
+    { accessor: "id", header: t("columns.id") },
+    { accessor: "name", header: t("columns.name") },
+    { accessor: "marks", header: t("columns.marks") },
+    { accessor: "level", header: t("columns.level") },
+    { accessor: "periodOfTime", header: t("columns.duration") },
+    { accessor: "questionCount", header: t("columns.questions") },
+    { accessor: "createdAt", header: t("columns.createdAt") },
   ];
 
-  const formattedData = (data ?? []).map((exam) => {
+  const filteredData = (data ?? []).filter((exam) =>
+    exam.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const formattedData = filteredData.map((exam) => {
     const level = exam.setting?.level ?? "-";
     let levelClass = "bg-green-100 text-green-800";
     if (level > 7) levelClass = "bg-red-100 text-red-800";
@@ -85,13 +92,13 @@ export default function Exams() {
         <span className="flex w-fit items-center gap-1 rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800">
           <MdTimer />{" "}
           {exam.setting?.periodOfTime
-            ? `${convertToMinutes(exam.setting.periodOfTime)} mins`
+            ? `${convertToMinutes(exam.setting.periodOfTime)} ${t("minutes")}`
             : "-"}
         </span>
       ),
-      generation_config: (
+      questionCount: (
         <span className="inline-block rounded bg-gray-100 px-2 py-1 font-mono text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-200">
-          {exam.setting?.generation_config ?? "-"}
+          {exam.questions?.length ?? 0}
         </span>
       ),
       createdAt: exam.setting?.createdAt ? (
@@ -114,16 +121,29 @@ export default function Exams() {
       <div className="flex flex-col gap-4">
         {/* Top Stats */}
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, i) => (
+          {[
+            {
+              title: t("stats.totalExams"),
+              value: "2,420",
+            },
+            {
+              title: t("stats.activeExams"),
+              value: "1,850",
+            },
+            {
+              title: t("stats.upcomingExams"),
+              value: "570",
+            },
+          ].map((stat, i) => (
             <div
               key={i}
               className="flex h-36 w-full flex-col gap-6 rounded-xl bg-white p-4 shadow-sm dark:bg-[#19191d]"
             >
               <h3 className="text-base font-bold text-[#181D27] dark:text-white">
-                Total Exams
+                {stat.title}
               </h3>
               <span className="text-3xl font-bold text-[#181D27] dark:text-white">
-                2,420
+                {stat.value}
               </span>
             </div>
           ))}
@@ -132,15 +152,18 @@ export default function Exams() {
         {/* Filters */}
         <div className="flex w-full justify-between rounded-md bg-white p-4 shadow-sm dark:bg-[#19191d]">
           <div className="flex gap-2">
-            <SearchInput placeholder="Search Exam" />
+            <SearchInput
+              placeholder={t("search.placeholder")}
+              onSearch={(value) => setSearchTerm(value)}
+            />
             <Button
               className="border border-[#D5D7DA] shadow-sm dark:border-none"
               variant="secondary"
             >
-              Filters
+              {t("filters")}
             </Button>
           </div>
-          <div>
+          <div className="flex gap-3">
             <ExamDialog />
           </div>
         </div>
@@ -156,8 +179,9 @@ export default function Exams() {
               onRowClick={(row) => router.push(`/exams/${row.id}`)}
               onEdit={handleEdit}
               onDelete={handleDelete}
-              deleteDialogTitle="Delete Exam"
-              deleteDialogDescription="Are you sure you want to delete this exam? All related data will be permanently removed."
+              deleteDialogTitle={t("deleteDialog.title")}
+              deleteDialogDescription={t("deleteDialog.description")}
+              direction={lang === "ar" ? "rtl" : "ltr"}
             />
             <EditExamDialog
               open={editDialogOpen}
